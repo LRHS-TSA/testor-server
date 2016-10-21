@@ -1,3 +1,3 @@
-# Base helper class
+# Base helper module
 module ApplicationHelper
 end
