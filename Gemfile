@@ -47,6 +47,8 @@ gem 'bcrypt', '~> 3.1.11'
 
 # Use respond_to in controller and respond_with
 gem 'responders', '~> 2.3.0'
+# Use devise for authentication
+gem 'devise', '~> 4.2.0'
 
 group :development, :test do
   ###
