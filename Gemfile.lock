@@ -222,8 +222,6 @@ GEM
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.1.1)
     uniform_notifier (1.10.0)
-    validates_email_format_of (1.6.3)
-      i18n
     warden (1.2.6)
       rack (>= 1.0)
     web-console (3.3.1)
@@ -274,7 +272,6 @@ DEPENDENCIES
   turbolinks (~> 5.0.1)
   tzinfo-data
   uglifier (~> 3.0.2)
-  validates_email_format_of (~> 1.6.3)
   web-console (~> 3.3.1)
 
 BUNDLED WITH
