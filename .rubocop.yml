@@ -9,5 +9,5 @@ AllCops:
 Rails:
   Enabled: true
 
-Metrics/LineLength:
+Metrics:
   Enabled: false
