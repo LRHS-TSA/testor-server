@@ -9,6 +9,15 @@
   </head>
 
   <body>
+    <% flash.each do |key, value| %>
+      <div class="<%= flash_class(key) %> role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <%= value %>
+      </div>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
