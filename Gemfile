@@ -47,6 +47,8 @@ gem 'bcrypt', '~> 3.1.11'
 gem 'responders', '~> 2.3.0'
 # Use devise for authentication
 gem 'devise', '~> 4.2.0'
+# Add token auth to devise
+gem 'devise_token_auth', '~> 0.1.39'
 
 group :development, :test do
   ###
