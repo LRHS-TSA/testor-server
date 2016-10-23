@@ -1,5 +1,5 @@
-<p>Welcome <%= @email %>!</p>
+<h3 style="font-family: Arial">Welcome to Testor <%= @resource.name %>!</h3>
 
-<p>You can confirm your account email through the link below:</p>
+<p style="font-family: Arial">You can confirm your account email through the link below:</p>
 
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<p style="font-family: Arial"><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
