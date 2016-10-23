@@ -6,7 +6,7 @@ module DeviseHelper
     messages = safe_join resource.errors.full_messages.map { |msg| content_tag(:p, msg, class: 'm-b-0 m-t-1') }
 
     html = content_tag :div, id: 'error_explanation', class: 'alert alert-danger', role: 'alert' do
-      safe_join([content_tag(:h4, 'Changes were not saved due to the following errors.', class: 'alert-heading m-b-1'), messages])
+      safe_join([content_tag(:h4, 'The following errors occured:', class: 'alert-heading m-b-1'), messages])
     end
 
     html
