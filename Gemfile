@@ -47,6 +47,8 @@ gem 'bcrypt', '~> 3.1.11'
 gem 'responders', '~> 2.3.0'
 # Use devise for authentication
 gem 'devise', '~> 4.2.0'
+# Provide authorization using CanCanCan
+gem 'cancancan', '~> 1.15.0'
 
 group :development do
   ###
