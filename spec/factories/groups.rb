@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :group do
-    name "MyString"
-    description "MyText"
+    name FFaker::Education.school_name
+    description FFaker::Lorem.paragraph
   end
 end
