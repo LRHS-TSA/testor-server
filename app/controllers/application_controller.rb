@@ -1,7 +1,8 @@
 # Base controller class
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  protect_from_forgery with: :reset_session
   before_action :configure_permitted_parameters, if: :devise_controller?
+  check_authorization unless: :devise_controller?
 
   private
 
