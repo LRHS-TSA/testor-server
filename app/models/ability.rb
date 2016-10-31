@@ -5,9 +5,9 @@ class Ability
   def initialize(user)
     if user.role == 1
       # User is a teacher
-      puts 'ABOUT TO LOAD'
+
       # Group
-      #can [:read, :create], Group
+      can [:read, :create], Group
       can :manage, Group, members: {user: user}
     else
       # User is a student
