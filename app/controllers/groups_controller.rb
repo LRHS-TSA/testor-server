@@ -1,6 +1,8 @@
 # Controller for groups
 class GroupsController < ApplicationController
   respond_to :html, :json
+  load_resource :member, through: :group
+
   load_and_authorize_resource
 
   def index
@@ -21,21 +23,26 @@ class GroupsController < ApplicationController
 
   def create
     if @group.save
-      head status: :created, location: event_path(event)
+      Member.create(user: current_user, group: @group)
+      head :created, location: group_path(@group)
     else
-      render json: {error: event.errors}, status: :bad_request
+      render json: {error: @group.errors}, status: :bad_request
     end
   end
 
   def update
     if @group.update_attributes(update_params)
-      head status: :ok
+      head :ok
     else
-      render json: {error: event.errors}, status: :bad_request
+      render json: {error: @group.errors}, status: :bad_request
     end
   end
 
   private
+
+  def create_params
+    params.require(:group).permit(:name, :description)
+  end
 
   def update_params
     params.require(:group).permit(:name, :description)
