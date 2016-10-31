@@ -112,6 +112,8 @@ group :development, :test do
 
   # Replace rails testing with rspec
   gem 'rspec-rails', '~> 3.5.2'
+  # Test controllers using assigns
+  gem 'rails-controller-testing', '~> 1.0.1'
   # Create database objects during testing with ease
   gem 'factory_girl_rails', '~> 4.7.0'
   # Test the entire stack
