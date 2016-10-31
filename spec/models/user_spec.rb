@@ -22,6 +22,14 @@ RSpec.describe User, type: :model do
     it 'can create groups' do
       is_expected.to be_able_to(:create, Group.new)
     end
+
+    it 'can manage groups they own' do
+      is_expected.to be_able_to(:manage, FactoryGirl.create(:member, user: user).group)
+    end
+
+    it 'cannot manage groups they do not own' do
+      is_expected.not_to be_able_to(:manage, Group.new)
+    end
   end
 
   context 'as a student' do

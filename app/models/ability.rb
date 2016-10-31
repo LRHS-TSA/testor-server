@@ -8,6 +8,7 @@ class Ability
 
       # Group
       can [:read, :create], Group
+      can :manage, Group, members: {user: user}
     else
       # User is a student
 
