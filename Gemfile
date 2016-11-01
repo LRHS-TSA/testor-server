@@ -38,6 +38,8 @@ gem 'font-awesome-rails', '~> 4.6.3.1'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.11'
+# Secure and easy tokens
+gem 'has_secure_token', '~> 1.0.0'
 
 ###
 ### Controllers and Application Logic
