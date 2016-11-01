@@ -3,15 +3,13 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user.role == 1
-      # User is a teacher
+    return if user.nil?
 
+    if user.teacher?
       # Group
       can [:read, :create], Group
       can :manage, Group, members: {user: user}
-    else
-      # User is a student
-
+    elsif user.student?
       # Group
       can :read, Group
     end
