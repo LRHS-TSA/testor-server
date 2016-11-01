@@ -14,3 +14,6 @@ Metrics:
 
 Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
+
+RSpec/ExampleLength:
+  Enabled: false

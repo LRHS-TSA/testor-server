@@ -47,39 +47,22 @@ gem 'bcrypt', '~> 3.1.11'
 gem 'responders', '~> 2.3.0'
 # Use devise for authentication
 gem 'devise', '~> 4.2.0'
+# Provide authorization using CanCanCan
+gem 'cancancan', '~> 1.15.0'
 
-group :development, :test do
+group :development do
   ###
   ### Debugging
   ###
 
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', '~> 9.0.6', platform: :mri
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '~> 3.3.1'
   # Replace rails default error pages
   gem 'better_errors', '~> 2.1.1'
   # Advanced features of better errors
   gem 'binding_of_caller', '~> 0.7.2'
-  # Better printing of ruby objects
-  gem 'awesome_print', '~> 1.7.0', require: 'ap'
   # View emails in dev environments
   gem 'letter_opener', '~> 1.4.1'
-
-  ###
-  ### Testing
-  ###
-
-  # Replace rails testing with rspec
-  gem 'rspec-rails', '~> 3.5.2'
-  # Create database objects during testing with ease
-  gem 'factory_girl_rails', '~> 4.7.0'
-  # Test the entire stack
-  gem 'capybara', '~> 2.10.1'
-  # Capybara can't run in a transaction because of AJAX
-  gem 'database_cleaner', '~> 1.5.3'
-  # Use FFaker for random value generation
-  gem 'ffaker', '~> 2.2.0'
 
   ###
   ### Refactoring
@@ -111,6 +94,38 @@ group :development, :test do
   gem 'spring', '~> 2.0.0'
   # Update spring using listen
   gem 'spring-watcher-listen', '~> 2.0.1'
+end
+
+group :development, :test do
+  ###
+  ### Debugging
+  ###
+
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'byebug', '~> 9.0.6', platform: :mri
+  # Better printing of ruby objects
+  gem 'awesome_print', '~> 1.7.0', require: 'ap'
+
+  ###
+  ### Testing
+  ###
+
+  # Replace rails testing with rspec
+  gem 'rspec-rails', '~> 3.5.2'
+  # Test controllers using assigns
+  gem 'rails-controller-testing', '~> 1.0.1'
+  # Create database objects during testing with ease
+  gem 'factory_girl_rails', '~> 4.7.0'
+  # Test the entire stack
+  gem 'capybara', '~> 2.10.1'
+  # Use selenium as the capybara driver
+  gem 'selenium-webdriver', '~> 3.0.0'
+  # Screenshot failed capybara tests
+  gem 'capybara-screenshot', '~> 1.0.14'
+  # Capybara can't run in a transaction because of AJAX
+  gem 'database_cleaner', '~> 1.5.3'
+  # Use FFaker for random value generation
+  gem 'ffaker', '~> 2.2.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
