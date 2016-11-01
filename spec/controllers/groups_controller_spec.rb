@@ -18,7 +18,7 @@ RSpec.describe GroupsController, type: :controller do
 
   describe '#index' do
     it 'assigns all groups as @groups' do
-      group = FactoryGirl.create(:group)
+      FactoryGirl.create(:member, user: user, group: group)
       get :index
       expect(assigns[:groups]).to eq([group])
     end
@@ -26,6 +26,7 @@ RSpec.describe GroupsController, type: :controller do
 
   describe '#show' do
     before do
+      FactoryGirl.create(:member, user: user, group: group)
       get :show, params: {id: group.id}
     end
 

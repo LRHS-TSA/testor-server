@@ -7,7 +7,7 @@ class Ability
 
     if user.teacher?
       # Group
-      can [:read, :create], Group
+      can :create, Group
       can :manage, Group, members: {user: user}
     elsif user.student?
       # Group

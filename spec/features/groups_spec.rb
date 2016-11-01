@@ -5,7 +5,7 @@ RSpec.feature 'Groups' do
 
   context 'Creating a group', js: true do
     scenario 'with valid parameters' do
-      visit '/groups/new'
+      visit new_group_path
       params = FactoryGirl.build(:group)
       within('#new_group') do
         fill_in 'Name', with: params.name
@@ -16,7 +16,7 @@ RSpec.feature 'Groups' do
     end
 
     scenario 'with invalid parameters' do
-      visit '/groups/new'
+      visit new_group_path
       click_button 'Create'
       expect(page).to have_content('error')
     end
