@@ -71,6 +71,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-screenshot (1.0.14)
+      capybara (>= 1.0, < 3)
+      launchy
     childprocess (0.5.9)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.1)
@@ -263,6 +266,7 @@ DEPENDENCIES
   byebug (~> 9.0.6)
   cancancan (~> 1.15.0)
   capybara (~> 2.10.1)
+  capybara-screenshot (~> 1.0.14)
   database_cleaner (~> 1.5.3)
   devise (~> 4.2.0)
   factory_girl_rails (~> 4.7.0)
