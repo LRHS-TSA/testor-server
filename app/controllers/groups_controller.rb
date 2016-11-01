@@ -36,6 +36,12 @@ class GroupsController < ApplicationController
     end
   end
 
+  def reset_tokens
+    @group.regenerate_student_token
+    @group.regenerate_teacher_token
+    render json: {student_token: @group.student_token, teacher_token: @group.teacher_token}, status: :ok
+  end
+
   private
 
   def create_params

@@ -122,4 +122,23 @@ RSpec.describe GroupsController, type: :controller do
       end
     end
   end
+
+  describe '#reset_tokens' do
+    before do
+      FactoryGirl.create(:member, user: user, group: group)
+    end
+
+    it 'resets the student token' do
+      expect { put :reset_tokens, params: {id: group.id} }.to change { group.reload.student_token }
+    end
+
+    it 'resets the teacher token' do
+      expect { put :reset_tokens, params: {id: group.id} }.to change { group.reload.teacher_token }
+    end
+
+    it 'returns HTTP status 200 (OK)' do
+      put :reset_tokens, params: {id: group.id}
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end
