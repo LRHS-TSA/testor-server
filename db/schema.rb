@@ -10,13 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161030235047) do
+ActiveRecord::Schema.define(version: 20161101225332) do
 
   create_table "groups", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "student_token"
+    t.string   "teacher_token"
+    t.index ["student_token"], name: "index_groups_on_student_token"
+    t.index ["teacher_token"], name: "index_groups_on_teacher_token"
   end
 
   create_table "members", force: :cascade do |t|
