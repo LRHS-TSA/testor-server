@@ -17,10 +17,17 @@ RSpec.describe GroupsController, type: :controller do
   end
 
   describe '#index' do
-    it 'assigns all groups as @groups' do
+    before do
       FactoryGirl.create(:member, user: user, group: group)
       get :index
+    end
+
+    it 'assigns all groups as @groups' do
       expect(assigns[:groups]).to eq([group])
+    end
+
+    it 'returns HTTP status 200 (OK)' do
+      expect(response).to have_http_status(:ok)
     end
   end
 
