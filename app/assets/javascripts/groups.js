@@ -28,7 +28,7 @@ $(document).on('turbolinks:load', function() {
       for (let form in errors) {
         var fieldSet = $(this).find("#group_" + form).parent();
         fieldSet.addClass('form-group has-danger');
-        for (const key of errors[form]) {
+        for (let key of errors[form]) {
           error = form.capitalizeFirstLetter().replace(/_/g, ' ') + ' ' + key;
           fieldSet.append("<div><small class=\"text-danger\">" + error + "</small></div>");
         }
