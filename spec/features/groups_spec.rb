@@ -46,7 +46,7 @@ RSpec.feature 'Groups' do
         fill_in 'Name', with: ''
         fill_in 'Description', with: ''
       end
-      click_button 'Create'
+      click_button 'Update'
       expect(page).to have_content('error')
     end
   end
