@@ -1,7 +1,7 @@
 # Macros to make capybara with devise easier
 module CapybaraMacros
   def login_student
-    let(:user) do
+    given(:user) do
       FactoryGirl.create(:user, role: 0, name: 'student')
     end
 
@@ -12,7 +12,7 @@ module CapybaraMacros
   end
 
   def login_teacher
-    let(:user) do
+    given(:user) do
       FactoryGirl.create(:user, role: 1, name: 'teacher')
     end
 
