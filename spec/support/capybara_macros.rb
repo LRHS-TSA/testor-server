@@ -5,7 +5,7 @@ module CapybaraMacros
       FactoryGirl.create(:user, role: 0, name: 'student')
     end
 
-    before do
+    background do
       user.confirm
       login_as(user, scope: :user)
     end
@@ -16,7 +16,7 @@ module CapybaraMacros
       FactoryGirl.create(:user, role: 1, name: 'teacher')
     end
 
-    before do
+    background do
       user.confirm
       login_as(user, scope: :user)
     end
