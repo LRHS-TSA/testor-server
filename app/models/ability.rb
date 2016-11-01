@@ -9,9 +9,16 @@ class Ability
       # Group
       can :create, Group
       can :manage, Group, members: {user: user}
+
+      # Member
+      can :join_group, Member
+      can :manage, Member, group: {members: {user: user}}
     elsif user.student?
       # Group
-      can :read, Group
+      can :read, Group, members: {user: user}
+
+      # Member
+      can :join_group, Member
     end
   end
 end
