@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :group do
-    name FFaker::Education.school_name
+    sequence(:name) { |n| "Group #{n}" }
     description FFaker::Lorem.paragraph
   end
 end

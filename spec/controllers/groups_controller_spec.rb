@@ -7,19 +7,12 @@ RSpec.describe GroupsController, type: :controller do
     FactoryGirl.create(:group)
   end
 
-  let(:valid_create_params) do
-    {name: FFaker::Education.school_name, description: FFaker::Lorem.paragraph}
+  let(:valid_params) do
+    g = FactoryGirl.build(:group)
+    {name: g.name, description: g.description}
   end
 
-  let(:invalid_create_params) do
-    {name: nil, description: nil}
-  end
-
-  let(:valid_update_params) do
-    {name: ' ' + FFaker::Education.school_name, description: ' ' + FFaker::Lorem.paragraph}
-  end
-
-  let(:invalid_update_params) do
+  let(:invalid_params) do
     {name: nil, description: nil}
   end
 
@@ -77,18 +70,18 @@ RSpec.describe GroupsController, type: :controller do
   describe '#create' do
     context 'with valid parameters' do
       it 'creates a new group' do
-        expect { post :create, params: {group: valid_create_params} }.to change(Group, :count).by(1)
+        expect { post :create, params: {group: valid_params} }.to change(Group, :count).by(1)
       end
 
       it 'returns HTTP status 201 (Created)' do
-        post :create, params: {group: valid_create_params}
+        post :create, params: {group: valid_params}
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'with invalid parameters' do
       it 'returns HTTP status 400 (Bad Request)' do
-        post :create, params: {group: invalid_create_params}
+        post :create, params: {group: invalid_params}
         expect(response).to have_http_status(:bad_request)
       end
     end
@@ -101,7 +94,7 @@ RSpec.describe GroupsController, type: :controller do
 
     context 'with valid parameters' do
       before do
-        put :update, params: {id: group.id, group: valid_update_params}
+        put :update, params: {id: group.id, group: valid_params}
       end
 
       it 'updates the requested group' do
@@ -116,7 +109,7 @@ RSpec.describe GroupsController, type: :controller do
 
     context 'with invalid parameters' do
       it 'returns HTTP status 400 (Bad Request)' do
-        put :update, params: {id: group.id, group: invalid_update_params}
+        put :update, params: {id: group.id, group: invalid_params}
         expect(response).to have_http_status(:bad_request)
       end
     end

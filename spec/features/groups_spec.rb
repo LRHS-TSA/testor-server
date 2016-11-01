@@ -6,12 +6,13 @@ RSpec.feature 'Groups' do
   context 'Creating a group', js: true do
     scenario 'with valid parameters' do
       visit '/groups/new'
+      params = FactoryGirl.build(:group)
       within('#new_group') do
-        fill_in 'Name', with: FFaker::Education.school_name
-        fill_in 'Description', with: FFaker::Lorem.paragraph
+        fill_in 'Name', with: params.name
+        fill_in 'Description', with: params.description
       end
       click_button 'Create'
-      expect(current_path).to eq(group_path(Group.last))
+      expect(page).to have_content(params.name)
     end
 
     scenario 'with invalid parameters' do
@@ -32,12 +33,13 @@ RSpec.feature 'Groups' do
 
     scenario 'with valid parameters' do
       visit edit_group_path(group)
+      params = FactoryGirl.build(:group)
       within("#edit_group_#{group.id}") do
-        fill_in 'Name', with: ' ' + FFaker::Education.school_name
-        fill_in 'Description', with: ' ' + FFaker::Lorem.paragraph
+        fill_in 'Name', with: params.name
+        fill_in 'Description', with: params.description
       end
       click_button 'Update'
-      expect(current_path).to eq(group_path(Group.last))
+      expect(page).to have_content(params.name)
     end
 
     scenario 'with invalid parameters' do
