@@ -118,6 +118,8 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.7.0'
   # Test the entire stack
   gem 'capybara', '~> 2.10.1'
+  # Use selenium as the capybara driver
+  gem 'selenium-webdriver', '~> 3.0.0'
   # Capybara can't run in a transaction because of AJAX
   gem 'database_cleaner', '~> 1.5.3'
   # Use FFaker for random value generation
