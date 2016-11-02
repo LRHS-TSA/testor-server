@@ -1,5 +1,6 @@
 # User model (Using Devise)
 class User < ApplicationRecord
+  acts_as_token_authenticatable
   devise :database_authenticatable, :confirmable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :lockable
 
   has_many :members
