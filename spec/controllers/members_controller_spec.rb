@@ -100,6 +100,7 @@ RSpec.describe MembersController, type: :controller do
     login_teacher
 
     it 'destroys the requested member' do
+      member.reload
       expect { delete :destroy, params: {group_id: member.group.id, id: member.id} }.to change(Member, :count).by(-1)
     end
 
