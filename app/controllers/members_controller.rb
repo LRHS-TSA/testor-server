@@ -1,4 +1,4 @@
-# Conttoler for members, also handles joining group by token
+# Controller for members, also handles joining group by token
 class MembersController < ApplicationController
   load_and_authorize_resource :group, except: :join_group
   load_and_authorize_resource through: :group, except: :join_group
