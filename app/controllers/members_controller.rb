@@ -1,6 +1,5 @@
 # Conttoler for members, also handles joining group by token
 class MembersController < ApplicationController
-  respond_to :html, :json
   load_and_authorize_resource :group, except: :join_group
   load_and_authorize_resource through: :group, except: :join_group
   authorize_resource only: :join_group
