@@ -49,6 +49,8 @@ gem 'has_secure_token', '~> 1.0.0'
 gem 'responders', '~> 2.3.0'
 # Use devise for authentication
 gem 'devise', '~> 4.2.0'
+# Add token authentication to devise
+gem 'simple_token_authentication', '~> 1.14.0'
 # Provide authorization using CanCanCan
 gem 'cancancan', '~> 1.15.0'
 
