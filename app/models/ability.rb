@@ -19,6 +19,7 @@ class Ability
 
       # Member
       can :join_group, Member
+      can :destroy, Member, user: user
     end
   end
 end

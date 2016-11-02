@@ -56,5 +56,13 @@ RSpec.describe User, type: :model do
     it 'can join groups' do
       is_expected.to be_able_to(:join_group, Member.new)
     end
+
+    it 'can leave groups' do
+      is_expected.to be_able_to(:destroy, FactoryGirl.create(:member, user: user))
+    end
+
+    it 'cannot kick others out of groups' do
+      is_expected.not_to be_able_to(:destroy, Member.new)
+    end
   end
 end
