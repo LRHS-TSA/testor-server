@@ -2,7 +2,7 @@
 module DeviseMacros
   def login_student
     let(:user) do
-      FactoryGirl.create(:user, role: 0, name: 'student')
+      FactoryGirl.create(:user, role: 0)
     end
 
     before do
@@ -14,7 +14,7 @@ module DeviseMacros
 
   def login_teacher
     let(:user) do
-      FactoryGirl.create(:user, role: 1, name: 'teacher')
+      FactoryGirl.create(:user, role: 1)
     end
 
     before do

@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def user_token_authenticable?
-    return false unless request.format.json?
+    request.format.json?
   end
 
   private
