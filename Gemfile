@@ -78,6 +78,8 @@ group :development do
   gem 'rubocop-rspec', require: false
   # Use bullet to find performace issues
   gem 'bullet', '~> 5.4.2'
+  # Lock down the formatting of schema.rb
+  gem 'fix-db-schema-conflicts', '~> 2.0.0'
 
   ###
   ### Security
