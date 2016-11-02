@@ -21,7 +21,7 @@ class GroupsController < ApplicationController
 
   def create
     if @group.save
-      Member.create(user: current_user, group: @group)
+      Member.create(group: @group, user: current_user)
       head :created, location: group_path(@group)
     else
       render json: {error: @group.errors}, status: :bad_request

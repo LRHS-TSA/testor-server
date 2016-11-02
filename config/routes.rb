@@ -6,5 +6,8 @@ Rails.application.routes.draw do
     member do
       put :reset_tokens
     end
+    resources :members, only: [:index, :show, :destroy]
   end
+
+  post '/join_group', to: 'members#join_group'
 end
