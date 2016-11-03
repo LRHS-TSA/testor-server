@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :members
   has_many :groups, through: :members
 
+  has_many :tests
+
   def teacher?
     role == 1
   end
