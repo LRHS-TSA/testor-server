@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :test do
-    name "MyString"
-    user nil
+    sequence(:name) { |n| "Test #{n}" }
+    association :user
   end
 end
