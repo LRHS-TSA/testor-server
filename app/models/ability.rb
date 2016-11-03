@@ -13,6 +13,10 @@ class Ability
       # Member
       can :join_group, Member
       can :manage, Member, group: {members: {user: user}}
+
+      # Test
+      can :create, Test
+      can :manage, Test, user: user
     elsif user.student?
       # Group
       can :read, Group, members: {user: user}
