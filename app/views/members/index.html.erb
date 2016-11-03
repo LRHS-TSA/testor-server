@@ -1,0 +1,13 @@
+<h2>All Members in <%= Group.find_by(id: params[:group_id]).name %></h2>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @members %>
+  </tbody>
+</table>

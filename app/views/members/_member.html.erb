@@ -1,0 +1,5 @@
+<tr>
+  <td><%= member.user.name %></td>
+  <td><%= role_name member.user.role %></td>
+  <td><%= link_to 'View', group_member_path(member.group, member), class: 'btn btn-primary' %></td>
+</tr>
