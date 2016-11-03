@@ -76,7 +76,7 @@ RSpec.describe TestsController, type: :controller do
   describe '#create' do
     context 'with valid parameters' do
       it 'creates a new test' do
-        expect { post :test, params: {test: valid_params} }.to change(Test, :count).by(1)
+        expect { post :create, params: {test: valid_params} }.to change(Test, :count).by(1)
       end
 
       it 'returns HTTP status 201 (Created)' do
