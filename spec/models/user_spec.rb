@@ -43,8 +43,12 @@ RSpec.describe User, type: :model do
       is_expected.to be_able_to(:create, Test.new)
     end
 
-    it 'can manage tests they created' do
+    it 'can manage tests they own' do
       is_expected.to be_able_to(:manage, FactoryGirl.create(:test, user: user))
+    end
+
+    it 'cannot manage tests they do not own' do
+      is_expected.not_to be_able_to(:manage, Test.new)
     end
   end
 
