@@ -51,5 +51,11 @@ RSpec.feature 'Groups' do
       click_button 'Update'
       expect(page).to have_content('error')
     end
+
+    scenario 'by resetting the tokens' do
+      visit edit_group_path(group)
+      click_button 'Reset'
+      expect(page).to have_content(group.name)
+    end
   end
 end
