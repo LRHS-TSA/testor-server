@@ -1,5 +1,5 @@
 <div style="margin: 1em 1em 1em 1em;">
-  <h3 id="navbar_add_group_title">Add Group</h3>
+  <h3 id="navbar_add_group_title">Join Group</h3>
 
   <%= form_tag({controller: 'members', action: 'join_group'}, method: 'post', remote: true, id: 'navbar_add_group') do %>
     <fieldset class="form-group">
@@ -7,6 +7,6 @@
       <%= text_field_tag :token, '', class: 'form-control', placeholder: 'Token' %>
     </fieldset>
 
-    <%= submit_tag 'Add Group', class: "btn btn-primary btn-block" %>
+    <%= submit_tag 'Join Group', class: "btn btn-primary btn-block" %>
   <% end %>
 </div>

@@ -10,4 +10,15 @@ module CapybaraMacros
       login_as(user, scope: :user)
     end
   end
+
+  def login_student
+    given(:user) do
+      FactoryGirl.create(:user, role: 0)
+    end
+
+    background do
+      user.confirm
+      login_as(user, scope: :user)
+    end
+  end
 end
