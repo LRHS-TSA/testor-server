@@ -3,6 +3,6 @@
   <td><%= role_name member.user.role %></td>
   <td><%= link_to 'View', group_member_path(member.group, member), class: 'btn btn-primary' %></td>
   <% if can? :destroy, member %>
-    <td><%= button_to 'Kick', {event_id: member.group.id, id: member.id, controller: :members, action: :destroy}, remote: true, method: :delete, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %></td>
+    <td><%= button_to 'Kick', {event_id: member.group.id, id: member.id, controller: :members, action: :destroy}, remote: true, method: :delete, class: 'btn btn-danger', id: 'kick_' + member.id.to_s %></td>
   <% end %>
 </tr>
