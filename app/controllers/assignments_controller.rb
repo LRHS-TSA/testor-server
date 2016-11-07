@@ -47,10 +47,10 @@ class AssignmentsController < ApplicationController
   private
 
   def create_params
-    params.require(:assignment).permit(:name, :test_id, :start_date, :end_date, :time)
+    params.require(:assignment).permit(:name, :test_id, :start_date, :end_date, :length)
   end
 
   def update_params
-    params.require(:assignment).permit(:name, :start_date, :end_date, :time)
+    params.require(:assignment).permit(:name, :start_date, :end_date, :length)
   end
 end
