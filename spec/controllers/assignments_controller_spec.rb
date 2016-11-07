@@ -15,13 +15,22 @@ RSpec.describe AssignmentsController, type: :controller do
     FactoryGirl.create(:assignment, group: group, test: test)
   end
 
-  let(:valid_params) do
+  let(:valid_create_params) do
     a = FactoryGirl.build(:assignment)
     {name: a.name, test_id: test.id, start_date: a.start_date, end_date: a.end_date, length: a.length}
   end
 
-  let(:invalid_params) do
+  let(:valid_update_params) do
+    a = FactoryGirl.build(:assignment)
+    {name: a.name, start_date: a.start_date, end_date: a.end_date, length: a.length}
+  end
+
+  let(:invalid_create_params) do
     {name: nil, test_id: nil, start_date: nil, end_date: nil, length: nil}
+  end
+
+  let(:invalid_update_params) do
+    {name: nil, start_date: nil, end_date: nil, length: nil}
   end
 
   describe '#index' do
@@ -83,18 +92,18 @@ RSpec.describe AssignmentsController, type: :controller do
   describe '#create' do
     context 'with valid parameters' do
       it 'creates a new assignment' do
-        expect { post :create, params: {group_id: group.id, assignment: valid_params} }.to change(Assignment, :count).by(1)
+        expect { post :create, params: {group_id: group.id, assignment: valid_create_params} }.to change(Assignment, :count).by(1)
       end
 
       it 'returns HTTP status 201 (Created)' do
-        post :create, params: {group_id: group.id, assignment: valid_params}
+        post :create, params: {group_id: group.id, assignment: valid_create_params}
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'with invalid parameters' do
       it 'returns HTTP status 400 (Bad Request)' do
-        post :create, params: {group_id: group.id, assignment: invalid_params}
+        post :create, params: {group_id: group.id, assignment: invalid_create_params}
         expect(response).to have_http_status(:bad_request)
       end
     end
@@ -103,7 +112,7 @@ RSpec.describe AssignmentsController, type: :controller do
   describe '#update' do
     context 'with valid parameters' do
       before do
-        put :update, params: {group_id: assignment.group.id, id: assignment.id, assignment: valid_params}
+        put :update, params: {group_id: assignment.group.id, id: assignment.id, assignment: valid_update_params}
       end
 
       it 'updates the requested assignment' do
@@ -118,7 +127,7 @@ RSpec.describe AssignmentsController, type: :controller do
 
     context 'with invalid parameters' do
       it 'returns HTTP status 400 (Bad Request)' do
-        put :update, params: {group_id: assignment.group.id, id: assignment.id, assignment: invalid_params}
+        put :update, params: {group_id: assignment.group.id, id: assignment.id, assignment: invalid_update_params}
         expect(response).to have_http_status(:bad_request)
       end
     end

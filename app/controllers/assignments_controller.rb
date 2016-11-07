@@ -20,6 +20,10 @@ class AssignmentsController < ApplicationController
   end
 
   def create
+    if !@assignment.test.nil? && @assignment.test.user != current_user
+      head :bad_request
+      return
+    end
     if @assignment.save
       head :created, location: group_assignment_path(@assignment.group, @assignment)
     else
@@ -47,6 +51,6 @@ class AssignmentsController < ApplicationController
   end
 
   def update_params
-    params.require(:assignment).permit(:name, :test_id, :start_date, :end_date, :time)
+    params.require(:assignment).permit(:name, :start_date, :end_date, :time)
   end
 end
