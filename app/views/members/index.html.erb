@@ -1,13 +1,17 @@
-<h2>All Members in <%= Group.find_by(id: params[:group_id]).name %></h2>
+<% group = Group.find_by(id: params[:group_id]) %>
+<h2>All Members in <%= group.name %></h2>
 <table class="table">
   <thead>
     <tr>
       <th>Name</th>
       <th>Role</th>
       <th></th>
+      <% if can? :destroy, Member %>
+        <th></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
-    <%= render @members %>
+    <%= render partial: 'member', collection: group.members, as: :member %>
   </tbody>
 </table>
