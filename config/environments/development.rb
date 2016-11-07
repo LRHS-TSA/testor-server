@@ -55,4 +55,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {host: 'localhost', port: 3000}
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.preview_path = "#{Rails.root}/lib/mailer_previews"
+
+  config.active_record.time_zone_aware_types = [:datetime, :time]
 end
