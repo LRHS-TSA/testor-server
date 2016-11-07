@@ -13,6 +13,9 @@
 <div class="row">
   <div class="col-sm-12 push-md-8 col-md-4">
     <% if can? :manage, @group %>
+      <% if can? :create, Assignment %>
+        <%= link_to 'Assign a Test', new_group_assignment_path(@group), class: 'btn btn-secondary btn-lg btn-block', style: 'margin-bottom: 12px;' %>
+      <% end %>
       <div class="card">
         <div class="card-block">
           <h4 class="card-title">Student Code</h4>
@@ -48,7 +51,8 @@
       </div>
     </div>
   </div>
-  <div class="col-md-8">
-
+  <div class="col-xs-12 col-md-8 pull-md-4">
+    <%= render partial: 'assignment', collection: @group.assignments.last(10), as: :assignment or 'No assignments have been posted.' %>
+    <%= link_to 'View All Assignments', group_assignments_path(@group), class: 'btn btn-secondary btn-block' %>
   </div>
 </div>
