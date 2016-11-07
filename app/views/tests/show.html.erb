@@ -1,0 +1,6 @@
+<% if can? :manage, @test %>
+  <%= link_to edit_test_path(@test), class: 'btn btn-secondary float-md-right' do %>
+    <i class="fa fa-cog" aria-hidden="true"></i> Edit
+  <% end %>
+<% end %>
+<h2><%= @test.name %></h2>

@@ -9,5 +9,7 @@ Rails.application.routes.draw do
     resources :members, only: [:index, :show, :destroy]
   end
 
+  resources :tests
+
   post '/join_group', to: 'members#join_group'
 end
