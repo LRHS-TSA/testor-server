@@ -1,6 +1,7 @@
 # Tests teachers can assign to students for a grade
 class Test < ApplicationRecord
   belongs_to :user, inverse_of: :tests
+  has_many :assignments
 
   validates :name, presence: true, length: {minimum: 3, maximum: 32}
 
