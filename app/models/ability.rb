@@ -17,6 +17,9 @@ class Ability
       # Test
       can :create, Test
       can :manage, Test, user: user
+
+      # Assignment
+      can :manage, Assignment, group: {members: {user: user}}
     elsif user.student?
       # Group
       can :read, Group, members: {user: user}
@@ -24,6 +27,9 @@ class Ability
       # Member
       can :join_group, Member
       can :destroy, Member, user: user
+
+      # Assignment
+      can :read, Assignment, group: {members: {user: user}}
     end
   end
 end
