@@ -12,14 +12,14 @@ class Ability
 
       # Member
       can :join_group, Member
-      can :manage, Member, group: {members: {user: user}}
+      can :manage, Member, group: {members: {user_id: user.id}}
 
       # Test
       can :create, Test
       can :manage, Test, user: user
 
       # Assignment
-      can :manage, Assignment, group: {members: {user: user}}
+      can :manage, Assignment, group: {members: {user_id: user.id}}
     elsif user.student?
       # Group
       can :read, Group, members: {user: user}
