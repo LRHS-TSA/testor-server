@@ -1,6 +1,5 @@
 # Controller for groups
 class GroupsController < ApplicationController
-  respond_to :html, :json
   load_and_authorize_resource
 
   def index
@@ -21,7 +20,7 @@ class GroupsController < ApplicationController
 
   def create
     if @group.save
-      Member.create(user: current_user, group: @group)
+      Member.create(group: @group, user: current_user)
       head :created, location: group_path(@group)
     else
       render json: {error: @group.errors}, status: :bad_request
@@ -34,6 +33,12 @@ class GroupsController < ApplicationController
     else
       render json: {error: @group.errors}, status: :bad_request
     end
+  end
+
+  def reset_tokens
+    @group.regenerate_student_token
+    @group.regenerate_teacher_token
+    render json: {student_token: @group.student_token, teacher_token: @group.teacher_token}, status: :ok
   end
 
   private

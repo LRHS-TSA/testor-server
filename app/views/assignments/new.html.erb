@@ -1,0 +1,29 @@
+<h2>Create a New Assignment</h2>
+<%= form_for @assignment, url: group_assignments_path(Group.find_by(id: params[:group_id])), remote: true do |f| %>
+  <fieldset class="form-group">
+    <%= f.label :name, class: 'form-control-label' %>
+    <%= f.text_field :name, class: 'form-control', placeholder: 'Assignment Name' %>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <%= f.label :test, class: 'form-control-label' %>
+    <%= f.collection_select :test_id, current_user.tests, :id, :name, { include_blank: true }, { class: 'form-control' } %>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <%= f.label :start_date, class: 'form-control-label' %>
+    <%= f.datetime_select :start_date, {ampm: true, include_blank: true} %>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <%= f.label :end_date, class: 'form-control-label' %>
+    <%= f.datetime_select :end_date, {ampm: true, include_blank: true} %>
+  </fieldset>
+
+  <fieldset class="form-group">
+    <%= f.label :length, "Time Limit", class: 'form-control-label' %>
+    <%= f.time_select :length, include_blank: true %>
+  </fieldset>
+
+  <%= f.submit 'Create', class: 'btn btn-primary', data: { disable_with: 'Create' } %>
+<% end %>

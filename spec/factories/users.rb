@@ -4,5 +4,6 @@ FactoryGirl.define do
     sequence(:email) { |n| "user#{n}@example.com" }
     password { FFaker::Internet.password }
     password_confirmation { password }
+    role 1
   end
 end

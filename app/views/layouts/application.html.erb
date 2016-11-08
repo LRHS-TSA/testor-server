@@ -20,6 +20,15 @@
             <ul class="nav navbar-nav">
               <div class="float-md-right">
                 <% if user_signed_in? then %>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link" href="#" id="addGroupDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fa fa-plus-square" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="addGroupDropdown">
+                      <%= render 'layouts/addgroup' %>
+                    </div>
+                  </li>
+                  <%= link_to 'My Groups', groups_path, class: 'nav-item nav-link' %>
                   <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'nav-item nav-link' %>
                 <% else %>
                   <%= link_to 'Log In', new_user_session_path, class: 'nav-item nav-link' %>

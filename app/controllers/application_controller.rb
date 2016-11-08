@@ -1,8 +1,17 @@
 # Base controller class
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :reset_session
+  respond_to :html, :json
+
+  protect_from_forgery with: :null_session
   before_action :configure_permitted_parameters, if: :devise_controller?
+  acts_as_token_authentication_handler_for User, if: ->(controller) { controller.user_token_authenticable? }
   check_authorization unless: :devise_controller?
+
+  protected
+
+  def user_token_authenticable?
+    request.format.json?
+  end
 
   private
 

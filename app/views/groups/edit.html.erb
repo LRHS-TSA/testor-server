@@ -12,3 +12,6 @@
 
   <%= f.submit 'Update', class: 'btn btn-primary', data: { disable_with: 'Update' } %>
 <% end %>
+<hr>
+<h3>Reset Student and Teacher Token</h3>
+<%= button_to 'Reset', reset_tokens_group_path, remote: true, method: :put, class: 'btn btn-danger' %>

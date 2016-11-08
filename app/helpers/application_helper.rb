@@ -18,4 +18,16 @@ module ApplicationHelper
     when 1 then 'Teacher'
     end
   end
+
+  # Converts Datetime to text
+  def format_datetime(datetime)
+    return if datetime.nil?
+    datetime.to_formatted_s(:long)
+  end
+
+  # Converts Time to text
+  def format_time(time)
+    return if time.nil?
+    time.to_s(:time)
+  end
 end

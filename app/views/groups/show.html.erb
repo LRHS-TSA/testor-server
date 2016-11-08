@@ -1,8 +1,58 @@
-<% if can? :manage, @group %>
-  <%= link_to edit_group_path(@group), class: 'btn btn-secondary float-md-right' do %>
-    <i class="fa fa-cog" aria-hidden="true"></i> Edit
-  <% end %>
-<% end %>
-<h2><%= @group.name %></h2>
-<hr>
-<p><%= simple_format @group.description %></p>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1><%= @group.name %></h1>
+    <hr class="my-2">
+    <%= simple_format @group.description, class: 'lead' %>
+    <% if can? :manage, @group %>
+      <%= link_to edit_group_path(@group), class: 'btn btn-secondary btn-lg' do %>
+        <i class="fa fa-cog" aria-hidden="true"></i> Edit
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12 push-md-8 col-md-4">
+    <% if can? :manage, @group %>
+      <% if can? :create, Assignment %>
+        <%= link_to 'Assign a Test', new_group_assignment_path(@group), class: 'btn btn-secondary btn-lg btn-block', style: 'margin-bottom: 12px;' %>
+      <% end %>
+      <div class="card">
+        <div class="card-block">
+          <h4 class="card-title">Student Code</h4>
+          <a class="btn btn-info btn-block btn-sm" data-toggle="collapse" href="#studentCode" aria-expanded="false" aria-controls="studentCode">
+            Show Student Code
+          </a>
+          <div class="collapse" id="studentCode">
+            <p class="bg-warning text-white text-middle text-xs-center rounded"><%= @group.student_token %></p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-block">
+          <h4 class="card-title">Teacher Code</h4>
+          <a class="btn btn-danger btn-block btn-sm" data-toggle="collapse" href="#teacherCode" aria-expanded="false" aria-controls="teacherCode">
+            Show Teacher Code
+          </a>
+          <div class="collapse" id="teacherCode">
+            <p class="bg-warning text-white text-middle text-xs-center rounded"><%= @group.teacher_token %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="card">
+      <div class="card-block">
+        <h4 class="card-title">Number of Members: <%= @group.members.count %></h4>
+        <table class="table">
+          <tbody>
+            <%= render partial: 'member', collection: @group.members.last(4), as: :member or 'No Members' %>
+          </tbody>
+        </table>
+        <%= link_to 'View All', group_members_path(@group), class: 'btn btn-primary btn-block' %>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-8 pull-md-4">
+    <%= render partial: 'assignment', collection: @group.assignments.last(10), as: :assignment or 'No assignments have been posted.' %>
+    <%= link_to 'View All Assignments', group_assignments_path(@group), class: 'btn btn-secondary btn-block' %>
+  </div>
+</div>

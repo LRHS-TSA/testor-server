@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-header">
+    Assignment
+  </div>
+  <div class="card-block">
+    <h4 class="card-title"><%= assignment.name %></h4>
+    <p class="card-text">Unlock Date: <%= format_datetime(assignment.start_date) or 'No start date' %></p>
+    <p class="card-text">Due By: <%= format_datetime(assignment.end_date) or 'No due date' %></p>
+    <p class="card-text text-muted">Time Limit: <%= format_time(assignment.length) or 'No time limit' %></p>
+    <%= link_to 'View', group_assignment_path(assignment.group, assignment), class: 'btn btn-primary' %>
+    <% if can? :manage, assignment %>
+      <%= link_to 'Edit', edit_group_assignment_path(assignment.group, assignment), class: 'btn btn-secondary' %>
+    <% end %>
+  </div>
+  <div class="card-footer text-muted">
+    Posted <%= time_ago_in_words assignment.created_at %> ago
+  </div>
+</div>

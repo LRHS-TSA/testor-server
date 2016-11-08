@@ -38,6 +38,8 @@ gem 'font-awesome-rails', '~> 4.6.3.1'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.11'
+# Secure and easy tokens
+gem 'has_secure_token', '~> 1.0.0'
 
 ###
 ### Controllers and Application Logic
@@ -47,6 +49,8 @@ gem 'bcrypt', '~> 3.1.11'
 gem 'responders', '~> 2.3.0'
 # Use devise for authentication
 gem 'devise', '~> 4.2.0'
+# Add token authentication to devise
+gem 'simple_token_authentication', '~> 1.14.0'
 # Provide authorization using CanCanCan
 gem 'cancancan', '~> 1.15.0'
 
@@ -74,6 +78,8 @@ group :development do
   gem 'rubocop-rspec', require: false
   # Use bullet to find performace issues
   gem 'bullet', '~> 5.4.2'
+  # Lock down the formatting of schema.rb
+  gem 'fix-db-schema-conflicts', '~> 2.0.0'
 
   ###
   ### Security

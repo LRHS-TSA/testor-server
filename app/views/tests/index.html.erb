@@ -1,0 +1,17 @@
+<% if can? :create, Test %>
+  <%= link_to new_test_path, class: 'btn btn-secondary float-md-right' do %>
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Create New Test
+  <% end %>
+<% end %>
+<h2>Your Tests</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @tests %>
+  </tbody>
+</table>

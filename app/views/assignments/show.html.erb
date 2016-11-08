@@ -1,0 +1,4 @@
+<h2><%= @assignment.name %></h2>
+<h4 class="text-muted">Unlock Date: <%= format_datetime(@assignment.start_date) or 'No start date' %></h4>
+<h4 class="text-muted">Due By: <%= format_datetime(@assignment.end_date) or 'No due date' %></h4>
+<h4 class="text-muted">Time Limit: <%= format_time(@assignment.length) or 'No time limit' %></h4>

@@ -1,8 +1,8 @@
 # Macros to make capybara with devise easier
 module CapybaraMacros
-  def login_student
+  def login_teacher
     given(:user) do
-      FactoryGirl.create(:user, role: 0, name: 'student')
+      FactoryGirl.create(:user, role: 1)
     end
 
     background do
@@ -11,9 +11,9 @@ module CapybaraMacros
     end
   end
 
-  def login_teacher
+  def login_student
     given(:user) do
-      FactoryGirl.create(:user, role: 1, name: 'teacher')
+      FactoryGirl.create(:user, role: 0)
     end
 
     background do
