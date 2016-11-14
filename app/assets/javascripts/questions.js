@@ -13,6 +13,9 @@ $(document).on('turbolinks:load', function() {
     $('input').attr('disabled', true);
   });
   $("form[action*='questions']").on('ajax:success', function(event, data, status, xhr) {
+    if($(this).hasClass("button_to")) {
+      setTimeout (window.location.href = window.location.href, 500);
+    }
     $('input').attr('disabled', false);
     $("#questionBody").append("<tr><td>" + event.currentTarget[2].value + "</td><td>" + event.currentTarget[4].value.capitalizeFirstLetter().replace("_", " ") + "</td></tr>");
     $("#newQuestion").modal('hide');
