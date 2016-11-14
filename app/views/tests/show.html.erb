@@ -4,3 +4,5 @@
   <% end %>
 <% end %>
 <h2><%= @test.name %></h2>
+<%= render partial: 'question', collection: @test.questions, as: :question or 'No questions have been created for this test' %>
+<%= link_to 'Modify Questions', test_questions_path(@test), class: 'btn btn-lg btn-primary btn-block' %>
