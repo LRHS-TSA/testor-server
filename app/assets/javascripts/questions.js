@@ -17,7 +17,7 @@ $(document).on('turbolinks:load', function() {
       setTimeout (window.location.href = window.location.href, 500);
     }
     $('input').attr('disabled', false);
-    $("#questionBody").append("<tr><td>" + event.currentTarget[2].value + "</td><td>" + event.currentTarget[4].value.capitalizeFirstLetter().replace("_", " ") + "</td></tr>");
+    $("#questionBody").append("<div class='card'><div class='card-header'>" + event.currentTarget[4].value.capitalizeFirstLetter().replace("_", " ") + "</div><div class='card-block'><p class='card-text'>" + event.currentTarget[2].value + "</p></div></div>");
     $("#newQuestion").modal('hide');
     $("#question_text").val("");
   });
