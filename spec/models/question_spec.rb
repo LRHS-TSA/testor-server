@@ -18,6 +18,6 @@ RSpec.describe Question, type: :model do
   end
 
   it 'is invalid without a type' do
-    expect(FactoryGirl.build(:question, type: nil)).not_to be_valid
+    expect(FactoryGirl.build(:question, question_type: nil)).not_to be_valid
   end
 end

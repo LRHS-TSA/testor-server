@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(version: 20161114135240) do
 
   create_table "questions", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.integer "question_type"
     t.integer "test_id"
     t.text "text"
-    t.integer "type"
     t.datetime "updated_at", null: false
     t.index ["test_id"], name: "index_questions_on_test_id"
   end
