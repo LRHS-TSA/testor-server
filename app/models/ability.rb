@@ -20,6 +20,9 @@ class Ability
 
       # Assignment
       can :manage, Assignment, group: {members: {user_id: user.id}}
+
+      # Question
+      can :manage, Question, test: {user: user}
     elsif user.student?
       # Group
       can :read, Group, members: {user: user}
