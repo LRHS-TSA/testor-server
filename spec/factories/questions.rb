@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :question do
-    test nil
-    text "MyText"
-    type 1
+    association :test
+    sequence(:text) { |n| "What is the answer to question #{n}?" }
+    type :essay
   end
 end
