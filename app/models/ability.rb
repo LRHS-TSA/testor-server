@@ -8,7 +8,7 @@ class Ability
     if user.teacher?
       # Group
       can :create, Group
-      can :manage, Group, members: {user: user}
+      can :manage, Group, members: {user_id: user.id}
 
       # Member
       can :join_group, Member
@@ -22,17 +22,17 @@ class Ability
       can :manage, Assignment, group: {members: {user_id: user.id}}
 
       # Question
-      can :manage, Question, test: {user: user}
+      can :manage, Question, test: {user_id: user.id}
     elsif user.student?
       # Group
-      can :read, Group, members: {user: user}
+      can :read, Group, members: {user_id: user.id}
 
       # Member
       can :join_group, Member
       can :destroy, Member, user: user
 
       # Assignment
-      can :read, Assignment, group: {members: {user: user}}
+      can :read, Assignment, group: {members: {user_id: user.id}}
     end
   end
 end
