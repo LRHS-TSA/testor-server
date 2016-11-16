@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :multiple_choice_option do
-    question nil
-    text "MyText"
+    association :question, question_type: :multiple_choice
+    sequence(:text) { |n| "Option #{n}" }
     correct false
   end
 end
