@@ -23,6 +23,9 @@ class Ability
 
       # Question
       can :manage, Question, test: {user_id: user.id}
+
+      # Multiple Choice Option
+      can :manage, MultipleChoiceOption, question: {test: {user_id: user.id}}
     elsif user.student?
       # Group
       can :read, Group, members: {user_id: user.id}
