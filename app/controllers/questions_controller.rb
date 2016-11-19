@@ -31,10 +31,10 @@ class QuestionsController < ApplicationController
   private
 
   def create_params
-    params.require(:question).permit(:test_id, :text, :question_type)
+    params.require(:question).permit(:text, :question_type)
   end
 
   def update_params
-    params.require(:question).permit(:text, :question_type)
+    params.require(:question).permit(:text)
   end
 end

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :tests do
     resources :questions, except: [:show, :new, :edit] do
-      resources :multiple_choice_options, path: :options, only: [:create, :update, :destroy]
+      resources :multiple_choice_options, only: [:create, :update, :destroy]
     end
   end
 

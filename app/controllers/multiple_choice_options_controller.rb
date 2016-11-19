@@ -11,7 +11,7 @@ class MultipleChoiceOptionsController < ApplicationController
     end
 
     if @multiple_choice_option.save
-      head :created, location: test_question_multiple_choice_option_path(@multiple_choice_option.test, @multiple_choice_option.question, @multiple_choice_option)
+      head :created, location: test_question_multiple_choice_option_path(@multiple_choice_option.question.test, @multiple_choice_option.question, @multiple_choice_option)
     else
       render json: {error: @multiple_choice_option.errors}, status: :bad_request
     end
@@ -33,10 +33,10 @@ class MultipleChoiceOptionsController < ApplicationController
   private
 
   def create_params
-    params.require(:question).permit(:test_id, :text, :question_type)
+    params.require(:multiple_choice_option).permit(:text, :correct)
   end
 
   def update_params
-    params.require(:question).permit(:text, :question_type)
+    params.require(:multiple_choice_option).permit(:text, :correct)
   end
 end
