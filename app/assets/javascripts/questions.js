@@ -5,7 +5,41 @@ String.prototype.capitalizeFirstLetter = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
+function makeCard(data, token) {
+  //Card
+  var card = $("#base-card").clone();
+  var cardID = 'question-' + data.id;
+  card.appendTo("#questionBody");
+  card.attr('id', cardID);
+  card.removeAttr('hidden');
+
+  //Delete Button
+  card.children('.card-header').children("form[name='delete-button']").attr('action', '/tests/' + data.test_id + '/questions/' + data.id);
+  card.children('.card-header').children("form[name='delete-button']").children("input[name='authenticity_token']").attr('value', token);
+
+  //Card Text
+  card.children('.card-header').append(data.question_type.capitalizeFirstLetter().replace("_", " "));
+  card.children('.card-block').children('blockquote[name="question-text"]').html(data.text);
+
+  //Multiple Choice
+  if (data.question_type == 'multiple_choice') {
+    //Form
+    var form = $("#base-multiple-choice").clone();
+    form.appendTo(card.children('.card-block'));
+    form.attr('id', 'create-multiple-choice-' + data.id);
+    form.removeAttr('hidden');
+
+    //Form Route
+    form.children('form').attr('action', '/tests/' + data.test_id + '/questions/' + data.id + '/multiple_choice_options');
+  }
+}
+
 $(document).on('turbolinks:load', function() {
+  var token = $('#questionBody').attr('data-token');
+  var existingCards = JSON.parse($("#questionBody").attr('data-questions'));
+  for(var i in existingCards) {
+   makeCard(existingCards[i], token);
+  }
   $("form[action*='questions']").on('ajax:send', function() {
     $(this).children('div').children('fieldset').attr('class', 'form-group');
     $(this).children('div').children('fieldset').children('div').remove();
@@ -13,11 +47,19 @@ $(document).on('turbolinks:load', function() {
     $('input').attr('disabled', true);
   });
   $("form[action*='questions']").on('ajax:success', function(event, data, status, xhr) {
-    if($(this).hasClass("button_to")) {
-      setTimeout (window.location.href = window.location.href, 500);
+    if ($(this).hasClass("button_to")) {
+      $(this).parent().parent().fadeOut();
+    }
+    if ($(this).attr('id') == 'new_question') {
+      var json = {
+        "id" : xhr.getResponseHeader('Location').substr(xhr.getResponseHeader('Location').lastIndexOf('/') + 1),
+        "test_id" : $("#questionBody").attr('test-id'),
+        "question_type" : event.currentTarget[4].value,
+        "text" : event.currentTarget[2].value,
+      };
+      makeCard(json, token);
     }
     $('input').attr('disabled', false);
-    $("#questionBody").append("<div class='card'><div class='card-header'>" + event.currentTarget[4].value.capitalizeFirstLetter().replace("_", " ") + "</div><div class='card-block'><p class='card-text'>" + event.currentTarget[2].value + "</p></div></div>");
     $("#newQuestion").modal('hide');
     $("#question_text").val("");
   });

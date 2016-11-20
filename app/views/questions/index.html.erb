@@ -1,8 +1,6 @@
 <h2>Questions for <%= Test.find_by(id: params[:test_id]).name %></h2>
 <hr>
-<div id="questionBody">
-  <%= render @questions %>
-</div>
+<div id="questionBody" test-id="<%= params[:test_id] %>" data-token="<%= form_authenticity_token %>" data-questions="<%= @questions.to_json %>"></div>
 
 <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#newQuestion">
   Add Question
@@ -37,4 +35,37 @@
       <% end %>
     </div>
   </div>
+</div>
+
+<!-- JS Element Resources for Loading Cards -->
+
+<!-- Base Card -->
+<div hidden class="card" id="base-card">
+  <div class="card-header" name="question-type">
+    <form name="delete-button" class="button_to" method="post" action="/tests/#/questions/#" data-remote="true"><input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="Delete"><input type="hidden" name="authenticity_token" value=""></form>
+  </div>
+  <div class="card-block">
+    <blockquote class="blockquote" name="question-text">
+    </blockquote>
+    <p class="card-text">
+    </p>
+  </div>
+</div>
+
+<!-- Form for adding multiple choice option -->
+<div hidden id="base-multiple-choice">
+  <h5>Add Options</h5>
+  <form action="/tests/#/questions/#/multiple_choice_options" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓">
+    <fieldset class="form-group">
+      <label class="form-control-label" for="multiple_choice_option_text">Text</label>
+      <input class="form-control" placeholder="Option" type="text" name="multiple_choice_option[text]" id="multiple_choice_option_text">
+    </fieldset>
+
+    <fieldset class="form-group">
+      <label class="form-control-label" for="multiple_choice_option_correct">Correct</label>
+      <input name="multiple_choice_option[correct]" type="hidden" value="0"><input class="form-check-inline" type="checkbox" value="1" name="multiple_choice_option[correct]" id="multiple_choice_option_correct">
+    </fieldset>
+
+    <input type="submit" name="commit" value="Add" class="btn btn-primary" data-disable-with="Create">
+  </form>
 </div>
