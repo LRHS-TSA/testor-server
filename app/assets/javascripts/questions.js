@@ -5,6 +5,13 @@ String.prototype.capitalizeFirstLetter = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
+function addMultipleChoiceOption(parentHTML, optionJSON) {
+  parentHTML.append("<li id='option-" + optionJSON.id + "'>" + optionJSON.text + "</li>");
+  if (optionJSON.correct) {
+    $("#option-" + optionJSON.id).addClass("text-success");
+  }
+}
+
 function makeCard(data, token) {
   //Card
   var card = $("#base-card").clone();
@@ -23,6 +30,15 @@ function makeCard(data, token) {
 
   //Multiple Choice
   if (data.question_type == 'multiple_choice') {
+    var list = $("#base-multiple-choice-list").clone();
+    list.attr('id', 'option-list-' + data.id);
+    list.appendTo(card.children('.card-block').children('.card-text'));
+    list.removeAttr('hidden');
+
+    for(var i in data.multiple_choice_options) {
+      addMultipleChoiceOption(list.children('ul'), data.multiple_choice_options[i]);
+    }
+
     //Form
     var form = $("#base-multiple-choice").clone();
     form.appendTo(card.children('.card-block'));
@@ -35,20 +51,31 @@ function makeCard(data, token) {
 }
 
 $(document).on('turbolinks:load', function() {
-  var token = $('#questionBody').attr('data-token');
-  var existingCards = JSON.parse($("#questionBody").attr('data-questions'));
-  for(var i in existingCards) {
-   makeCard(existingCards[i], token);
+  if ($("#questionBody").length != 0) {
+    var token = $('#questionBody').attr('data-token');
+    var existingCards = JSON.parse($("#questionBody").attr('data-questions'));
+    for(var i in existingCards) {
+     makeCard(existingCards[i], token);
+    }
   }
-  $("form[action*='questions']").on('ajax:send', function() {
+  $(".container").on('ajax:send', "form[action*='questions']", function() {
     $(this).children('div').children('fieldset').attr('class', 'form-group');
     $(this).children('div').children('fieldset').children('div').remove();
     $("#question_alert").remove();
     $('input').attr('disabled', true);
   });
-  $("form[action*='questions']").on('ajax:success', function(event, data, status, xhr) {
+  $(".container").on('ajax:success', "form[action*='questions']", function(event, data, status, xhr) {
     if ($(this).hasClass("button_to")) {
       $(this).parent().parent().fadeOut();
+    }
+    if ($(this).hasClass('add_option')) {
+      var json = {
+        "id" : xhr.getResponseHeader('Location').substr(xhr.getResponseHeader('Location').lastIndexOf('/') + 1),
+        "text" : event.currentTarget[2].value,
+        "correct" : $(this).children('fieldset').children('#multiple_choice_option_correct').is(':checked')
+      };
+      addMultipleChoiceOption($("#option-list-" + xhr.getResponseHeader('Location').split('/')[4]).children('ul'), json);
+      $(this).children('fieldset').children('input[name="multiple_choice_option[text]"]').val('');
     }
     if ($(this).attr('id') == 'new_question') {
       var json = {
@@ -63,7 +90,7 @@ $(document).on('turbolinks:load', function() {
     $("#newQuestion").modal('hide');
     $("#question_text").val("");
   });
-  $("form[action*='questions']").on('ajax:error', function(event, data, status, xhr) {
+  $(".container").on('ajax:error', "form[action*='questions']", function(event, data, status, xhr) {
     $('input').attr('disabled', false);
     $('h2').before("<div class=\"alert alert-danger alert-dismissible fade in\" role=\"alert\" id=\"question_alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>An error has occured while trying to submit your information.</div>");
     if (data.responseJSON !== undefined) {

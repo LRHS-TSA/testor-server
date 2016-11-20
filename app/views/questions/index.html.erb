@@ -1,6 +1,6 @@
 <h2>Questions for <%= Test.find_by(id: params[:test_id]).name %></h2>
 <hr>
-<div id="questionBody" test-id="<%= params[:test_id] %>" data-token="<%= form_authenticity_token %>" data-questions="<%= @questions.to_json %>"></div>
+<div id="questionBody" test-id="<%= params[:test_id] %>" data-token="<%= form_authenticity_token %>" data-questions="<%= @questions.to_json(include: [:multiple_choice_options]) %>"></div>
 
 <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#newQuestion">
   Add Question
@@ -55,7 +55,7 @@
 <!-- Form for adding multiple choice option -->
 <div hidden id="base-multiple-choice">
   <h5>Add Options</h5>
-  <form action="/tests/#/questions/#/multiple_choice_options" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓">
+  <form class="add_option" action="/tests/#/questions/#/multiple_choice_options" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓">
     <fieldset class="form-group">
       <label class="form-control-label" for="multiple_choice_option_text">Text</label>
       <input class="form-control" placeholder="Option" type="text" name="multiple_choice_option[text]" id="multiple_choice_option_text">
@@ -68,4 +68,12 @@
 
     <input type="submit" name="commit" value="Add" class="btn btn-primary" data-disable-with="Create">
   </form>
+</div>
+
+<!-- List of Options for Multiple Choice Questions -->
+<div hidden id="base-multiple-choice-list">
+  <h4>Options</h4>
+  <ul>
+
+  </ul>
 </div>
