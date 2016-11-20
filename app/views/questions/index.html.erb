@@ -78,4 +78,17 @@
 </div>
 
 <!-- List item for Multiple Choice Questions -->
-<li hidden id='option-item-base' class='my-1'><form name="delete-option" class="button_to form-inline" method="post" action="/tests/#/questions/#/multiple_choice_option/#" data-remote="true"><input type="hidden" name="_method" value="delete"><input class="btn btn-danger btn-sm float-xs-right" data-confirm="Are you sure?" type="submit" value="&times;"><input type="hidden" name="authenticity_token" value=""></form></li>
+<li hidden id='option-item-base' class='my-1'><form name="delete-option" class="button_to form-inline" method="post" action="/tests/#/questions/#/multiple_choice_option/#" data-remote="true"><input type="hidden" name="_method" value="delete"><input class="btn btn-danger btn-sm float-xs-right" data-confirm="Are you sure?" type="submit" value="&times;"><input type="hidden" name="authenticity_token" value=""></form><button type="button" class="btn btn-success btn-sm float-xs-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button><p class='d-inline'></p></li>
+
+<!-- Edit List Item Inline Form -->
+<form hidden class="edit_option form-inline" id='edit-option-line-base' action="/tests/#/questions/#/multiple_choice_options/#" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch">
+  <fieldset class="form-group">
+    <input class="form-control" placeholder="Text" type="text" name="multiple_choice_option[text]">
+  </fieldset>
+
+  <fieldset class="form-group">
+    <input name="multiple_choice_option[correct]" type="hidden" value="0"><input class="form-check-inline" type="checkbox" value="1" name="multiple_choice_option[correct]">
+  </fieldset>
+
+  <input hidden type="submit" name="commit" value="Save" class="btn btn-primary btn-sm float-xs-right" data-disable-with="Save">
+</form>

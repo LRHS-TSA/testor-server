@@ -6,14 +6,44 @@ String.prototype.capitalizeFirstLetter = function () {
 }
 
 function addMultipleChoiceOption(parentHTML, optionJSON, token, loadingPage = false) {
+  //Set Up
   var item = $('#option-item-base').clone();
   var itemID = 'option-' + optionJSON.id;
   item.appendTo(parentHTML);
   item.attr('id', itemID);
-  item.children('form').after(optionJSON.text);
 
+  //Delete Button Routing
   item.children('form').attr('action', '/tests/' + $("#questionBody").attr('test-id') + '/questions/' + optionJSON.question_id + '/multiple_choice_options/' + optionJSON.id);
   item.children('form').children("input[name='authenticity_token']").attr('value', token);
+
+  //Edit Button
+  item.children('button').on('click', function() {
+    //Set Up
+    var option = $(this).parent();
+    var currentText = option.text();
+    console.log(currentText);
+    option.children('p').empty();
+    option.children('form').attr('hidden', true);
+    option.children('button').attr('hidden', true);
+    var optionEditForm = $('#edit-option-line-base').clone();
+    optionEditForm.removeAttr('id');
+    optionEditForm.appendTo(option);
+    optionEditForm.attr('action', '/tests/' + $("#questionBody").attr('test-id') + '/questions/' + optionJSON.question_id + '/multiple_choice_options/' + optionJSON.id);
+
+    //Redefine Form Text
+    optionEditForm.children('fieldset').children('input[name="multiple_choice_option[text]"]').val(currentText);
+    optionEditForm.children('fieldset').children('input[name="multiple_choice_option[correct]"]').prop('checked', optionJSON.correct);
+
+    optionEditForm.removeAttr('hidden');
+
+    //Save Button
+    optionEditForm.children('input').removeAttr('hidden');
+    optionEditForm.children('input').hide();
+    optionEditForm.children('input').show("slide", { direction: "right" }, 300);
+  });
+
+  //Text
+  item.children('p').append(optionJSON.text);
   if (optionJSON.correct) {
     $("#option-" + optionJSON.id).addClass("text-success");
   }
@@ -87,6 +117,21 @@ $(document).on('turbolinks:load', function() {
       } else {
         $(this).parent().parent().slideUp();
       }
+    }
+    if ($(this).hasClass('edit_option')) {
+      var newText = event.currentTarget[3].value;
+      var newChecked = $(this).children('fieldset').children('.form-check-inline').is(':checked');
+      $(this).parent().children('p').text(newText);
+      if (newChecked) {
+        $(this).parent().attr('class', 'my-1 text-success');
+      } else {
+        $(this).parent().attr('class', 'my-1');
+      }
+
+      $(this).parent().children('form[name="delete-option"]').removeAttr('hidden');
+      $(this).parent().children('button').removeAttr('hidden');
+      $(this).remove();
+
     }
     if ($(this).hasClass('add_option')) {
       var json = {
