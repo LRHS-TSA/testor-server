@@ -9,10 +9,14 @@
     <% if question.multiple_choice? %>
       <h4>Options</h4>
       <ul>
-        <% question.multiple_choice_options.each do |option| %>
-          <li class="<%= option.correct ? 'text-success' : '' %>">
-            <%= option.text %>
-          </li>
+        <% if !question.multiple_choice_options.empty? %>
+          <% question.multiple_choice_options.each do |option| %>
+            <li class="<%= option.correct ? 'text-success' : '' %>">
+              <%= option.text %>
+            </li>
+          <% end %>
+        <% else %>
+          No options for this question
         <% end %>
       </ul>
     <% end %>
