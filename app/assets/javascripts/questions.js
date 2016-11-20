@@ -5,20 +5,31 @@ String.prototype.capitalizeFirstLetter = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
-function addMultipleChoiceOption(parentHTML, optionJSON) {
-  parentHTML.append("<li id='option-" + optionJSON.id + "'>" + optionJSON.text + "</li>");
+function addMultipleChoiceOption(parentHTML, optionJSON, token, loadingPage = false) {
+  var item = $('#option-item-base').clone();
+  var itemID = 'option-' + optionJSON.id;
+  item.appendTo(parentHTML);
+  item.attr('id', itemID);
+  item.children('form').after(optionJSON.text);
+
+  item.children('form').attr('action', '/tests/' + $("#questionBody").attr('test-id') + '/questions/' + optionJSON.question_id + '/multiple_choice_options/' + optionJSON.id);
+  item.children('form').children("input[name='authenticity_token']").attr('value', token);
   if (optionJSON.correct) {
     $("#option-" + optionJSON.id).addClass("text-success");
   }
+  item.removeAttr('hidden');
+  if (!loadingPage) {
+    item.hide();
+    item.slideDown();
+  }
 }
 
-function makeCard(data, token) {
+function makeCard(data, token, loadingPage = false) {
   //Card
   var card = $("#base-card").clone();
   var cardID = 'question-' + data.id;
   card.appendTo("#questionBody");
   card.attr('id', cardID);
-  card.removeAttr('hidden');
 
   //Delete Button
   card.children('.card-header').children("form[name='delete-button']").attr('action', '/tests/' + data.test_id + '/questions/' + data.id);
@@ -36,7 +47,7 @@ function makeCard(data, token) {
     list.removeAttr('hidden');
 
     for(var i in data.multiple_choice_options) {
-      addMultipleChoiceOption(list.children('ul'), data.multiple_choice_options[i]);
+      addMultipleChoiceOption(list.children('ul'), data.multiple_choice_options[i], token, true);
     }
 
     //Form
@@ -48,6 +59,11 @@ function makeCard(data, token) {
     //Form Route
     form.children('form').attr('action', '/tests/' + data.test_id + '/questions/' + data.id + '/multiple_choice_options');
   }
+  card.removeAttr('hidden');
+  if (!loadingPage) {
+    card.hide();
+    card.slideDown();
+  }
 }
 
 $(document).on('turbolinks:load', function() {
@@ -55,7 +71,7 @@ $(document).on('turbolinks:load', function() {
     var token = $('#questionBody').attr('data-token');
     var existingCards = JSON.parse($("#questionBody").attr('data-questions'));
     for(var i in existingCards) {
-     makeCard(existingCards[i], token);
+     makeCard(existingCards[i], token, true);
     }
   }
   $(".container").on('ajax:send', "form[action*='questions']", function() {
@@ -66,15 +82,20 @@ $(document).on('turbolinks:load', function() {
   });
   $(".container").on('ajax:success', "form[action*='questions']", function(event, data, status, xhr) {
     if ($(this).hasClass("button_to")) {
-      $(this).parent().parent().fadeOut();
+      if ($(this).hasClass('form-inline')) {
+        $(this).parent().slideUp();
+      } else {
+        $(this).parent().parent().slideUp();
+      }
     }
     if ($(this).hasClass('add_option')) {
       var json = {
         "id" : xhr.getResponseHeader('Location').substr(xhr.getResponseHeader('Location').lastIndexOf('/') + 1),
+        "question_id" : xhr.getResponseHeader('Location').split('/')[4],
         "text" : event.currentTarget[2].value,
         "correct" : $(this).children('fieldset').children('#multiple_choice_option_correct').is(':checked')
       };
-      addMultipleChoiceOption($("#option-list-" + xhr.getResponseHeader('Location').split('/')[4]).children('ul'), json);
+      addMultipleChoiceOption($("#option-list-" + xhr.getResponseHeader('Location').split('/')[4]).children('ul'), json, token);
       $(this).children('fieldset').children('input[name="multiple_choice_option[text]"]').val('');
     }
     if ($(this).attr('id') == 'new_question') {
