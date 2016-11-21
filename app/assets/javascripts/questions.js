@@ -98,7 +98,7 @@ function makeCard(data, token, loadingPage = false) {
 
 function setUpEditModal(questionID) {
   $("#edit_question_text").val($('#' + questionID).children('.card-block').children('blockquote').text());
-  $('#edit-question').attr('action', '/tests/' + $("#questionBody").attr('test-id') + '/questions/' + questionID.substr(questionID.lastIndexOf('-') + 1))
+  $('#edit_question').attr('action', '/tests/' + $("#questionBody").attr('test-id') + '/questions/' + questionID.substr(questionID.lastIndexOf('-') + 1))
 }
 
 $(document).on('turbolinks:load', function() {
