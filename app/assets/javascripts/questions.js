@@ -65,6 +65,9 @@ function addMatchingPair(tableBody, json, token, loadingPage = false) {
   item1.html(json.item1);
   item2.html(json.item2);
 
+  //Delete Button
+  pair.children('td').children('form[method="post"]').attr('action', '/tests/' + $('#questionBody').attr('test-id') + '/questions/' + json.question_id + '/matching_pairs/' + json.id);
+
   //Edit Button
   pair.children('td').children('button').on('click', function() {
     var currentItem1 = item1.html();

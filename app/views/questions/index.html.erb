@@ -181,7 +181,10 @@
           <%= f.submit 'Save', class: 'btn btn-primary btn-sm', data: { disable_with: 'Save' } %>
         <% end %>
       </td>
-      <td><button type="button" class="btn btn-success btn-sm edit-pair-button">Edit</button></td>
+      <td>
+        <button type="button" class="btn btn-success btn-sm edit-pair-button float-xs-left">Edit</button>
+        <%= button_to 'Delete', { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-xs-left', data: { confirm: "Are you sure?" } %>
+      </td>
     </tr>
   </tbody>
 </table>
