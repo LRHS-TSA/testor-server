@@ -13,20 +13,20 @@ RSpec.describe QuestionsController, type: :controller do
 
   let(:valid_create_params) do
     q = FactoryGirl.build(:question)
-    {test_id: test.id, text: q.text, question_type: q.question_type}
+    {text: q.text, question_type: q.question_type}
   end
 
   let(:valid_update_params) do
     q = FactoryGirl.build(:question)
-    {text: q.text, question_type: q.question_type}
+    {text: q.text}
   end
 
   let(:invalid_create_params) do
-    {test_id: nil, text: nil, question_type: nil}
+    {text: nil, question_type: nil}
   end
 
   let(:invalid_update_params) do
-    {text: nil, question_type: nil}
+    {text: nil}
   end
 
   describe '#index' do

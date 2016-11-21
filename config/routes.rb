@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   end
 
   resources :tests do
-    resources :questions, except: [:show, :new, :edit]
+    resources :questions, except: [:show, :new, :edit] do
+      resources :multiple_choice_options, only: [:create, :update, :destroy]
+      resources :matching_pairs, only: [:create, :update, :destroy]
+    end
   end
 
   post '/join_group', to: 'members#join_group'

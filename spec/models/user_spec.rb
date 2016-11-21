@@ -23,6 +23,10 @@ RSpec.describe User, type: :model do
       FactoryGirl.create(:test, user: user)
     end
 
+    let(:question) do
+      FactoryGirl.create(:question, test: test)
+    end
+
     it 'can create groups' do
       is_expected.to be_able_to(:create, Group.new)
     end
@@ -71,8 +75,24 @@ RSpec.describe User, type: :model do
       is_expected.to be_able_to(:manage, FactoryGirl.create(:question, test: test))
     end
 
-    it 'cannot manage questions for tests they own' do
+    it 'cannot manage questions for tests they do not own' do
       is_expected.not_to be_able_to(:manage, Question.new)
+    end
+
+    it 'can manage multiple choice options for questions in tests they own' do
+      is_expected.to be_able_to(:manage, FactoryGirl.create(:multiple_choice_option, question: question))
+    end
+
+    it 'cannot manage multiple choice options for questions in tests they do not own' do
+      is_expected.not_to be_able_to(:manage, MultipleChoiceOption.new)
+    end
+
+    it 'can manage matching pairs for questions in tests they own' do
+      is_expected.to be_able_to(:manage, FactoryGirl.create(:matching_pair, question: question))
+    end
+
+    it 'cannot manage matching pairs for questions in tests they do not own' do
+      is_expected.not_to be_able_to(:manage, MatchingPair.new)
     end
   end
 

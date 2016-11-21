@@ -27,6 +27,8 @@ gem 'sass-rails', '~> 5.0.6'
 gem 'uglifier', '~> 3.0.2'
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.2.1'
+# Use jquery ui for advanced user interface effects
+gem 'jquery-ui-rails', '~> 5.0.5'
 # Use bootstrap for styling
 gem 'bootstrap', '~> 4.0.0.alpha4'
 # Use font awesome for icons

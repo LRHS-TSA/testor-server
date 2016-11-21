@@ -3,6 +3,35 @@
     <%= question.question_type.humanize %>
   </div>
   <div class="card-block">
-    <p class="card-text"><%= question.text %></p>
+    <blockquote class="blockquote" name="question-text">
+      <%= question.text %>
+    </blockquote>
+    <% if question.multiple_choice? %>
+      <h4>Options</h4>
+      <ul>
+        <% if !question.multiple_choice_options.empty? %>
+          <% question.multiple_choice_options.each do |option| %>
+            <li class="<%= option.correct ? 'text-success' : '' %>">
+              <%= option.text %>
+            </li>
+          <% end %>
+        <% else %>
+          No options for this question
+        <% end %>
+      </ul>
+    <% end %>
+    <p class="card-text"></p>
+  </div>
+</div>
+
+<div hidden class="card" id="base-card">
+  <div class="card-header" name="question-type">
+    <form name="delete-button" class="button_to" method="post" action="/tests/#/questions/#" data-remote="true"><input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="Delete"><input type="hidden" name="authenticity_token" value=""></form>
+  </div>
+  <div class="card-block">
+    <blockquote class="blockquote" name="question-text">
+    </blockquote>
+    <p class="card-text">
+    </p>
   </div>
 </div>

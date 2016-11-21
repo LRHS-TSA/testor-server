@@ -41,4 +41,32 @@ RSpec.feature 'Questions' do
       expect(page).not_to have_content(params.text)
     end
   end
+
+  context 'Editing a question', js: true do
+    background do
+      FactoryGirl.create(:question, test: test)
+    end
+
+    scenario 'with valid parameters' do
+      visit test_questions_path(test)
+      click_button 'Edit'
+      params = FactoryGirl.build(:question, text: 'edit')
+      within('#editQuestion') do
+        fill_in 'Question', with: params.text
+        click_button 'Save'
+      end
+      expect(page).to have_content(params.text)
+    end
+
+    scenario 'with invalid parameters' do
+      visit test_questions_path(test)
+      click_button 'Edit'
+      params = FactoryGirl.build(:question, text: '')
+      within('#editQuestion') do
+        fill_in 'Question', with: params.text
+        click_button 'Save'
+      end
+      expect(page).to have_content('error')
+    end
+  end
 end
