@@ -60,7 +60,7 @@ RSpec.describe MultipleChoiceOptionsController, type: :controller do
   describe '#update' do
     context 'with valid parameters' do
       before do
-        put :update, params: {test_id: question.test.id, question_id: question.id, id: multiple_choice_option.id, multiple_choice_option: valid_params}
+        put :update, params: {test_id: multiple_choice_option.question.test.id, question_id: multiple_choice_option.question.id, id: multiple_choice_option.id, multiple_choice_option: valid_params}
       end
 
       it 'updates the requested multiple choice option' do
@@ -75,7 +75,7 @@ RSpec.describe MultipleChoiceOptionsController, type: :controller do
 
     context 'with invalid parameters' do
       it 'returns HTTP status 400 (Bad Request)' do
-        put :update, params: {test_id: question.test.id, question_id: question.id, id: multiple_choice_option.id, multiple_choice_option: invalid_params}
+        put :update, params: {test_id: multiple_choice_option.question.test.id, question_id: multiple_choice_option.question.id, id: multiple_choice_option.id, multiple_choice_option: invalid_params}
         expect(response).to have_http_status(:bad_request)
       end
     end
@@ -84,11 +84,11 @@ RSpec.describe MultipleChoiceOptionsController, type: :controller do
   describe '#destroy' do
     it 'destroys the multiple choice option' do
       multiple_choice_option.reload
-      expect { delete :destroy, params: {test_id: question.test.id, question_id: question.id, id: multiple_choice_option.id} }.to change(MultipleChoiceOption, :count).by(-1)
+      expect { delete :destroy, params: {test_id: multiple_choice_option.question.test.id, question_id: multiple_choice_option.question.id, id: multiple_choice_option.id} }.to change(MultipleChoiceOption, :count).by(-1)
     end
 
     it 'returns HTTP status 200 (OK)' do
-      delete :destroy, params: {test_id: question.test.id, question_id: question.id, id: multiple_choice_option.id}
+      delete :destroy, params: {test_id: multiple_choice_option.question.test.id, question_id: multiple_choice_option.question.id, id: multiple_choice_option.id}
       expect(response).to have_http_status(:ok)
     end
   end
