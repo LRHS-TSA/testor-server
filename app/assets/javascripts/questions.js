@@ -160,11 +160,10 @@ $(document).on('turbolinks:load', function() {
     for(var i in existingCards) {
      makeCard(existingCards[i], token, true);
     }
-    $('button[data-target="#editQuestionModal"]').on('click', function() {
+    $('.container').on('click', 'button[data-target="#editQuestionModal"]', function() {
       setUpEditModal($(this).parent().parent().attr('id'));
     });
   }
-
   $('.container').on('ajax:send', 'form[action*="questions"]', function() {
     $(this).children('div').children('fieldset').attr('class', 'form-group');
     $(this).children('div').children('fieldset').children('div').remove();
