@@ -67,4 +67,25 @@ RSpec.feature 'Matching Pair Options' do
       expect(page).to have_content('error')
     end
   end
+
+  context 'Deleting a matching pair option', js: true do
+    let(:test) do
+      FactoryGirl.create(:test, user: user)
+    end
+
+    let(:question) do
+      FactoryGirl.create(:question, test: test, question_type: 'matching')
+    end
+
+    background do
+      FactoryGirl.create(:matching_pair, question: question)
+    end
+
+    scenario 'with valid parameters' do
+      visit test_questions_path(test)
+      params = FactoryGirl.build(:matching_pair)
+      find('input[value="Delete"].btn-sm').click
+      expect(page).not_to have_content(params.item1)
+    end
+  end
 end
