@@ -37,12 +37,38 @@
   </div>
 </div>
 
+<div class="modal fade" id="editQuestion" tabindex="-1" role="dialog" aria-labelledby="editQuestion" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="">Edit Question</h4>
+      </div>
+      <div class="modal-body">
+        <form class="edit_question" id='edit-question' action="/tests/#/questions/#" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch">
+          <fieldset class="form-group">
+            <label class="form-control-label" for="question_text">Question</label>
+            <input class="form-control" placeholder="Question" type="text" name="question[text]" id="edit_question_text">
+          </fieldset>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <input type="submit" name="commit" value="Save" class="btn btn-primary" data-disable-with="Save">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- JS Element Resources for Loading Cards -->
 
 <!-- Base Card -->
 <div hidden class="card" id="base-card">
   <div class="card-header" name="question-type">
-    <form name="delete-button" class="button_to" method="post" action="/tests/#/questions/#" data-remote="true"><input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="Delete"><input type="hidden" name="authenticity_token" value=""></form>
+    <p class='d-inline align-text-top'></p>
+    <form name="delete-button" class="button_to d-inline" method="post" action="/tests/#/questions/#" data-remote="true"><input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="Delete"><input type="hidden" name="authenticity_token" value=""></form>
+    <button type="button" class="d-inline btn btn-success float-xs-right" data-toggle="modal" data-target="#editQuestion">Edit</button>
   </div>
   <div class="card-block">
     <blockquote class="blockquote" name="question-text">

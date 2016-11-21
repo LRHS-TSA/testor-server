@@ -66,7 +66,7 @@ function makeCard(data, token, loadingPage = false) {
   card.children('.card-header').children("form[name='delete-button']").children("input[name='authenticity_token']").attr('value', token);
 
   //Card Text
-  card.children('.card-header').append(data.question_type.capitalizeFirstLetter().replace("_", " "));
+  card.children('.card-header').children('p').append(data.question_type.capitalizeFirstLetter().replace("_", " "));
   card.children('.card-block').children('blockquote[name="question-text"]').html(data.text);
 
   //Multiple Choice
@@ -96,6 +96,11 @@ function makeCard(data, token, loadingPage = false) {
   }
 }
 
+function setUpEditModal(questionID) {
+  $("#edit_question_text").val($('#' + questionID).children('.card-block').children('blockquote').text());
+  $('#edit-question').attr('action', '/tests/' + $("#questionBody").attr('test-id') + '/questions/' + questionID.substr(questionID.lastIndexOf('-') + 1))
+}
+
 $(document).on('turbolinks:load', function() {
   if ($("#questionBody").length != 0) {
     var token = $('#questionBody').attr('data-token');
@@ -103,7 +108,11 @@ $(document).on('turbolinks:load', function() {
     for(var i in existingCards) {
      makeCard(existingCards[i], token, true);
     }
+    $("button[data-target='#editQuestion']").on('click', function() {
+      setUpEditModal($(this).parent().parent().attr('id'));
+    });
   }
+
   $(".container").on('ajax:send', "form[action*='questions']", function() {
     $(this).children('div').children('fieldset').attr('class', 'form-group');
     $(this).children('div').children('fieldset').children('div').remove();
@@ -143,6 +152,12 @@ $(document).on('turbolinks:load', function() {
       addMultipleChoiceOption($("#option-list-" + xhr.getResponseHeader('Location').split('/')[4]).children('ul'), json, token);
       $(this).children('fieldset').children('input[name="multiple_choice_option[text]"]').val('');
     }
+    if ($(this).hasClass('edit_question')) {
+      var newQuestionText = event.currentTarget[3].value;
+      var questionID = event.target.action.substr(event.target.action.lastIndexOf('/') + 1);
+      console.log(questionID);
+      $('#question-' + questionID).children('.card-block').children('blockquote').text(newQuestionText);
+    }
     if ($(this).attr('id') == 'new_question') {
       var json = {
         "id" : xhr.getResponseHeader('Location').substr(xhr.getResponseHeader('Location').lastIndexOf('/') + 1),
@@ -154,6 +169,7 @@ $(document).on('turbolinks:load', function() {
     }
     $('input').attr('disabled', false);
     $("#newQuestion").modal('hide');
+    $("#editQuestion").modal('hide');
     $("#question_text").val("");
   });
   $(".container").on('ajax:error', "form[action*='questions']", function(event, data, status, xhr) {
