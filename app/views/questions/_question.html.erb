@@ -1,0 +1,9 @@
+<div class="card">
+  <div class="card-header">
+    <%= button_to 'Delete', { action: 'destroy', id: question.id }, method: :delete, remote: true, class: 'btn btn-danger float-xs-right', data: { confirm: "Are you sure?" } %>
+    <%= question.question_type.humanize %>
+  </div>
+  <div class="card-block">
+    <p class="card-text"><%= question.text %></p>
+  </div>
+</div>

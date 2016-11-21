@@ -6,13 +6,13 @@ String.prototype.capitalizeFirstLetter = function () {
 }
 
 $(document).on('turbolinks:load', function() {
-  $("form[action*='test']").on('ajax:send', function() {
+  $("form[id*='test']").on('ajax:send', function() {
     $(this).children('fieldset').attr('class', 'form-group');
     $(this).children('fieldset').children('div').remove();
     $("#test_alert").remove();
     $('input').attr('disabled', true);
   });
-  $("form[action*='test']").on('ajax:success', function(event, data, status, xhr) {
+  $("form[id*='test']").on('ajax:success', function(event, data, status, xhr) {
     $(this).children('fieldset').addClass('form-group has-success');
     if ($(this).hasClass('new_test')) {
       setTimeout (window.location.href = xhr.getResponseHeader('Location'), 500);
@@ -20,7 +20,7 @@ $(document).on('turbolinks:load', function() {
       setTimeout (window.location.href = "./", 500);
     }
   });
-  $("form[action*='test']").on('ajax:error', function(event, data, status, xhr) {
+  $("form[id*='test']").on('ajax:error', function(event, data, status, xhr) {
     $('input').attr('disabled', false);
     $('h2').before("<div class=\"alert alert-danger alert-dismissible fade in\" role=\"alert\" id=\"test_alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>An error has occured while trying to submit your information.</div>");
     if (data.responseJSON !== undefined) {

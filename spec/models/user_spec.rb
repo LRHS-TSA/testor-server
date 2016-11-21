@@ -19,6 +19,10 @@ RSpec.describe User, type: :model do
       FactoryGirl.create(:member, user: user).group
     end
 
+    let(:test) do
+      FactoryGirl.create(:test, user: user)
+    end
+
     it 'can create groups' do
       is_expected.to be_able_to(:create, Group.new)
     end
@@ -61,6 +65,14 @@ RSpec.describe User, type: :model do
 
     it 'cannot manage assignments for groups they are not in' do
       is_expected.not_to be_able_to(:manage, Assignment.new)
+    end
+
+    it 'can manage questions for tests they own' do
+      is_expected.to be_able_to(:manage, FactoryGirl.create(:question, test: test))
+    end
+
+    it 'cannot manage questions for tests they own' do
+      is_expected.not_to be_able_to(:manage, Question.new)
     end
   end
 

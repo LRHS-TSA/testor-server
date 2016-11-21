@@ -10,7 +10,9 @@ Rails.application.routes.draw do
     resources :assignments
   end
 
-  resources :tests
+  resources :tests do
+    resources :questions, except: [:show, :new, :edit]
+  end
 
   post '/join_group', to: 'members#join_group'
 end
