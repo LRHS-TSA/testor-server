@@ -86,6 +86,14 @@ RSpec.describe User, type: :model do
     it 'cannot manage multiple choice options for questions in tests they do not own' do
       is_expected.not_to be_able_to(:manage, MultipleChoiceOption.new)
     end
+
+    it 'can manage matching pairs for questions in tests they own' do
+      is_expected.to be_able_to(:manage, FactoryGirl.create(:matching_pair, question: question))
+    end
+
+    it 'cannot manage matching pairs for questions in tests they do not own' do
+      is_expected.not_to be_able_to(:manage, MatchingPair.new)
+    end
   end
 
   context 'as a student' do
