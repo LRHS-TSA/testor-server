@@ -1,6 +1,6 @@
 <h2>Questions for <%= Test.find_by(id: params[:test_id]).name %></h2>
 <hr>
-<div id="questionBody" test-id="<%= params[:test_id] %>" data-token="<%= form_authenticity_token %>" data-questions="<%= @questions.to_json(include: [:multiple_choice_options]) %>"></div>
+<div id="questionBody" test-id="<%= params[:test_id] %>" data-token="<%= form_authenticity_token %>" data-questions="<%= @questions.to_json(include: [:multiple_choice_options, :matching_pairs]) %>"></div>
 
 <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#newQuestion">
   Add Question
@@ -138,3 +138,36 @@
 
   <input hidden type="submit" name="commit" value="Save" class="btn btn-primary btn-sm float-xs-right" data-disable-with="Save">
 </form>
+
+<!-- List of Pairs for Matching Questions -->
+<div hidden id="baseMatchingList">
+  <h4>Pairs</h4>
+  <table class="table table-bordered">
+    <tbody>
+    </tbody>
+  </table>
+  <h4>Add a New Pair</h4>
+  <%= form_for :matching_pair, url: nil, remote: true, html: { class: 'add_pair' } do |f| %>
+    <fieldset class="form-group">
+      <%= f.label :item1, 'Item One', class: 'form-control-label' %>
+      <%= f.text_field :item1, class: 'form-control', placeholder: 'Item One' %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :item2, 'Item Two', class: 'form-control-label' %>
+      <%= f.text_field :item2, class: 'form-control', placeholder: 'Item Two' %>
+    </fieldset>
+
+    <%= f.submit 'Add', class: 'btn btn-primary', data: { disable_with: 'Add' } %>
+  <% end %>
+</div>
+
+<!-- Table row for Matching Pairs -->
+<table hidden>
+  <tbody>
+    <tr hidden id="baseMatchingPairRow">
+      <td name='item1'></td>
+      <td name='item2'></td>
+    </tr>
+  </tbody>
+</table>

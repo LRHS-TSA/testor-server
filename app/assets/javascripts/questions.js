@@ -53,6 +53,23 @@ function addMultipleChoiceOption(parentHTML, optionJSON, token, loadingPage = fa
   }
 }
 
+function addMatchingPair(tableBody, json, token, loadingPage = false) {
+  var pair = $('#baseMatchingPairRow').clone();
+  var pairID = 'pair-' + json.id;
+  pair.appendTo(tableBody);
+  pair.attr('id', pairID);
+
+  //Text
+  pair.children('td[name="item1"]').html(json.item1);
+  pair.children('td[name="item2"]').html(json.item2);
+
+  pair.removeAttr('hidden');
+  if (!loadingPage) {
+    pair.hide();
+    pair.fadeIn();
+  }
+}
+
 function makeCard(data, token, loadingPage = false) {
   //Card
   var card = $('#base-card').clone();
@@ -69,25 +86,41 @@ function makeCard(data, token, loadingPage = false) {
   card.children('.card-header').children('p').append(data.question_type.capitalizeFirstLetter().replace('_', ' '));
   card.children('.card-block').children('blockquote[name="question-text"]').html(data.text);
 
-  //Multiple Choice
-  if (data.question_type == 'multiple_choice') {
-    var list = $('#baseMultipleChoiceList').clone();
-    list.attr('id', 'option-list-' + data.id);
-    list.appendTo(card.children('.card-block').children('.card-text'));
-    list.removeAttr('hidden');
+  switch(data.question_type) {
+    case 'multiple_choice':
+      var list = $('#baseMultipleChoiceList').clone();
+      list.attr('id', 'option-list-' + data.id);
+      list.appendTo(card.children('.card-block').children('.card-text'));
+      list.removeAttr('hidden');
 
-    for(var i in data.multiple_choice_options) {
-      addMultipleChoiceOption(list.children('ul'), data.multiple_choice_options[i], token, true);
-    }
+      for(var i in data.multiple_choice_options) {
+        addMultipleChoiceOption(list.children('ul'), data.multiple_choice_options[i], token, true);
+      }
 
-    //Form
-    var form = $('#baseMultipleChoice').clone();
-    form.appendTo(card.children('.card-block'));
-    form.attr('id', 'create-multiple-choice-' + data.id);
-    form.removeAttr('hidden');
+      //Form
+      var form = $('#baseMultipleChoice').clone();
+      form.appendTo(card.children('.card-block'));
+      form.attr('id', 'create-multiple-choice-' + data.id);
+      form.removeAttr('hidden');
 
-    //Form Route
-    form.children('form').attr('action', '/tests/' + data.test_id + '/questions/' + data.id + '/multiple_choice_options');
+      //Form Route
+      form.children('form').attr('action', '/tests/' + data.test_id + '/questions/' + data.id + '/multiple_choice_options');
+      break;
+    case 'matching':
+      var table = $('#baseMatchingList').clone();
+      table.attr('id', 'pair-table-' + data.id);
+      table.appendTo(card.children('.card-block').children('.card-text'));
+      table.removeAttr('hidden');
+
+      for(var i in data.matching_pairs) {
+        addMatchingPair(table.children('table').children('tbody'), data.matching_pairs[i], token, true);
+      }
+
+      //Form Route
+      table.children('form').attr('action', table.children('form').attr('action') + '/' + data.id + '/matching_pairs');
+      break;
+    default:
+      break;
   }
   card.removeAttr('hidden');
   if (!loadingPage) {
@@ -154,6 +187,18 @@ $(document).on('turbolinks:load', function() {
       };
       addMultipleChoiceOption($("#option-list-" + xhr.getResponseHeader('Location').split('/')[4]).children('ul'), json, token);
       $(this).children('fieldset').children('input[name="multiple_choice_option[text]"]').val('');
+    }
+    //Adding Matching Pair
+    if ($(this).hasClass('add_pair')) {
+      var json = {
+        "id" : xhr.getResponseHeader('Location').substr(xhr.getResponseHeader('Location').lastIndexOf('/') + 1),
+        "question_id" : xhr.getResponseHeader('Location').split('/')[4],
+        "item1" : event.currentTarget[2].value,
+        "item2" : event.currentTarget[4].value
+      };
+      addMatchingPair($("#pair-table-" + xhr.getResponseHeader('Location').split('/')[4]).children('table').children('tbody'), json, token, false);
+      $(this).children('fieldset').children('input[name="matching_pair[item1]"]').val('');
+      $(this).children('fieldset').children('input[name="matching_pair[item2]"]').val('');
     }
     // Edit Question from Modal
     if ($(this).hasClass('edit-question')) {
