@@ -37,7 +37,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="editQuestion" tabindex="-1" role="dialog" aria-labelledby="editQuestion" aria-hidden="true">
+<div class="modal fade" id="editQuestionModal" tabindex="-1" role="dialog" aria-labelledby="editQuestion" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -47,10 +47,13 @@
         <h4 class="modal-title" id="">Edit Question</h4>
       </div>
       <div class="modal-body">
-        <form class="edit_question" id='edit_question' action="/tests/#/questions/#" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch">
+        <form class="edit-question" id='editQuestion' action="/tests/#/questions/#" accept-charset="UTF-8" data-remote="true" method="post">
+          <input name="utf8" type="hidden" value="✓">
+          <input type="hidden" name="_method" value="patch">
+
           <fieldset class="form-group">
             <label class="form-control-label" for="question_text">Question</label>
-            <input class="form-control" placeholder="Question" type="text" name="question[text]" id="edit_question_text">
+            <input class="form-control" placeholder="Question" type="text" name="question[text]" id="editQuestionText">
           </fieldset>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -66,9 +69,12 @@
 <!-- Base Card -->
 <div hidden class="card" id="base-card">
   <div class="card-header" name="question-type">
-    <p class='d-inline align-text-top'></p>
-    <form name="delete-button" class="button_to d-inline" method="post" action="/tests/#/questions/#" data-remote="true"><input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="Delete"><input type="hidden" name="authenticity_token" value=""></form>
-    <button type="button" class="d-inline btn btn-success float-xs-right" data-toggle="modal" data-target="#editQuestion">Edit</button>
+    <p class="d-inline align-text-top"></p>
+    <form name="delete-button" class="button_to d-inline" method="post" action="/tests/#/questions/#" data-remote="true">
+      <input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="Delete">
+      <input type="hidden" name="authenticity_token" value="">
+    </form>
+    <button type="button" class="d-inline btn btn-success float-xs-right" data-toggle="modal" data-target="#editQuestionModal">Edit</button>
   </div>
   <div class="card-block">
     <blockquote class="blockquote" name="question-text">
@@ -79,9 +85,11 @@
 </div>
 
 <!-- Form for adding multiple choice option -->
-<div hidden id="base-multiple-choice">
+<div hidden id="baseMultipleChoice">
   <h5>Add Options</h5>
-  <form class="add_option" action="/tests/#/questions/#/multiple_choice_options" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓">
+  <form class="add_option" action="/tests/#/questions/#/multiple_choice_options" accept-charset="UTF-8" data-remote="true" method="post">
+    <input name="utf8" type="hidden" value="✓">
+
     <fieldset class="form-group">
       <label class="form-control-label" for="multiple_choice_option_text">Text</label>
       <input class="form-control" placeholder="Text" type="text" name="multiple_choice_option[text]" id="multiple_choice_option_text">
@@ -89,7 +97,8 @@
 
     <fieldset class="form-group">
       <label class="form-control-label" for="multiple_choice_option_correct">Correct</label>
-      <input name="multiple_choice_option[correct]" type="hidden" value="0"><input class="form-check-inline" type="checkbox" value="1" name="multiple_choice_option[correct]" id="multiple_choice_option_correct">
+      <input name="multiple_choice_option[correct]" type="hidden" value="0">
+      <input class="form-check-inline" type="checkbox" value="1" name="multiple_choice_option[correct]" id="multiple_choice_option_correct">
     </fieldset>
 
     <input type="submit" name="commit" value="Add" class="btn btn-primary" data-disable-with="Create">
@@ -97,17 +106,28 @@
 </div>
 
 <!-- List of Options for Multiple Choice Questions -->
-<div hidden id="base-multiple-choice-list">
+<div hidden id="baseMultipleChoiceList">
   <h4>Options</h4>
   <ul>
   </ul>
 </div>
 
 <!-- List item for Multiple Choice Questions -->
-<li hidden id='option-item-base' class='my-1'><form name="delete-option" class="button_to form-inline" method="post" action="/tests/#/questions/#/multiple_choice_option/#" data-remote="true"><input type="hidden" name="_method" value="delete"><input class="btn btn-danger btn-sm float-xs-right" data-confirm="Are you sure?" type="submit" value="&times;"><input type="hidden" name="authenticity_token" value=""></form><button type="button" class="btn btn-success btn-sm float-xs-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button><p class='d-inline'></p></li>
+<li hidden id="option-item-base" class="my-1">
+  <form name="delete-option" class="button_to form-inline" method="post" action="/tests/#/questions/#/multiple_choice_option/#" data-remote="true">
+    <input type="hidden" name="_method" value="delete">
+    <input type="hidden" name="authenticity_token" value="">
+    <input class="btn btn-danger btn-sm float-xs-right" data-confirm="Are you sure?" type="submit" value="&times;">
+  </form>
+  <button type="button" class="btn btn-success btn-sm float-xs-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+  <p class='d-inline'></p>
+</li>
 
 <!-- Edit List Item Inline Form -->
-<form hidden class="edit_option form-inline" id='edit-option-line-base' action="/tests/#/questions/#/multiple_choice_options/#" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="_method" value="patch">
+<form hidden class="edit_option form-inline" id="editOptionLineBase" action="/tests/#/questions/#/multiple_choice_options/#" accept-charset="UTF-8" data-remote="true" method="post">
+  <input name="utf8" type="hidden" value="✓">
+  <input type="hidden" name="_method" value="patch">
+
   <fieldset class="form-group">
     <input class="form-control" placeholder="Text" type="text" name="multiple_choice_option[text]">
   </fieldset>

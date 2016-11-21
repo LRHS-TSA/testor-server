@@ -51,7 +51,7 @@ RSpec.feature 'Questions' do
       visit test_questions_path(test)
       click_button 'Edit'
       params = FactoryGirl.build(:question, text: 'edit')
-      within('#edit_question') do
+      within('#editQuestion') do
         fill_in 'Question', with: params.text
         click_button 'Save'
       end
@@ -62,7 +62,7 @@ RSpec.feature 'Questions' do
       visit test_questions_path(test)
       click_button 'Edit'
       params = FactoryGirl.build(:question, text: '')
-      within('#edit_question') do
+      within('#editQuestion') do
         fill_in 'Question', with: params.text
         click_button 'Save'
       end
