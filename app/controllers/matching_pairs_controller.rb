@@ -1,0 +1,2 @@
+class MatchingPairsController < ApplicationController
+end
