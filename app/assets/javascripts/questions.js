@@ -60,8 +60,27 @@ function addMatchingPair(tableBody, json, token, loadingPage = false) {
   pair.attr('id', pairID);
 
   //Text
-  pair.children('td[name="item1"]').html(json.item1);
-  pair.children('td[name="item2"]').html(json.item2);
+  var item1 = pair.children('td[name="item1"]');
+  var item2 = pair.children('td[name="item2"]');
+  item1.html(json.item1);
+  item2.html(json.item2);
+
+  //Edit Button
+  pair.children('td').children('button').on('click', function() {
+    var currentItem1 = item1.html();
+    var currentItem2 = item2.html();
+
+    item1.hide();
+    item2.hide();
+
+    var formCell = pair.children('td[name="edit-pair"]');
+    var form = formCell.children('form');
+    form.attr('action', '/tests/' + $('#questionBody').attr('test-id') + '/questions/' + json.question_id + '/matching_pairs/' + json.id);
+    form.children('fieldset').children('input[name="matching_pair[item1]"]').val(currentItem1);
+    form.children('fieldset').children('input[name="matching_pair[item2]"]').val(currentItem2);
+    formCell.removeAttr('hidden');
+    pair.addClass('table-active');
+  });
 
   pair.removeAttr('hidden');
   if (!loadingPage) {
@@ -188,7 +207,7 @@ $(document).on('turbolinks:load', function() {
       addMultipleChoiceOption($("#option-list-" + xhr.getResponseHeader('Location').split('/')[4]).children('ul'), json, token);
       $(this).children('fieldset').children('input[name="multiple_choice_option[text]"]').val('');
     }
-    //Adding Matching Pair
+    // Adding Matching Pair
     if ($(this).hasClass('add_pair')) {
       var json = {
         "id" : xhr.getResponseHeader('Location').substr(xhr.getResponseHeader('Location').lastIndexOf('/') + 1),
@@ -199,6 +218,18 @@ $(document).on('turbolinks:load', function() {
       addMatchingPair($("#pair-table-" + xhr.getResponseHeader('Location').split('/')[4]).children('table').children('tbody'), json, token, false);
       $(this).children('fieldset').children('input[name="matching_pair[item1]"]').val('');
       $(this).children('fieldset').children('input[name="matching_pair[item2]"]').val('');
+    }
+    // Edit Matching Pair
+    if($(this).hasClass('edit_pair')) {
+      var newItem1 = event.currentTarget[3].value;
+      var newItem2 = event.currentTarget[5].value;
+      $(this).parent().parent().children('td[name="item1"]').html(newItem1);
+      $(this).parent().parent().children('td[name="item2"]').html(newItem2);
+
+      $(this).parent().attr('hidden', true);
+      $(this).parent().parent().removeClass('table-active');
+      $(this).parent().parent().children('td[name="item1"]').show();
+      $(this).parent().parent().children('td[name="item2"]').show();
     }
     // Edit Question from Modal
     if ($(this).hasClass('edit-question')) {

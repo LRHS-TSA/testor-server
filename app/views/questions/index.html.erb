@@ -168,6 +168,20 @@
     <tr hidden id="baseMatchingPairRow">
       <td name='item1'></td>
       <td name='item2'></td>
+      <td hidden colspan="2" name='edit-pair'>
+        <%= form_for :matching_pair, url: nil, method: 'patch', remote: true, html: { class: 'edit_pair form-inline' } do |f| %>
+          <fieldset class="form-group">
+            <%= f.text_field :item1, class: 'form-control', placeholder: 'Item One' %>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <%= f.text_field :item2, class: 'form-control', placeholder: 'Item Two' %>
+          </fieldset>
+
+          <%= f.submit 'Save', class: 'btn btn-primary btn-sm', data: { disable_with: 'Save' } %>
+        <% end %>
+      </td>
+      <td><button type="button" class="btn btn-success btn-sm">Edit</button></td>
     </tr>
   </tbody>
 </table>
