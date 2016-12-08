@@ -70,10 +70,10 @@
 <div hidden class="card" id="base-card">
   <div class="card-header">
     <form name="delete-button" class="button_to d-inline" method="post" action="/tests/#/questions/#" data-remote="true">
-      <input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="Delete">
+      <input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="&times;">
       <input type="hidden" name="authenticity_token" value="">
     </form>
-    <button type="button" class="d-inline btn btn-success float-xs-right" data-toggle="modal" data-target="#editQuestionModal">Edit</button>
+    <button type="button" class="d-inline btn btn-success float-xs-right" data-toggle="modal" data-target="#editQuestionModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
   </div>
   <div class="card-block">
     <blockquote class="blockquote" name="question-text">
@@ -181,8 +181,8 @@
         <% end %>
       </td>
       <td name='edit_and_delete'>
-        <%= button_to 'Delete', { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-xs-right', data: { confirm: "Are you sure?" } %>
-        <button type="button" class="btn btn-success btn-sm edit-pair-button float-xs-right">Edit</button>
+        <%= button_to '&times;'.html_safe, { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-xs-right', data: { confirm: "Are you sure?" } %>
+        <button type="button" class="btn btn-success btn-sm edit-pair-button float-xs-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
       </td>
     </tr>
   </tbody>
