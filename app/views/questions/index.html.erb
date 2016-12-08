@@ -182,8 +182,8 @@
         <% end %>
       </td>
       <td name='edit_and_delete'>
-        <button type="button" class="btn btn-success btn-sm edit-pair-button float-xs-left">Edit</button>
-        <%= button_to 'Delete', { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-xs-left', data: { confirm: "Are you sure?" } %>
+        <%= button_to 'Delete', { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-xs-right', data: { confirm: "Are you sure?" } %>
+        <button type="button" class="btn btn-success btn-sm edit-pair-button float-xs-right">Edit</button>
       </td>
     </tr>
   </tbody>
