@@ -76,6 +76,8 @@ function addMatchingPair(tableBody, json, token, loadingPage = false) {
     item1.hide();
     item2.hide();
 
+    pair.children('td[name="edit_and_delete"]').hide();
+
     var formCell = pair.children('td[name="edit-pair"]');
     var form = formCell.children('form');
     form.attr('action', '/tests/' + $('#questionBody').attr('test-id') + '/questions/' + json.question_id + '/matching_pairs/' + json.id);
@@ -232,6 +234,7 @@ $(document).on('turbolinks:load', function() {
       $(this).parent().parent().removeClass('table-active');
       $(this).parent().parent().children('td[name="item1"]').show();
       $(this).parent().parent().children('td[name="item2"]').show();
+      $(this).parent().parent().children('td[name="edit_and_delete"]').show();
     }
     // Edit Question from Modal
     if ($(this).hasClass('edit-question')) {

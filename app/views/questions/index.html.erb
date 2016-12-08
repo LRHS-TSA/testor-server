@@ -168,7 +168,7 @@
     <tr hidden id="baseMatchingPairRow">
       <td name='item1'></td>
       <td name='item2'></td>
-      <td hidden colspan="2" name='edit-pair'>
+      <td hidden name='edit-pair'>
         <%= form_for :matching_pair, url: nil, method: 'patch', remote: true, html: { class: 'edit_pair form-inline' } do |f| %>
           <fieldset class="form-group">
             <%= f.text_field :item1, class: 'form-control', placeholder: 'Item One' %>
@@ -181,7 +181,7 @@
           <%= f.submit 'Save', class: 'btn btn-primary btn-sm', data: { disable_with: 'Save' } %>
         <% end %>
       </td>
-      <td>
+      <td name='edit_and_delete'>
         <button type="button" class="btn btn-success btn-sm edit-pair-button float-xs-left">Edit</button>
         <%= button_to 'Delete', { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-xs-left', data: { confirm: "Are you sure?" } %>
       </td>
