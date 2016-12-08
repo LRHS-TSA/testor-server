@@ -107,7 +107,6 @@ function makeCard(data, token, loadingPage = false) {
   deleteButton.children('input[name="authenticity_token"]').attr('value', token);
 
   //Card Text
-  card.children('.card-header').children('p').append(data.question_type.capitalizeFirstLetter().replace('_', ' '));
   card.children('.card-block').children('blockquote[name="question-text"]').html(data.text);
 
   switch(data.question_type) {
