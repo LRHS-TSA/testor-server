@@ -124,6 +124,8 @@ function makeCard(data, token, loadingPage = false) {
       var form = $('#baseMultipleChoice').clone();
       form.appendTo(card.children('.card-block'));
       form.attr('id', 'create-multiple-choice-' + data.id);
+      card.children('.card-block').children('.collapse-btn').attr('href', '#' + 'create-multiple-choice-' + data.id);
+      card.children('.card-block').children('.collapse-btn').text('Add Option');
       form.removeAttr('hidden');
 
       //Form Route
@@ -139,8 +141,19 @@ function makeCard(data, token, loadingPage = false) {
         addMatchingPair(table.children('table').children('tbody'), data.matching_pairs[i], token, true);
       }
 
+      var matchAdd = $('#baseMatchingListAdd').clone();
+      matchAdd.appendTo(card.children('.card-block'));
+      matchAdd.attr('id', 'pair-table-select-' + data.id);
+      matchAdd.removeAttr('hidden');
+
+      card.children('.card-block').children('.collapse-btn').attr('href', '#' + 'pair-table-select-' + data.id);
+      card.children('.card-block').children('.collapse-btn').text('Add a New Pair');
+
       //Form Route
-      table.children('form').attr('action', table.children('form').attr('action') + '/' + data.id + '/matching_pairs');
+      matchAdd.children('form').attr('action', matchAdd.children('form').attr('action') + '/' + data.id + '/matching_pairs');
+      break;
+    case 'essay':
+      card.children('.card-block').children('.collapse-btn').remove();
       break;
     default:
       break;
