@@ -68,25 +68,24 @@
 
 <!-- Base Card -->
 <div hidden class="card" id="base-card">
-  <div class="card-header" name="question-type">
-    <p class="d-inline align-text-top"></p>
+  <div class="card-header">
     <form name="delete-button" class="button_to d-inline" method="post" action="/tests/#/questions/#" data-remote="true">
-      <input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="Delete">
+      <input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="&times;">
       <input type="hidden" name="authenticity_token" value="">
     </form>
-    <button type="button" class="d-inline btn btn-success float-xs-right" data-toggle="modal" data-target="#editQuestionModal">Edit</button>
+    <button type="button" class="d-inline btn btn-success float-xs-right" data-toggle="modal" data-target="#editQuestionModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
   </div>
   <div class="card-block">
     <blockquote class="blockquote" name="question-text">
     </blockquote>
     <p class="card-text">
     </p>
+    <a class="btn btn-secondary btn-block collapse-btn" data-toggle="collapse"></a>
   </div>
 </div>
 
 <!-- Form for adding multiple choice option -->
-<div hidden id="baseMultipleChoice">
-  <h5>Add Options</h5>
+<div hidden id="baseMultipleChoice" class="collapse card-block">
   <form class="add_option" action="/tests/#/questions/#/multiple_choice_options" accept-charset="UTF-8" data-remote="true" method="post">
     <input name="utf8" type="hidden" value="✓">
 
@@ -142,11 +141,13 @@
 <!-- List of Pairs for Matching Questions -->
 <div hidden id="baseMatchingList">
   <h4>Pairs</h4>
-  <table class="table table-bordered">
+  <table class="table table-striped">
     <tbody>
     </tbody>
   </table>
-  <h4>Add a New Pair</h4>
+</div>
+
+<div hidden id="baseMatchingListAdd" class="collapse card-block">
   <%= form_for :matching_pair, url: nil, remote: true, html: { class: 'add_pair' } do |f| %>
     <fieldset class="form-group">
       <%= f.label :item1, 'Item One', class: 'form-control-label' %>
@@ -168,7 +169,7 @@
     <tr hidden id="baseMatchingPairRow">
       <td name='item1'></td>
       <td name='item2'></td>
-      <td hidden colspan="2" name='edit-pair'>
+      <td hidden name='edit-pair'>
         <%= form_for :matching_pair, url: nil, method: 'patch', remote: true, html: { class: 'edit_pair form-inline' } do |f| %>
           <fieldset class="form-group">
             <%= f.text_field :item1, class: 'form-control', placeholder: 'Item One' %>
@@ -181,9 +182,9 @@
           <%= f.submit 'Save', class: 'btn btn-primary btn-sm', data: { disable_with: 'Save' } %>
         <% end %>
       </td>
-      <td>
-        <button type="button" class="btn btn-success btn-sm edit-pair-button float-xs-left">Edit</button>
-        <%= button_to 'Delete', { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-xs-left', data: { confirm: "Are you sure?" } %>
+      <td name='edit_and_delete'>
+        <%= button_to '&times;'.html_safe, { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-xs-right', data: { confirm: "Are you sure?" } %>
+        <button type="button" class="btn btn-success btn-sm edit-pair-button float-xs-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
       </td>
     </tr>
   </tbody>

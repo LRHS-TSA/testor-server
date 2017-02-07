@@ -76,6 +76,8 @@ function addMatchingPair(tableBody, json, token, loadingPage = false) {
     item1.hide();
     item2.hide();
 
+    pair.children('td[name="edit_and_delete"]').hide();
+
     var formCell = pair.children('td[name="edit-pair"]');
     var form = formCell.children('form');
     form.attr('action', '/tests/' + $('#questionBody').attr('test-id') + '/questions/' + json.question_id + '/matching_pairs/' + json.id);
@@ -105,7 +107,6 @@ function makeCard(data, token, loadingPage = false) {
   deleteButton.children('input[name="authenticity_token"]').attr('value', token);
 
   //Card Text
-  card.children('.card-header').children('p').append(data.question_type.capitalizeFirstLetter().replace('_', ' '));
   card.children('.card-block').children('blockquote[name="question-text"]').html(data.text);
 
   switch(data.question_type) {
@@ -123,6 +124,8 @@ function makeCard(data, token, loadingPage = false) {
       var form = $('#baseMultipleChoice').clone();
       form.appendTo(card.children('.card-block'));
       form.attr('id', 'create-multiple-choice-' + data.id);
+      card.children('.card-block').children('.collapse-btn').attr('href', '#' + 'create-multiple-choice-' + data.id);
+      card.children('.card-block').children('.collapse-btn').text('Add Option');
       form.removeAttr('hidden');
 
       //Form Route
@@ -138,8 +141,19 @@ function makeCard(data, token, loadingPage = false) {
         addMatchingPair(table.children('table').children('tbody'), data.matching_pairs[i], token, true);
       }
 
+      var matchAdd = $('#baseMatchingListAdd').clone();
+      matchAdd.appendTo(card.children('.card-block'));
+      matchAdd.attr('id', 'pair-table-select-' + data.id);
+      matchAdd.removeAttr('hidden');
+
+      card.children('.card-block').children('.collapse-btn').attr('href', '#' + 'pair-table-select-' + data.id);
+      card.children('.card-block').children('.collapse-btn').text('Add a New Pair');
+
       //Form Route
-      table.children('form').attr('action', table.children('form').attr('action') + '/' + data.id + '/matching_pairs');
+      matchAdd.children('form').attr('action', matchAdd.children('form').attr('action') + '/' + data.id + '/matching_pairs');
+      break;
+    case 'essay':
+      card.children('.card-block').children('.collapse-btn').remove();
       break;
     default:
       break;
@@ -232,6 +246,7 @@ $(document).on('turbolinks:load', function() {
       $(this).parent().parent().removeClass('table-active');
       $(this).parent().parent().children('td[name="item1"]').show();
       $(this).parent().parent().children('td[name="item2"]').show();
+      $(this).parent().parent().children('td[name="edit_and_delete"]').show();
     }
     // Edit Question from Modal
     if ($(this).hasClass('edit-question')) {
