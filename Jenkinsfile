@@ -22,6 +22,8 @@ node('basic') {
       break
       case "master":
         tag = binding.variables.get("TAG_NAME")
+        sh 'git describe --tags > .git-tag'
+        tag = readFile('.git-tag').trim()
       break
     }
     app.push "${tag}"
