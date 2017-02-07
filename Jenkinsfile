@@ -35,7 +35,7 @@ node('basic') {
         namespace = 'development'
       break
       case 'master':
-        namespace = 'master'
+        namespace = 'default'
       break
     }
     sh "kubectl --namespace ${namespace} set image deployment testor-server testor-server=lrhstsa/testor-server:${tag}"
