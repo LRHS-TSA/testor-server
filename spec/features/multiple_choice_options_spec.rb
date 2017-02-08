@@ -15,17 +15,26 @@ RSpec.feature 'Multiple Choice Options' do
     scenario 'with valid parameters' do
       visit test_questions_path(test)
       params = FactoryGirl.build(:multiple_choice_option)
+      find('.collapse-btn').click
       within('.add_option') do
         fill_in 'Text', with: params.text
       end
-      click_button 'Add'
-      expect(page).to have_content(params.text)
+      find('input[name="commit"]').click
+      using_wait_time 3 do
+        expect(page).to have_content(params.text)
+      end
     end
 
     scenario 'with invalid parameters' do
       visit test_questions_path(test)
-      click_button 'Add'
-      expect(page).to have_content('error')
+      find('.collapse-btn').click
+      within('.add_option') do
+        find('.form-check-inline').set(true)
+      end
+      find('input[name="commit"]').click
+      using_wait_time 3 do
+        expect(page).to have_content('error')
+      end
     end
   end
 
@@ -45,7 +54,7 @@ RSpec.feature 'Multiple Choice Options' do
     scenario 'with valid parameters' do
       visit test_questions_path(test)
       params = FactoryGirl.build(:multiple_choice_option)
-      click_button('×')
+      find('.delete-multiple-choice-option').click
       expect(page).not_to have_content(params.text)
     end
   end
@@ -65,7 +74,7 @@ RSpec.feature 'Multiple Choice Options' do
 
     scenario 'with valid parameters' do
       visit test_questions_path(test)
-      find('.fa-pencil-square-o').click
+      find('.btn-success.btn-sm').click
       params = FactoryGirl.build(:multiple_choice_option)
       within('.edit_option') do
         fill_in 'Text', with: params.text
@@ -76,7 +85,7 @@ RSpec.feature 'Multiple Choice Options' do
 
     scenario 'with invalid parameters' do
       visit test_questions_path(test)
-      find('.fa-pencil-square-o').click
+      find('.btn-success.btn-sm').click
       params = FactoryGirl.build(:multiple_choice_option, text: '')
       within('.edit_option') do
         fill_in 'Text', with: params.text

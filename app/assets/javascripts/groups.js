@@ -25,10 +25,10 @@ $(document).on('turbolinks:load', function() {
     $('h2').before("<div class=\"alert alert-danger alert-dismissible fade in\" role=\"alert\" id=\"group_alert\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>An error has occured while trying to submit your information.</div>");
     if (data.responseJSON !== undefined) {
       var errors = data.responseJSON.error;
-      for (let form in errors) {
+      for (var form in errors) {
         var fieldSet = $(this).find("#group_" + form).parent();
         fieldSet.addClass('form-group has-danger');
-        for (let key of errors[form]) {
+        for (var key in errors[form]) {
           error = form.capitalizeFirstLetter().replace(/_/g, ' ') + ' ' + key;
           fieldSet.append("<div><small class=\"text-danger\">" + error + "</small></div>");
         }
