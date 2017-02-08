@@ -5,7 +5,7 @@ String.prototype.capitalizeFirstLetter = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
-function addMultipleChoiceOption(parentHTML, optionJSON, token, loadingPage = false) {
+function addMultipleChoiceOption(parentHTML, optionJSON, token, loadingPage) {
   //Set Up
   var item = $('#option-item-base').clone();
   var itemID = 'option-' + optionJSON.id;
@@ -53,7 +53,7 @@ function addMultipleChoiceOption(parentHTML, optionJSON, token, loadingPage = fa
   }
 }
 
-function addMatchingPair(tableBody, json, token, loadingPage = false) {
+function addMatchingPair(tableBody, json, token, loadingPage) {
   var pair = $('#baseMatchingPairRow').clone();
   var pairID = 'pair-' + json.id;
   pair.appendTo(tableBody);
@@ -94,7 +94,7 @@ function addMatchingPair(tableBody, json, token, loadingPage = false) {
   }
 }
 
-function makeCard(data, token, loadingPage = false) {
+function makeCard(data, token, loadingPage) {
   //Card
   var card = $('#base-card').clone();
   var cardID = 'question-' + data.id;
@@ -220,7 +220,7 @@ $(document).on('turbolinks:load', function() {
         "text" : event.currentTarget[2].value,
         "correct" : $(this).children('fieldset').children('#multiple_choice_option_correct').is(':checked')
       };
-      addMultipleChoiceOption($("#option-list-" + xhr.getResponseHeader('Location').split('/')[4]).children('ul'), json, token);
+      addMultipleChoiceOption($("#option-list-" + xhr.getResponseHeader('Location').split('/')[4]).children('ul'), json, token, false);
       $(this).children('fieldset').children('input[name="multiple_choice_option[text]"]').val('');
     }
     // Adding Matching Pair
@@ -262,7 +262,7 @@ $(document).on('turbolinks:load', function() {
         "question_type" : event.currentTarget[4].value,
         "text" : event.currentTarget[2].value,
       };
-      makeCard(json, token);
+      makeCard(json, token, false);
     }
     $('input').attr('disabled', false);
     $("#newQuestion").modal('hide');
@@ -274,10 +274,10 @@ $(document).on('turbolinks:load', function() {
     $('h2').before('<div class="alert alert-danger alert-dismissible fade in" role="alert" id="questionAlert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>An error has occured while trying to submit your information.</div>');
     if (data.responseJSON !== undefined) {
       var errors = data.responseJSON.error;
-      for (let form in errors) {
+      for (var form in errors) {
         var fieldSet = $(this).find('#question_' + form).parent();
         fieldSet.addClass('form-group has-danger');
-        for (let key of errors[form]) {
+        for (var key in errors[form]) {
           error = form.capitalizeFirstLetter().replace(/_/g, ' ') + ' ' + key;
           fieldSet.append('<div><small class="text-danger">' + error + '</small></div>');
         }

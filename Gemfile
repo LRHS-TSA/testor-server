@@ -33,6 +33,10 @@ gem 'jquery-ui-rails', '~> 5.0.5'
 gem 'bootstrap', '~> 4.0.0.alpha4'
 # Use font awesome for icons
 gem 'font-awesome-rails', '~> 4.6.3.1'
+# Use tether for use with bootstrap
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
+end
 
 ###
 ### Models
