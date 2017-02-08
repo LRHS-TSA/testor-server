@@ -37,7 +37,7 @@ RSpec.feature 'Questions' do
     scenario 'with valid parameters' do
       visit test_questions_path(test)
       params = FactoryGirl.build(:question)
-      click_button 'Delete'
+      click_button '×'
       expect(page).not_to have_content(params.text)
     end
   end
@@ -49,7 +49,7 @@ RSpec.feature 'Questions' do
 
     scenario 'with valid parameters' do
       visit test_questions_path(test)
-      click_button 'Edit'
+      find('.d-inline.btn-success').click
       params = FactoryGirl.build(:question, text: 'edit')
       within('#editQuestion') do
         fill_in 'Question', with: params.text
@@ -60,7 +60,7 @@ RSpec.feature 'Questions' do
 
     scenario 'with invalid parameters' do
       visit test_questions_path(test)
-      click_button 'Edit'
+      find('.d-inline.btn-success').click
       params = FactoryGirl.build(:question, text: '')
       within('#editQuestion') do
         fill_in 'Question', with: params.text

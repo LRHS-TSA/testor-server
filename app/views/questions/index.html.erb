@@ -100,7 +100,7 @@
       <input class="form-check-inline" type="checkbox" value="1" name="multiple_choice_option[correct]" id="multiple_choice_option_correct">
     </fieldset>
 
-    <input type="submit" name="commit" value="Add" class="btn btn-primary" data-disable-with="Create">
+    <input type="submit" name="commit" value="Add" class="btn btn-primary add-multiple-choice-option" data-disable-with="Create">
   </form>
 </div>
 
@@ -116,7 +116,7 @@
   <form name="delete-option" class="button_to form-inline" method="post" action="/tests/#/questions/#/multiple_choice_option/#" data-remote="true">
     <input type="hidden" name="_method" value="delete">
     <input type="hidden" name="authenticity_token" value="">
-    <input class="btn btn-danger btn-sm float-xs-right" data-confirm="Are you sure?" type="submit" value="&times;">
+    <input class="btn btn-danger btn-sm float-xs-right delete-multiple-choice-option" data-confirm="Are you sure?" type="submit" value="&times;">
   </form>
   <button type="button" class="btn btn-success btn-sm float-xs-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
   <p class='d-inline'></p>
@@ -159,7 +159,7 @@
       <%= f.text_field :item2, class: 'form-control', placeholder: 'Item Two' %>
     </fieldset>
 
-    <%= f.submit 'Add', class: 'btn btn-primary', data: { disable_with: 'Add' } %>
+    <%= f.submit 'Add', class: 'btn btn-primary matching-pair-add', data: { disable_with: 'Add' } %>
   <% end %>
 </div>
 
