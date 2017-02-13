@@ -4,6 +4,7 @@ node('basic') {
   def tag
 
   stage('Checkout source') {
+    slackSend "[Testor Server] Build #${env.BUILD_NUMBER} started (${env.BUILD_URL})"
     checkout scm
     sh 'git rev-parse HEAD > .git-commit-id'
     commit_id = readFile('.git-commit-id').trim()
@@ -28,18 +29,24 @@ node('basic') {
       break
     }
     app.push "${tag}"
+    slackSend "[Testor Server] `lrhstsa/testor-server:${tag}` pushed to Docker Hub"
   }
 
   stage('Deploy to cluster') {
-    def namespace
+    milestone()
     switch(env.BRANCH_NAME) {
       case 'develop':
-        namespace = 'development'
+        milestone()
+        sh "kubectl --namespace development set image deployment testor-server testor-server=lrhstsa/testor-server:${tag}"
+        slackSend "[Testor Server] Commit `${tag}` deployed to development"
       break
       case 'master':
-        namespace = 'default'
+        slackSend "[Testor Server] Release `${tag}` awaiting admin approval"
+        input 'Deploy to production?'
+        milestone()
+        sh "kubectl --namespace default set image deployment testor-server testor-server=lrhstsa/testor-server:${tag}"
+        slackSend "[Testor Server] Release `${tag}` deployed to production"
       break
     }
-    sh "kubectl --namespace ${namespace} set image deployment testor-server testor-server=lrhstsa/testor-server:${tag}"
   }
 }
