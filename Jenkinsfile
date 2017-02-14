@@ -37,7 +37,7 @@ node('basic') {
       case 'develop':
         milestone()
         sh "kubectl --namespace development set image deployment testor-server testor-server=lrhstsa/testor-server:${tag}"
-        slackSend color: 'good', message: "*[Testor Server]* Commit `${tag}` deployed to development"
+        slackSend color: 'good', message: "*[Testor Server]* Commit `${commit_id}` deployed to development"
       break
       case 'master':
         slackSend color: 'warning', message: "*[Testor Server]* Release `${tag}` awaiting admin approval"
