@@ -5,9 +5,9 @@ source 'https://rubygems.org'
 ###
 
 # This is a rails project
-gem 'rails', '~> 5.0.0.1'
+gem 'rails', '~> 5.0.1  '
 # Use Puma as the app server
-gem 'puma', '~> 3.6.0'
+gem 'puma', '~> 3.7.1'
 # Use turbolinks to increase page loading speed
 gem 'turbolinks', '~> 5.0.1'
 # Easy JSON APIs
@@ -56,9 +56,9 @@ gem 'responders', '~> 2.3.0'
 # Use devise for authentication
 gem 'devise', '~> 4.2.0'
 # Add token authentication to devise
-gem 'simple_token_authentication', '~> 1.14.0'
+gem 'simple_token_authentication', '~> 1.15.1'
 # Provide authorization using CanCanCan
-gem 'cancancan', '~> 1.15.0'
+gem 'cancancan', '~> 1.16.0'
 
 group :development do
   ###
@@ -66,7 +66,7 @@ group :development do
   ###
 
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
-  gem 'web-console', '~> 3.3.1'
+  gem 'web-console', '~> 3.4.0'
   # Replace rails default error pages
   gem 'better_errors', '~> 2.1.1'
   # Advanced features of better errors
@@ -79,11 +79,11 @@ group :development do
   ###
 
   # Use rubocop to check style
-  gem 'rubocop', '~> 0.44.1', require: false
+  gem 'rubocop', '~> 0.47.1', require: false
   # Check style for tests
   gem 'rubocop-rspec', require: false
   # Use bullet to find performace issues
-  gem 'bullet', '~> 5.4.2'
+  gem 'bullet', '~> 5.5.0'
   # Lock down the formatting of schema.rb
   gem 'fix-db-schema-conflicts', '~> 2.0.0'
 
@@ -94,7 +94,7 @@ group :development do
   # Audit the gemfile for insecure gems
   gem 'bundler-audit', '~> 0.5.0', require: false
   # Scan the application for vulnerabilities
-  gem 'brakeman', '~> 3.4.0', require: false
+  gem 'brakeman', '~> 3.5.0', require: false
 
   ###
   ### Utilitly
@@ -127,17 +127,17 @@ group :development, :test do
   # Test controllers using assigns
   gem 'rails-controller-testing', '~> 1.0.1'
   # Create database objects during testing with ease
-  gem 'factory_girl_rails', '~> 4.7.0'
+  gem 'factory_girl_rails', '~> 4.8.0'
   # Test the entire stack
-  gem 'capybara', '~> 2.10.1'
-  # Use selenium as the capybara driver
-  gem 'selenium-webdriver', '~> 3.0.0'
+  gem 'capybara', '~> 2.12.1'
+  # Use phantomjs as the capybara driver
+  gem 'poltergeist', '~> 1.13.0'
   # Screenshot failed capybara tests
   gem 'capybara-screenshot', '~> 1.0.14'
   # Capybara can't run in a transaction because of AJAX
   gem 'database_cleaner', '~> 1.5.3'
   # Use FFaker for random value generation
-  gem 'ffaker', '~> 2.2.0'
+  gem 'ffaker', '~> 2.5.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
