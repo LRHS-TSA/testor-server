@@ -8,39 +8,39 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-    <header class="navbar navbar-full navbar-dark bg-inverse mb-1">
-      <div class="container">
-        <nav>
-          <div class="clearfix">
-            <button class="navbar-toggler hidden-md-up float-xs-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"></button>
-            <%= link_to 'Testor', root_path, class: 'navbar-brand hidden-md-up' %>
+    <nav class="navbar navbar-toggleable-sm navbar-inverse bg-inverse">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarToggle">
+        <%= link_to 'Testor', root_path, class: 'navbar-brand hidden-sm-down' %>
+        <ul class="navbar-nav mr-auto"></ul>
+        <ul class="navbar-nav"
+          <div class="float-md-right">
+            <% if user_signed_in? then %>
+              <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="addGroupDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-plus-square" aria-hidden="true"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="addGroupDropdown">
+                  <%= render 'layouts/addgroup' %>
+                </div>
+              </li>
+              <%= link_to 'My Groups', groups_path, class: 'nav-item nav-link' %>
+              <%= link_to 'My Tests', tests_path, class: 'nav-item nav-link' %>
+              <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'nav-item nav-link' %>
+            <% else %>
+            <li class="nav-item">
+              <%= link_to 'Log In', new_user_session_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link' %>
+            </li>
+            <% end %>
           </div>
-          <div class="collapse navbar-toggleable-sm" id="navbarResponsive">
-            <%= link_to 'Testor', root_path, class: 'navbar-brand hidden-sm-down' %>
-            <ul class="nav navbar-nav">
-              <div class="float-md-right">
-                <% if user_signed_in? then %>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link" href="#" id="addGroupDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fa fa-plus-square" aria-hidden="true"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="addGroupDropdown">
-                      <%= render 'layouts/addgroup' %>
-                    </div>
-                  </li>
-                  <%= link_to 'My Groups', groups_path, class: 'nav-item nav-link' %>
-                  <%= link_to 'My Tests', tests_path, class: 'nav-item nav-link' %>
-                  <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'nav-item nav-link' %>
-                <% else %>
-                  <%= link_to 'Log In', new_user_session_path, class: 'nav-item nav-link' %>
-                  <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-item nav-link' %>
-                <% end %>
-              </div>
-            </ul>
-          </div>
-        </nav>
+        </ul>
       </div>
-    </header>
+    </nav>
     <div class="container">
       <% flash.each do |key, value| %>
         <div class="<%= flash_class(key) %>" role="alert">
