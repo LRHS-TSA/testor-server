@@ -15,29 +15,27 @@
       <div class="collapse navbar-collapse" id="navbarToggle">
         <%= link_to 'Testor', root_path, class: 'navbar-brand hidden-sm-down' %>
         <ul class="navbar-nav mr-auto"></ul>
-        <ul class="navbar-nav"
-          <div class="float-md-right">
-            <% if user_signed_in? then %>
-              <li class="nav-item dropdown">
-                <a class="nav-link" href="#" id="addGroupDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-plus-square" aria-hidden="true"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="addGroupDropdown">
-                  <%= render 'layouts/addgroup' %>
-                </div>
-              </li>
-              <%= link_to 'My Groups', groups_path, class: 'nav-item nav-link' %>
-              <%= link_to 'My Tests', tests_path, class: 'nav-item nav-link' %>
-              <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'nav-item nav-link' %>
-            <% else %>
-            <li class="nav-item">
-              <%= link_to 'Log In', new_user_session_path, class: 'nav-link' %>
+        <ul class="navbar-nav">
+          <% if user_signed_in? then %>
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" id="addGroupDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-plus-square" aria-hidden="true"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="addGroupDropdown">
+                <%= render 'layouts/addgroup' %>
+              </div>
             </li>
-            <li class="nav-item">
-              <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link' %>
-            </li>
-            <% end %>
-          </div>
+            <%= link_to 'My Groups', groups_path, class: 'nav-item nav-link' %>
+            <%= link_to 'My Tests', tests_path, class: 'nav-item nav-link' %>
+            <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: 'nav-item nav-link' %>
+          <% else %>
+          <li class="nav-item">
+            <%= link_to 'Log In', new_user_session_path, class: 'nav-link' %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Sign Up', new_user_registration_path, class: 'nav-link' %>
+          </li>
+          <% end %>
         </ul>
       </div>
     </nav>
