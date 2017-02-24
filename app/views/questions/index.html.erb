@@ -10,10 +10,10 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Add a Question</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title" id="myModalLabel">Add a Question</h4>
       </div>
       <%= form_for :question, url: {controller: 'questions', action: 'create'}, remote: true, html: { id: 'new_question' } do |f| %>
         <div class="modal-body">
@@ -70,10 +70,10 @@
 <div hidden class="card" id="base-card">
   <div class="card-header">
     <form name="delete-button" class="button_to d-inline" method="post" action="/tests/#/questions/#" data-remote="true">
-      <input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-xs-right" data-confirm="Are you sure?" type="submit" value="&times;">
+      <input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-right" data-confirm="Are you sure?" type="submit" value="&times;">
       <input type="hidden" name="authenticity_token" value="">
     </form>
-    <button type="button" class="d-inline btn btn-success float-xs-right" data-toggle="modal" data-target="#editQuestionModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+    <button type="button" class="d-inline btn btn-success float-right" data-toggle="modal" data-target="#editQuestionModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
   </div>
   <div class="card-block">
     <blockquote class="blockquote" name="question-text">
@@ -113,12 +113,12 @@
 
 <!-- List item for Multiple Choice Questions -->
 <li hidden id="option-item-base" class="my-1">
-  <form name="delete-option" class="button_to form-inline" method="post" action="/tests/#/questions/#/multiple_choice_option/#" data-remote="true">
+  <form name="delete-option" class="button_to form-inline float-right" method="post" action="/tests/#/questions/#/multiple_choice_option/#" data-remote="true">
     <input type="hidden" name="_method" value="delete">
     <input type="hidden" name="authenticity_token" value="">
-    <input class="btn btn-danger btn-sm float-xs-right delete-multiple-choice-option" data-confirm="Are you sure?" type="submit" value="&times;">
+    <input class="btn btn-danger btn-sm delete-multiple-choice-option" data-confirm="Are you sure?" type="submit" value="&times;">
   </form>
-  <button type="button" class="btn btn-success btn-sm float-xs-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+  <button type="button" class="btn btn-success btn-sm float-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
   <p class='d-inline'></p>
 </li>
 
@@ -135,7 +135,7 @@
     <input name="multiple_choice_option[correct]" type="hidden" value="0"><input class="form-check-inline" type="checkbox" value="1" name="multiple_choice_option[correct]">
   </fieldset>
 
-  <input hidden type="submit" name="commit" value="Save" class="btn btn-primary btn-sm float-xs-right" data-disable-with="Save">
+  <input hidden type="submit" name="commit" value="Save" class="btn btn-primary btn-sm float-right" data-disable-with="Save">
 </form>
 
 <!-- List of Pairs for Matching Questions -->
@@ -183,8 +183,8 @@
         <% end %>
       </td>
       <td name='edit_and_delete'>
-        <%= button_to '&times;'.html_safe, { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-xs-right', data: { confirm: "Are you sure?" } %>
-        <button type="button" class="btn btn-success btn-sm edit-pair-button float-xs-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+        <%= button_to '&times;'.html_safe, { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-right', data: { confirm: "Are you sure?" } %>
+        <button type="button" class="btn btn-success btn-sm edit-pair-button float-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
       </td>
     </tr>
   </tbody>
