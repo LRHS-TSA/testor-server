@@ -29,6 +29,9 @@ class Ability
 
       # Matching Pair
       can :manage, MatchingPair, question: {test: {user_id: user.id}}
+
+      # Session
+      can :manage, Session, assignment: {group: {members: {user_id: user.id}}}
     elsif user.student?
       # Group
       can :read, Group, members: {user_id: user.id}
@@ -39,6 +42,10 @@ class Ability
 
       # Assignment
       can :read, Assignment, group: {members: {user_id: user.id}}
+
+      # Session
+      can :create, Session, assignment: {group: {members: {user_id: user.id}}}
+      can [:read, :update], Session, user_id: user.id
     end
   end
 end

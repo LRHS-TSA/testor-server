@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :groups, through: :members
 
   has_many :tests
+  has_many :sessions
 
   def teacher?
     role == 1

@@ -17,3 +17,6 @@ Style/SpaceInsideHashLiteralBraces:
 
 RSpec/ExampleLength:
   Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false

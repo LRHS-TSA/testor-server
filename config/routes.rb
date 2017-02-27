@@ -7,7 +7,9 @@ Rails.application.routes.draw do
       put :reset_tokens
     end
     resources :members, only: [:index, :show, :destroy]
-    resources :assignments
+    resources :assignments do
+      resources :sessions, except: [:new, :destroy]
+    end
   end
 
   resources :tests do

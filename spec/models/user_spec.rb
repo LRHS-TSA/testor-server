@@ -19,6 +19,10 @@ RSpec.describe User, type: :model do
       FactoryGirl.create(:member, user: user).group
     end
 
+    let(:assignment) do
+      FactoryGirl.create(:assignment, group: group)
+    end
+
     let(:test) do
       FactoryGirl.create(:test, user: user)
     end
@@ -94,6 +98,14 @@ RSpec.describe User, type: :model do
     it 'cannot manage matching pairs for questions in tests they do not own' do
       is_expected.not_to be_able_to(:manage, MatchingPair.new)
     end
+
+    it 'can manage sessions for their group' do
+      is_expected.to be_able_to(:manage, FactoryGirl.create(:session, assignment: assignment))
+    end
+
+    it 'cannot manage sessions for other groups' do
+      is_expected.not_to be_able_to(:manage, FactoryGirl.create(:session))
+    end
   end
 
   context 'as a student' do
@@ -103,6 +115,10 @@ RSpec.describe User, type: :model do
 
     let(:group) do
       FactoryGirl.create(:member, user: user).group
+    end
+
+    let(:assignment) do
+      FactoryGirl.create(:assignment, group: group)
     end
 
     it 'can read groups they are in' do
@@ -131,6 +147,30 @@ RSpec.describe User, type: :model do
 
     it 'cannot read assignments for groups they are not in' do
       is_expected.not_to be_able_to(:read, Assignment.new)
+    end
+
+    it 'can create sessions for assignments for their group' do
+      is_expected.to be_able_to(:create, FactoryGirl.create(:session, assignment: assignment))
+    end
+
+    it 'cannot create sessions for assignments for other groups' do
+      is_expected.not_to be_able_to(:create, FactoryGirl.create(:session))
+    end
+
+    it 'can read their sessions' do
+      is_expected.to be_able_to(:read, FactoryGirl.create(:session, assignment: assignment, user: user))
+    end
+
+    it 'cannot read sessions for other users' do
+      is_expected.not_to be_able_to(:read, FactoryGirl.create(:session, assignment: assignment))
+    end
+
+    it 'can update their sessions' do
+      is_expected.to be_able_to(:update, FactoryGirl.create(:session, assignment: assignment, user: user))
+    end
+
+    it 'cannot update sessions for other users' do
+      is_expected.not_to be_able_to(:update, FactoryGirl.create(:session, assignment: assignment))
     end
   end
 end
