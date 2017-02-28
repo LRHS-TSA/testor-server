@@ -14,6 +14,10 @@ class MultipleChoiceAnswersController < ApplicationController
   end
 
   def create
+    if @multiple_choice_answer.session.locked?
+      head :bad_request
+      return
+    end
     if @multiple_choice_answer.question.nil? || !@multiple_choice_answer.question.multiple_choice? || @multiple_choice_answer.question.test != @multiple_choice_answer.session.assignment.test
       head :bad_request
       return
@@ -30,6 +34,10 @@ class MultipleChoiceAnswersController < ApplicationController
   end
 
   def update
+    if @multiple_choice_answer.session.locked?
+      head :bad_request
+      return
+    end
     if update_params[:multiple_choice_option_id].nil? || MultipleChoiceOption.find_by(id: update_params[:multiple_choice_option_id]).nil? || MultipleChoiceOption.find_by(id: update_params[:multiple_choice_option_id]).question.id != @multiple_choice_answer.question.id
       head :bad_request
       return

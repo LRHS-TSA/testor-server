@@ -14,6 +14,10 @@ class TextAnswersController < ApplicationController
   end
 
   def create
+    if @text_answer.session.locked?
+      head :bad_request
+      return
+    end
     if @text_answer.question.nil? || (!@text_answer.question.essay? && !@text_answer.question.short_answer?) || @text_answer.question.test != @text_answer.session.assignment.test
       head :bad_request
       return
@@ -26,6 +30,10 @@ class TextAnswersController < ApplicationController
   end
 
   def update
+    if @text_answer.session.locked?
+      head :bad_request
+      return
+    end
     if @text_answer.update_attributes(update_params)
       head :ok
     else

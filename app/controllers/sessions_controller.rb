@@ -17,15 +17,11 @@ class SessionsController < ApplicationController
   end
 
   def create
+    if @session.locked?
+      head :bad_request
+      return
+    end
     if current_user.student? && @session.status != 'awaiting_approval'
-      head :bad_request
-      return
-    end
-    if !@session.assignment.start_date.nil? && @session.assignment.start_date.utc > Time.now.utc
-      head :bad_request
-      return
-    end
-    if !@session.assignment.end_date.nil? && @session.assignment.end_date.utc < Time.now.utc
       head :bad_request
       return
     end
@@ -38,11 +34,11 @@ class SessionsController < ApplicationController
   end
 
   def update
-    if current_user.student? && update_params[:status] != 'awaiting_approval'
+    if @session.locked?
       head :bad_request
       return
     end
-    if !@session.assignment.end_date.nil? && @session.assignment.end_date.utc < Time.now.utc
+    if current_user.student? && update_params[:status] != 'awaiting_approval'
       head :bad_request
       return
     end

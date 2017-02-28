@@ -12,4 +12,8 @@ class Session < ApplicationRecord
   validates :user, presence: true
   validates :user, uniqueness: {scope: :assignment}
   validates :status, presence: true
+
+  def locked?
+    !assignment.start_date.nil? && assignment.start_date.utc > Time.now.utc || !assignment.end_date.nil? && assignment.end_date.utc < Time.now.utc
+  end
 end

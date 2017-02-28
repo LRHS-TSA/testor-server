@@ -14,6 +14,10 @@ class MatchingPairAnswersController < ApplicationController
   end
 
   def create
+    if @matching_pair_answer.session.locked?
+      head :bad_request
+      return
+    end
     if @matching_pair_answer.question.nil? || !@matching_pair_answer.question.matching? || @matching_pair_answer.question.test != @matching_pair_answer.session.assignment.test
       head :bad_request
       return
@@ -30,6 +34,10 @@ class MatchingPairAnswersController < ApplicationController
   end
 
   def update
+    if @matching_pair_answer.session.locked?
+      head :bad_request
+      return
+    end
     if update_params[:item2].nil? || MatchingPair.find_by(question: @matching_pair_answer.question, item2: update_params[:item2]).nil?
       head :bad_request
       return
