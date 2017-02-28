@@ -7,6 +7,7 @@ class Question < ApplicationRecord
 
   has_one :text_answer
   has_one :multiple_choice_answer
+  has_many :matching_pair_answers
 
   validates :test, presence: true
   validates :text, presence: true, length: {maximum: 4096}

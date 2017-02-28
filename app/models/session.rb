@@ -6,6 +6,7 @@ class Session < ApplicationRecord
 
   has_many :text_answers
   has_many :multiple_choice_answers
+  has_many :matching_pair_answers
 
   validates :assignment, presence: true
   validates :user, presence: true

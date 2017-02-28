@@ -177,7 +177,7 @@ RSpec.describe MultipleChoiceAnswersController, type: :controller do
 
     context 'with an invalid multiple choice option' do
       it 'returns HTTP status 400 (Bad Request)' do
-        put :update, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, session_id: session.id, id: multiple_choice_answer.id, multiple_choice_answer: invalid_multiple_choice_option_update_params}
+        put :update, params: {group_id: multiple_choice_answer.session.assignment.group.id, assignment_id: multiple_choice_answer.session.assignment.id, session_id: multiple_choice_answer.session.id, id: multiple_choice_answer.id, multiple_choice_answer: invalid_multiple_choice_option_update_params}
         expect(response).to have_http_status(:bad_request)
       end
     end

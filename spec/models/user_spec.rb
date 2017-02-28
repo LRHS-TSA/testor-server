@@ -122,6 +122,14 @@ RSpec.describe User, type: :model do
     it 'cannot read multiple choice answers for other questions' do
       is_expected.not_to be_able_to(:read, MultipleChoiceAnswer.new)
     end
+
+    it 'can read matching pair answers for their questions' do
+      is_expected.to be_able_to(:read, FactoryGirl.create(:matching_pair_answer, question: question))
+    end
+
+    it 'cannot read matching pair answers for other questions' do
+      is_expected.not_to be_able_to(:read, MatchingPairAnswer.new)
+    end
   end
 
   context 'as a student' do
@@ -199,6 +207,14 @@ RSpec.describe User, type: :model do
 
     it 'cannot manage multiple choice answers for other sessions' do
       is_expected.not_to be_able_to(:manage, MultipleChoiceAnswer.new)
+    end
+
+    it 'can manage matching pair answers for their sessions' do
+      is_expected.to be_able_to(:manage, FactoryGirl.create(:matching_pair_answer, session: session))
+    end
+
+    it 'cannot manage matching pair answers for other sessions' do
+      is_expected.not_to be_able_to(:manage, MatchingPairAnswer.new)
     end
   end
 end

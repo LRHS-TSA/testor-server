@@ -38,6 +38,9 @@ class Ability
 
       # Multiple Choice Answer
       can :read, MultipleChoiceAnswer, question: {test: {user_id: user.id}}
+
+      # Matching Pair Answer
+      can :read, MatchingPairAnswer, question: {test: {user_id: user.id}}
     elsif user.student?
       # Group
       can :read, Group, members: {user_id: user.id}
@@ -58,6 +61,9 @@ class Ability
 
       # Multiple Choice Answer
       can :manage, MultipleChoiceAnswer, session: {user_id: user.id}
+
+      # Matching Pair Answer
+      can :manage, MatchingPairAnswer, session: {user_id: user.id}
     end
   end
 end

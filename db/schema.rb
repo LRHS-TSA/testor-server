@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228010413) do
+ActiveRecord::Schema.define(version: 20170228034141) do
   create_table "assignments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "end_date"
@@ -33,6 +33,17 @@ ActiveRecord::Schema.define(version: 20170228010413) do
     t.datetime "updated_at", null: false
     t.index ["student_token"], name: "index_groups_on_student_token"
     t.index ["teacher_token"], name: "index_groups_on_teacher_token"
+  end
+
+  create_table "matching_pair_answers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "item1"
+    t.string "item2"
+    t.integer "question_id"
+    t.integer "session_id"
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_matching_pair_answers_on_question_id"
+    t.index ["session_id"], name: "index_matching_pair_answers_on_session_id"
   end
 
   create_table "matching_pairs", force: :cascade do |t|

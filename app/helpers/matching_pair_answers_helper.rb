@@ -1,0 +1,3 @@
+# Helper for MatchingPairAnswersController
+module MatchingPairAnswersHelper
+end

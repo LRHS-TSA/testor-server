@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :sessions, except: [:new, :destroy] do
         resources :text_answers, only: [:index, :show, :create, :update]
         resources :multiple_choice_answers, only: [:index, :show, :create, :update]
+        resources :matching_pair_answers, only: [:index, :show, :create, :update]
       end
     end
   end
