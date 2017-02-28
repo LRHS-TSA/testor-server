@@ -153,4 +153,20 @@ RSpec.describe SessionsController, type: :controller do
       end
     end
   end
+
+  describe '#load_questions' do
+    before do
+      request.env['HTTP_ACCEPT'] = 'application/json'
+      get :load_questions, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, id: session.id}
+    end
+
+    it 'returns HTTP status 200' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'sets the session as used' do
+      session.reload
+      expect(session.status).to eq('used')
+    end
+  end
 end

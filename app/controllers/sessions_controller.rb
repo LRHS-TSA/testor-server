@@ -49,6 +49,17 @@ class SessionsController < ApplicationController
     end
   end
 
+  def load_questions
+    respond_to :json
+    unless current_user.student?
+      head :bad_request
+      return
+    end
+    @session.status = :used
+    @session.save!
+    respond_with @session
+  end
+
   private
 
   def create_params

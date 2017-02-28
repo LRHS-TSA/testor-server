@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     resources :members, only: [:index, :show, :destroy]
     resources :assignments do
       resources :sessions, except: [:new, :destroy] do
+        member do
+          get :load_questions
+        end
         resources :scores, except: [:new, :edit]
         resources :text_answers, except: [:new, :edit, :destroy]
         resources :multiple_choice_answers, except: [:new, :edit, :destroy]

@@ -209,6 +209,14 @@ RSpec.describe User, type: :model do
       is_expected.not_to be_able_to(:update, FactoryGirl.create(:session, assignment: assignment))
     end
 
+    it 'can load questions from their sessions' do
+      is_expected.to be_able_to(:load_questions, FactoryGirl.create(:session, assignment: assignment, user: user))
+    end
+
+    it 'cannot load questions from sessions for other users' do
+      is_expected.not_to be_able_to(:load_questions, FactoryGirl.create(:session, assignment: assignment))
+    end
+
     it 'can manage multiple choice answers for their sessions' do
       is_expected.to be_able_to(:manage, FactoryGirl.create(:multiple_choice_answer, session: session))
     end

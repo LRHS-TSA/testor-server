@@ -57,7 +57,7 @@ class Ability
 
       # Session
       can :create, Session, assignment: {group: {members: {user_id: user.id}}}
-      can [:read, :update], Session, user_id: user.id
+      can [:read, :update, :load_questions], Session, user_id: user.id
 
       # Text Answer
       can :manage, TextAnswer, session: {user_id: user.id}
