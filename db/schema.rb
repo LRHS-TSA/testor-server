@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227234735) do
+ActiveRecord::Schema.define(version: 20170228010413) do
   create_table "assignments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "end_date"
@@ -51,6 +51,17 @@ ActiveRecord::Schema.define(version: 20170227234735) do
     t.integer "user_id"
     t.index ["group_id"], name: "index_members_on_group_id"
     t.index ["user_id"], name: "index_members_on_user_id"
+  end
+
+  create_table "multiple_choice_answers", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "multiple_choice_option_id"
+    t.integer "question_id"
+    t.integer "session_id"
+    t.datetime "updated_at", null: false
+    t.index ["multiple_choice_option_id"], name: "index_multiple_choice_answers_on_multiple_choice_option_id"
+    t.index ["question_id"], name: "index_multiple_choice_answers_on_question_id"
+    t.index ["session_id"], name: "index_multiple_choice_answers_on_session_id"
   end
 
   create_table "multiple_choice_options", force: :cascade do |t|

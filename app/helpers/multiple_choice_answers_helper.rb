@@ -1,0 +1,3 @@
+# Helper for MultpleChoiceAnswersController
+module MultipleChoiceAnswersHelper
+end

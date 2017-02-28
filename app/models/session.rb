@@ -5,6 +5,7 @@ class Session < ApplicationRecord
   enum status: [:awaiting_approval, :approved, :used]
 
   has_many :text_answers
+  has_many :multiple_choice_answers
 
   validates :assignment, presence: true
   validates :user, presence: true

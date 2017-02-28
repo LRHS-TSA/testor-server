@@ -14,7 +14,7 @@ class TextAnswersController < ApplicationController
   end
 
   def create
-    if @text_answer.question.nil? || (!@text_answer.question.essay? && !@text_answer.question.short_answer?)
+    if @text_answer.question.nil? || (!@text_answer.question.essay? && !@text_answer.question.short_answer?) || @text_answer.question.test != @text_answer.session.assignment.test
       head :bad_request
       return
     end

@@ -6,6 +6,7 @@ class Question < ApplicationRecord
   enum question_type: [:essay, :multiple_choice, :short_answer, :matching]
 
   has_one :text_answer
+  has_one :multiple_choice_answer
 
   validates :test, presence: true
   validates :text, presence: true, length: {maximum: 4096}

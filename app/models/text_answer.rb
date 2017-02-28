@@ -1,4 +1,4 @@
-# Stores text data for essay and short answer questions
+# Stores text answers for essay and short answer questions
 class TextAnswer < ApplicationRecord
   belongs_to :question, inverse_of: :text_answer
   belongs_to :session, inverse_of: :text_answers

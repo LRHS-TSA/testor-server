@@ -35,6 +35,9 @@ class Ability
 
       # Text Answer
       can :read, TextAnswer, question: {test: {user_id: user.id}}
+
+      # Multiple Choice Answer
+      can :read, MultipleChoiceAnswer, question: {test: {user_id: user.id}}
     elsif user.student?
       # Group
       can :read, Group, members: {user_id: user.id}
@@ -52,6 +55,9 @@ class Ability
 
       # Text Answer
       can :manage, TextAnswer, session: {user_id: user.id}
+
+      # Multiple Choice Answer
+      can :manage, MultipleChoiceAnswer, session: {user_id: user.id}
     end
   end
 end

@@ -27,6 +27,10 @@ RSpec.describe TextAnswersController, type: :controller do
     FactoryGirl.create(:question, test: test, question_type: :multiple_choice)
   end
 
+  let(:invalid_question) do
+    FactoryGirl.create(:question, question_type: :essay)
+  end
+
   let(:text_answer) do
     FactoryGirl.create(:text_answer, session: session, question: question)
   end
@@ -43,6 +47,11 @@ RSpec.describe TextAnswersController, type: :controller do
   let(:invalid_question_type_create_params) do
     ta = FactoryGirl.build(:text_answer)
     {question_id: invalid_type_question.id, text: ta.text}
+  end
+
+  let(:invalid_question_create_params) do
+    ta = FactoryGirl.build(:text_answer)
+    {question_id: invalid_question.id, text: ta.text}
   end
 
   let(:valid_update_params) do
@@ -102,6 +111,13 @@ RSpec.describe TextAnswersController, type: :controller do
     end
 
     context 'with an invalid question type' do
+      it 'returns HTTP status 400 (Bad Request)' do
+        post :create, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, session_id: session.id, text_answer: invalid_question_create_params}
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    context 'with an invalid question' do
       it 'returns HTTP status 400 (Bad Request)' do
         post :create, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, session_id: session.id, text_answer: invalid_question_type_create_params}
         expect(response).to have_http_status(:bad_request)

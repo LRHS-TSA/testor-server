@@ -114,6 +114,14 @@ RSpec.describe User, type: :model do
     it 'cannot read text answers for other questions' do
       is_expected.not_to be_able_to(:read, TextAnswer.new)
     end
+
+    it 'can read multiple choice answers for their questions' do
+      is_expected.to be_able_to(:read, FactoryGirl.create(:multiple_choice_answer, question: question))
+    end
+
+    it 'cannot read multiple choice answers for other questions' do
+      is_expected.not_to be_able_to(:read, MultipleChoiceAnswer.new)
+    end
   end
 
   context 'as a student' do
@@ -185,12 +193,12 @@ RSpec.describe User, type: :model do
       is_expected.not_to be_able_to(:update, FactoryGirl.create(:session, assignment: assignment))
     end
 
-    it 'can manage text answers for their sessions' do
-      is_expected.to be_able_to(:manage, FactoryGirl.create(:text_answer, session: session))
+    it 'can manage multiple choice answers for their sessions' do
+      is_expected.to be_able_to(:manage, FactoryGirl.create(:multiple_choice_answer, session: session))
     end
 
-    it 'cannot manage text answers for other sessions' do
-      is_expected.not_to be_able_to(:manage, TextAnswer.new)
+    it 'cannot manage multiple choice answers for other sessions' do
+      is_expected.not_to be_able_to(:manage, MultipleChoiceAnswer.new)
     end
   end
 end
