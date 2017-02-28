@@ -21,6 +21,14 @@ class SessionsController < ApplicationController
       head :bad_request
       return
     end
+    if !@session.assignment.start_date.nil? && @session.assignment.start_date.utc > Time.now.utc
+      head :bad_request
+      return
+    end
+    if !@session.assignment.end_date.nil? && @session.assignment.end_date.utc < Time.now.utc
+      head :bad_request
+      return
+    end
     @session.user = current_user
     if @session.save
       head :created, location: group_assignment_session_path(@session.assignment.group, @session.assignment, @session)
@@ -31,6 +39,10 @@ class SessionsController < ApplicationController
 
   def update
     if current_user.student? && update_params[:status] != 'awaiting_approval'
+      head :bad_request
+      return
+    end
+    if !@session.assignment.end_date.nil? && @session.assignment.end_date.utc < Time.now.utc
       head :bad_request
       return
     end

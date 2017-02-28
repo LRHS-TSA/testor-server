@@ -11,12 +11,24 @@ RSpec.describe SessionsController, type: :controller do
     FactoryGirl.create(:assignment, group: group, test: test)
   end
 
+  let(:before_start_date_assignment) do
+    FactoryGirl.create(:assignment, group: group, test: test, start_date: 1.day.from_now)
+  end
+
+  let(:after_end_date_assignment) do
+    FactoryGirl.create(:assignment, group: group, test: test, end_date: 1.day.ago)
+  end
+
   let(:test) do
     FactoryGirl.create(:test, user: user)
   end
 
   let(:session) do
     FactoryGirl.create(:session, assignment: assignment, user: user)
+  end
+
+  let(:after_end_date_session) do
+    FactoryGirl.create(:session, assignment: after_end_date_assignment, user: user)
   end
 
   let(:valid_create_params) do
@@ -95,6 +107,20 @@ RSpec.describe SessionsController, type: :controller do
         expect(response).to have_http_status(:bad_request)
       end
     end
+
+    context 'before the start date' do
+      it 'returns HTTP status 400 (Bad Request)' do
+        post :create, params: {group_id: before_start_date_assignment.group.id, assignment_id: before_start_date_assignment.id, session: valid_create_params}
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    context 'after the end date' do
+      it 'returns HTTP status 400 (Bad Request)' do
+        post :create, params: {group_id: after_end_date_assignment.group.id, assignment_id: after_end_date_assignment.id, session: valid_create_params}
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
   end
 
   describe '#update' do
@@ -116,6 +142,13 @@ RSpec.describe SessionsController, type: :controller do
     context 'with invalid parameters' do
       it 'returns HTTP status 400 (Bad Request)' do
         put :update, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, id: session.id, session: invalid_update_params}
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    context 'after the end date' do
+      it 'returns HTTP status 400 (Bad Request)' do
+        post :create, params: {group_id: after_end_date_session.assignment.group.id, assignment_id: after_end_date_session.assignment.id, id: after_end_date_session.id, session: valid_create_params}
         expect(response).to have_http_status(:bad_request)
       end
     end
