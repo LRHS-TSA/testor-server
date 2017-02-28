@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
   acts_as_token_authentication_handler_for User, if: ->(controller) { controller.user_token_authenticable? }
   check_authorization unless: :devise_controller?
 
+  rescue_from CanCan::AccessDenied do
+    head :forbidden
+  end
+
   protected
 
   def user_token_authenticable?
