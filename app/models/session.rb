@@ -4,6 +4,8 @@ class Session < ApplicationRecord
   belongs_to :user, inverse_of: :sessions
   enum status: [:awaiting_approval, :approved, :used]
 
+  has_many :text_answers
+
   validates :assignment, presence: true
   validates :user, presence: true
   validates :user, uniqueness: {scope: :assignment}

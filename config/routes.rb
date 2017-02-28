@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     end
     resources :members, only: [:index, :show, :destroy]
     resources :assignments do
-      resources :sessions, except: [:new, :destroy]
+      resources :sessions, except: [:new, :destroy] do
+        resources :text_answers, only: [:index, :show, :create, :update]
+      end
     end
   end
 

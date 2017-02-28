@@ -32,6 +32,9 @@ class Ability
 
       # Session
       can :manage, Session, assignment: {group: {members: {user_id: user.id}}}
+
+      # Text Answer
+      can :read, TextAnswer, question: {test: {user_id: user.id}}
     elsif user.student?
       # Group
       can :read, Group, members: {user_id: user.id}
@@ -46,6 +49,9 @@ class Ability
       # Session
       can :create, Session, assignment: {group: {members: {user_id: user.id}}}
       can [:read, :update], Session, user_id: user.id
+
+      # Text Answer
+      can :manage, TextAnswer, session: {user_id: user.id}
     end
   end
 end

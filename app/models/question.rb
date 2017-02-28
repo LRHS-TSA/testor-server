@@ -5,6 +5,8 @@ class Question < ApplicationRecord
   has_many :matching_pairs, inverse_of: :question
   enum question_type: [:essay, :multiple_choice, :short_answer, :matching]
 
+  has_one :text_answer
+
   validates :test, presence: true
   validates :text, presence: true, length: {maximum: 4096}
   validates :question_type, presence: true

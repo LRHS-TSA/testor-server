@@ -106,6 +106,14 @@ RSpec.describe User, type: :model do
     it 'cannot manage sessions for other groups' do
       is_expected.not_to be_able_to(:manage, FactoryGirl.create(:session))
     end
+
+    it 'can read text answers for their questions' do
+      is_expected.to be_able_to(:read, FactoryGirl.create(:text_answer, question: question))
+    end
+
+    it 'cannot read text answers for other questions' do
+      is_expected.not_to be_able_to(:read, TextAnswer.new)
+    end
   end
 
   context 'as a student' do
@@ -119,6 +127,10 @@ RSpec.describe User, type: :model do
 
     let(:assignment) do
       FactoryGirl.create(:assignment, group: group)
+    end
+
+    let(:session) do
+      FactoryGirl.create(:session, assignment: assignment, user: user)
     end
 
     it 'can read groups they are in' do
@@ -171,6 +183,14 @@ RSpec.describe User, type: :model do
 
     it 'cannot update sessions for other users' do
       is_expected.not_to be_able_to(:update, FactoryGirl.create(:session, assignment: assignment))
+    end
+
+    it 'can manage text answers for their sessions' do
+      is_expected.to be_able_to(:manage, FactoryGirl.create(:text_answer, session: session))
+    end
+
+    it 'cannot manage text answers for other sessions' do
+      is_expected.not_to be_able_to(:manage, TextAnswer.new)
     end
   end
 end
