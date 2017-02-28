@@ -12,7 +12,7 @@ RSpec.describe MatchingPairAnswersController, type: :controller do
   end
 
   let(:test) do
-    FactoryGirl.create(:test, user: user)
+    FactoryGirl.create(:test)
   end
 
   let(:session) do

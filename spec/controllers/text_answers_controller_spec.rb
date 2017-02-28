@@ -12,7 +12,7 @@ RSpec.describe TextAnswersController, type: :controller do
   end
 
   let(:test) do
-    FactoryGirl.create(:test, user: user)
+    FactoryGirl.create(:test)
   end
 
   let(:session) do
@@ -112,14 +112,14 @@ RSpec.describe TextAnswersController, type: :controller do
 
     context 'with an invalid question type' do
       it 'returns HTTP status 400 (Bad Request)' do
-        post :create, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, session_id: session.id, text_answer: invalid_question_create_params}
+        post :create, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, session_id: session.id, text_answer: invalid_question_type_create_params}
         expect(response).to have_http_status(:bad_request)
       end
     end
 
     context 'with an invalid question' do
       it 'returns HTTP status 400 (Bad Request)' do
-        post :create, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, session_id: session.id, text_answer: invalid_question_type_create_params}
+        post :create, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, session_id: session.id, text_answer: invalid_question_create_params}
         expect(response).to have_http_status(:bad_request)
       end
     end

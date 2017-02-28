@@ -130,6 +130,14 @@ RSpec.describe User, type: :model do
     it 'cannot read matching pair answers for other questions' do
       is_expected.not_to be_able_to(:read, MatchingPairAnswer.new)
     end
+
+    it 'can manage scores for their questions' do
+      is_expected.to be_able_to(:manage, FactoryGirl.create(:score, question: question))
+    end
+
+    it 'cannot manage scores for other questions' do
+      is_expected.not_to be_able_to(:manage, Score.new)
+    end
   end
 
   context 'as a student' do
@@ -215,6 +223,14 @@ RSpec.describe User, type: :model do
 
     it 'cannot manage matching pair answers for other sessions' do
       is_expected.not_to be_able_to(:manage, MatchingPairAnswer.new)
+    end
+
+    it 'can read scores for their sessions' do
+      is_expected.to be_able_to(:read, FactoryGirl.create(:score, session: session))
+    end
+
+    it 'cannot read scores for other sessions' do
+      is_expected.not_to be_able_to(:read, Score.new)
     end
   end
 end

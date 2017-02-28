@@ -9,9 +9,10 @@ Rails.application.routes.draw do
     resources :members, only: [:index, :show, :destroy]
     resources :assignments do
       resources :sessions, except: [:new, :destroy] do
-        resources :text_answers, only: [:index, :show, :create, :update]
-        resources :multiple_choice_answers, only: [:index, :show, :create, :update]
-        resources :matching_pair_answers, only: [:index, :show, :create, :update]
+        resources :scores, except: [:new, :edit]
+        resources :text_answers, except: [:new, :edit, :destroy]
+        resources :multiple_choice_answers, except: [:new, :edit, :destroy]
+        resources :matching_pair_answers, except: [:new, :edit, :destroy]
       end
     end
   end
