@@ -12,4 +12,5 @@ class Question < ApplicationRecord
   validates :test, presence: true
   validates :text, presence: true, length: {maximum: 4096}
   validates :question_type, presence: true
+  validates :points, presence: true, numericality: {greater_than: 0}
 end

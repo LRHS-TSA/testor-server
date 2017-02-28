@@ -20,4 +20,16 @@ RSpec.describe Question, type: :model do
   it 'is invalid without a type' do
     expect(FactoryGirl.build(:question, question_type: nil)).not_to be_valid
   end
+
+  it 'is invalid without a point value' do
+    expect(FactoryGirl.build(:question, points: nil)).not_to be_valid
+  end
+
+  it 'is invalid with a point value of 0' do
+    expect(FactoryGirl.build(:question, points: 0)).not_to be_valid
+  end
+
+  it 'is invalid with a negative point value' do
+    expect(FactoryGirl.build(:question, points: -1)).not_to be_valid
+  end
 end
