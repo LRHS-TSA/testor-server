@@ -14,6 +14,10 @@ class ScoresController < ApplicationController
   end
 
   def create
+    if @score.question.nil? || @score.question.test != @score.session.assignment.test
+      head :bad_request
+      return
+    end
     if @score.score.nil? || @score.score.to_i > @score.question.points
       head :bad_request
       return

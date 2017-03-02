@@ -15,12 +15,20 @@ RSpec.describe ScoresController, type: :controller do
     FactoryGirl.create(:test, user: user)
   end
 
+  let(:invalid_question_test) do
+    FactoryGirl.create(:test, user: user)
+  end
+
   let(:session) do
     FactoryGirl.create(:session, assignment: assignment)
   end
 
   let(:question) do
     FactoryGirl.create(:question, test: test)
+  end
+
+  let(:invalid_question) do
+    FactoryGirl.create(:question, test: invalid_question_test)
   end
 
   let(:score) do
@@ -37,6 +45,10 @@ RSpec.describe ScoresController, type: :controller do
 
   let(:score_over_points_create_params) do
     {question_id: question.id, score: question.points + 1}
+  end
+
+  let(:invalid_question_create_params) do
+    {question_id: invalid_question.id, score: question.points}
   end
 
   let(:valid_update_params) do
@@ -101,6 +113,13 @@ RSpec.describe ScoresController, type: :controller do
     context 'with a score over the maximum points' do
       it 'returns HTTP status 400 (Bad Request)' do
         post :create, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, session_id: session.id, score: score_over_points_create_params}
+        expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    context 'with an invalid question' do
+      it 'returns HTTP status 400 (Bad Request)' do
+        post :create, params: {group_id: session.assignment.group.id, assignment_id: session.assignment.id, session_id: session.id, score: invalid_question_create_params}
         expect(response).to have_http_status(:bad_request)
       end
     end
