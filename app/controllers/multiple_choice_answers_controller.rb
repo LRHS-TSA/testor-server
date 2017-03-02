@@ -14,7 +14,7 @@ class MultipleChoiceAnswersController < ApplicationController
   end
 
   def create
-    if @multiple_choice_answer.session.locked?
+    if @multiple_choice_answer.session.locked? || (current_user.student? && !@session.approved?)
       head :bad_request
       return
     end

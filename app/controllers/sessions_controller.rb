@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
       head :bad_request
       return
     end
-    if current_user.student? && @session.status != 'awaiting_approval'
+    if current_user.student? && !@session.awaiting_approval?
       head :bad_request
       return
     end
@@ -34,7 +34,7 @@ class SessionsController < ApplicationController
   end
 
   def update
-    if @session.locked?
+    if @session.locked? || (current_user.student? && !@session.approved?)
       head :bad_request
       return
     end
@@ -51,7 +51,7 @@ class SessionsController < ApplicationController
 
   def load_questions
     respond_to :json
-    unless current_user.student?
+    unless current_user.student? && @session.approved?
       head :bad_request
       return
     end

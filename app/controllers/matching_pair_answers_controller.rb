@@ -14,7 +14,7 @@ class MatchingPairAnswersController < ApplicationController
   end
 
   def create
-    if @matching_pair_answer.session.locked?
+    if @matching_pair_answer.session.locked? || (current_user.student? && !@session.approved?)
       head :bad_request
       return
     end

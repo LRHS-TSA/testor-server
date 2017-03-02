@@ -14,7 +14,7 @@ class TextAnswersController < ApplicationController
   end
 
   def create
-    if @text_answer.session.locked?
+    if @text_answer.session.locked? || (current_user.student? && !@session.approved?)
       head :bad_request
       return
     end
