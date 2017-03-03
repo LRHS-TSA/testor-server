@@ -1,0 +1,10 @@
+<tr>
+  <td><%= session.user.name %></td>
+  <td name="status"><%= session_status_text session.status %></td>
+  <td>
+    <% if session.status == 'awaiting_approval' %>
+      <%= button_to 'Approve', group_assignment_session_path(session.assignment.group, session.assignment, session), method: :patch, remote: true, params: { session: { status: 'approved' } }, class: 'btn btn-success btn-sm', form: { id: 'approve_' + session.user.id.to_s } %>
+    <% end %>
+  </td>
+  <td><%= link_to 'View', group_assignment_session_path(session.assignment.group, session.assignment, session), class: 'btn btn-primary btn-sm' %></td>
+</tr>

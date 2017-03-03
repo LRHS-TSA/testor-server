@@ -1,0 +1,14 @@
+<h2>All Sessions for <%= Assignment.find_by_id(params[:assignment_id]).name %></h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= render @sessions or 'No current sessions for this assignment.' %>
+  </tbody>
+</table>
