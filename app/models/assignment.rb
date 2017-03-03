@@ -8,4 +8,12 @@ class Assignment < ApplicationRecord
   validates :group, presence: true
   validates :test, presence: true
   validates :name, presence: true
+
+  def length=(value)
+    if value.nil? || value[4].nil? && value[5].nil?
+      self[:length] = nil
+    else
+      self[:length] = (value[4].nil? ? 0 : value[4]) * 60 + (value[5].nil? ? 0 : value[5])
+    end
+  end
 end
