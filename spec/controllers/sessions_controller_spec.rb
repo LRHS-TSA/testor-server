@@ -168,5 +168,10 @@ RSpec.describe SessionsController, type: :controller do
       session.reload
       expect(session.status).to eq('used')
     end
+
+    it 'sets start_time' do
+      session.reload
+      expect(session.start_time).not_to be_nil
+    end
   end
 end

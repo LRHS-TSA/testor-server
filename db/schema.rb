@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170303034936) do
+ActiveRecord::Schema.define(version: 20170303044438) do
   create_table "assignments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "end_date"
@@ -107,6 +107,7 @@ ActiveRecord::Schema.define(version: 20170303034936) do
   create_table "sessions", force: :cascade do |t|
     t.integer "assignment_id"
     t.datetime "created_at", null: false
+    t.datetime "start_time"
     t.integer "status"
     t.datetime "updated_at", null: false
     t.integer "user_id"

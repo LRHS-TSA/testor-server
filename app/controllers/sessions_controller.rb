@@ -56,6 +56,7 @@ class SessionsController < ApplicationController
       return
     end
     @session.status = :used
+    @session.start_time = Time.now.utc
     @session.save!
     respond_with @session
   end
