@@ -27,6 +27,11 @@ class SessionsController < ApplicationController
     end
     @session.user = current_user
     if @session.save
+      if !@session.assignment.length.nil?
+        GradeSessionJob.set(wait: @session.length.seconds).perform_later(@session)
+      elsif !@session.assignment.end_date.nil?
+        GradeSessionJob.set(wait_until: @session.end_date).perform_later(@session)
+      end
       head :created, location: group_assignment_session_path(@session.assignment.group, @session.assignment, @session)
     else
       render json: {error: @session.errors}, status: :bad_request
