@@ -1,0 +1,16 @@
+<h2><%= @session.user.name %> taking <%= @session.assignment.name %></h2>
+
+<h3>Answers</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Question</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @session.answers.each do |a| %>
+      <%= render partial: 'answer', object: a, as: :answer or 'No answers for this assignment.' %>
+    <% end %>
+  </tbody>
+</table>

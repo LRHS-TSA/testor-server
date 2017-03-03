@@ -1,0 +1,4 @@
+<tr>
+  <td><%= answer.question.text %></td>
+  <td><%= @session.scores.find_by(question: answer.question) %></td>
+</tr>
