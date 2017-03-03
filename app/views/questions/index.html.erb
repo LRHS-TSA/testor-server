@@ -1,191 +1,205 @@
-<h2>Questions for <%= Test.find_by(id: params[:test_id]).name %></h2>
-<hr>
-<div id="questionBody" test-id="<%= params[:test_id] %>" data-token="<%= form_authenticity_token %>" data-questions="<%= @questions.to_json(include: [:multiple_choice_options, :matching_pairs]) %>"></div>
+<div class="questions">
+  <h2>Questions for <%= Test.find_by(id: params[:test_id]).name %></h2>
+  <hr>
+  <div id="questionBody" test-id="<%= params[:test_id] %>" data-token="<%= form_authenticity_token %>" data-questions="<%= @questions.to_json(include: [:multiple_choice_options, :matching_pairs]) %>"></div>
 
-<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#newQuestion">
-  Add Question
-</button>
+  <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#newQuestion">
+    Add Question
+  </button>
 
-<div class="modal fade" id="newQuestion" tabindex="-1" role="dialog" aria-labelledby="addQuestion" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">Add a Question</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <%= form_for :question, url: {controller: 'questions', action: 'create'}, remote: true, html: { id: 'new_question' } do |f| %>
-        <div class="modal-body">
-            <fieldset class="form-group">
-              <%= f.label :text, 'Question', class: 'form-control-label' %>
-              <%= f.text_field :text, class: 'form-control', placeholder: 'Question' %>
-            </fieldset>
-
-            <fieldset class="form-group">
-              <%= f.label :question_type, class: 'form-control-label' %>
-              <%= f.select :question_type, Question.question_types.to_a.map {|type| [type[0].humanize, type[0]] } %>
-            </fieldset>
-
+  <div class="modal fade" id="newQuestion" tabindex="-1" role="dialog" aria-labelledby="addQuestion" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Add a Question</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <%= f.submit 'Add', class: 'btn btn-primary', data: { disable_with: 'Create' } %>
-        </div>
-      <% end %>
-    </div>
-  </div>
-</div>
+        <%= form_for :question, url: {controller: 'questions', action: 'create'}, remote: true, html: { id: 'new_question' } do |f| %>
+          <div class="modal-body">
+              <fieldset class="form-group">
+                <%= f.label :text, 'Question', class: 'form-control-label' %>
+                <%= f.text_field :text, class: 'form-control', placeholder: 'Question' %>
+              </fieldset>
 
-<div class="modal fade" id="editQuestionModal" tabindex="-1" role="dialog" aria-labelledby="editQuestion" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" id="">Edit Question</h4>
-      </div>
-      <div class="modal-body">
-        <form class="edit-question" id='editQuestion' action="/tests/#/questions/#" accept-charset="UTF-8" data-remote="true" method="post">
-          <input name="utf8" type="hidden" value="✓">
-          <input type="hidden" name="_method" value="patch">
+              <fieldset class="form-group">
+                <%= f.label :question_type, class: 'form-control-label' %>
+                <%= f.select :question_type, Question.question_types.to_a.map {|type| [type[0].humanize, type[0]] } %>
+              </fieldset>
 
-          <fieldset class="form-group">
-            <label class="form-control-label" for="question_text">Question</label>
-            <input class="form-control" placeholder="Question" type="text" name="question[text]" id="editQuestionText">
-          </fieldset>
+              <fieldset class="form-group">
+                <%= f.label :points, class: 'form-control-label' %>
+                <%= f.number_field :points, class: 'form-control' %>
+              </fieldset>
+
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <input type="submit" name="commit" value="Save" class="btn btn-primary" data-disable-with="Save">
+            <%= f.submit 'Add', class: 'btn btn-primary', data: { disable_with: 'Create' } %>
           </div>
-        </form>
+        <% end %>
       </div>
     </div>
   </div>
-</div>
-<!-- JS Element Resources for Loading Cards -->
 
-<!-- Base Card -->
-<div hidden class="card my-3" id="base-card">
-  <div class="card-header">
-    <form name="delete-button" class="button_to d-inline" method="post" action="/tests/#/questions/#" data-remote="true">
-      <input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-right" data-confirm="Are you sure?" type="submit" value="&times;">
-      <input type="hidden" name="authenticity_token" value="">
+  <div class="modal fade" id="editQuestionModal" tabindex="-1" role="dialog" aria-labelledby="editQuestion" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="">Edit Question</h4>
+        </div>
+        <div class="modal-body">
+          <form class="edit-question" id='editQuestion' action="/tests/#/questions/#" accept-charset="UTF-8" data-remote="true" method="post">
+            <input name="utf8" type="hidden" value="✓">
+            <input type="hidden" name="_method" value="patch">
+
+            <fieldset class="form-group">
+              <label class="form-control-label" for="question_text">Question</label>
+              <input class="form-control" placeholder="Question" type="text" name="question[text]" id="editQuestionText">
+            </fieldset>
+
+            <fieldset class="form-group">
+              <label class="form-control-label" for="question_text">Points</label>
+              <input class="form-control" placeholder="Points" type="number" name="question[points]" id="editQuestionPoints">
+            </fieldset>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <input type="submit" name="commit" value="Save" class="btn btn-primary" data-disable-with="Save">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- JS Element Resources for Loading Cards -->
+
+  <!-- Base Card -->
+  <div hidden class="card my-3" id="base-card">
+    <div class="card-header">
+      <form name="delete-button" class="button_to d-inline" method="post" action="/tests/#/questions/#" data-remote="true">
+        <input type="hidden" name="_method" value="delete"><input class="btn btn-danger float-right" data-confirm="Are you sure?" type="submit" value="&times;">
+        <input type="hidden" name="authenticity_token" value="">
+      </form>
+      <button type="button" class="d-inline btn btn-success float-right" data-toggle="modal" data-target="#editQuestionModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+    </div>
+    <div class="card-block">
+      <blockquote class="blockquote" name="question-text">
+      </blockquote>
+      <blockquote class="blockquote" name="question-points">
+      </blockquote>
+      <p class="card-text">
+      </p>
+      <a class="btn btn-secondary btn-block collapse-btn" data-toggle="collapse"></a>
+    </div>
+  </div>
+
+  <!-- Form for adding multiple choice option -->
+  <div hidden id="baseMultipleChoice" class="collapse card-block">
+    <form class="add_option" action="/tests/#/questions/#/multiple_choice_options" accept-charset="UTF-8" data-remote="true" method="post">
+      <input name="utf8" type="hidden" value="✓">
+
+      <fieldset class="form-group">
+        <label class="form-control-label" for="multiple_choice_option_text">Text</label>
+        <input class="form-control" placeholder="Text" type="text" name="multiple_choice_option[text]" id="multiple_choice_option_text">
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label class="form-control-label" for="multiple_choice_option_correct">Correct</label>
+        <input name="multiple_choice_option[correct]" type="hidden" value="0">
+        <input class="form-check-inline" type="checkbox" value="1" name="multiple_choice_option[correct]" id="multiple_choice_option_correct">
+      </fieldset>
+
+      <input type="submit" name="commit" value="Add" class="btn btn-primary add-multiple-choice-option" data-disable-with="Create">
     </form>
-    <button type="button" class="d-inline btn btn-success float-right" data-toggle="modal" data-target="#editQuestionModal"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
   </div>
-  <div class="card-block">
-    <blockquote class="blockquote" name="question-text">
-    </blockquote>
-    <p class="card-text">
-    </p>
-    <a class="btn btn-secondary btn-block collapse-btn" data-toggle="collapse"></a>
-  </div>
-</div>
 
-<!-- Form for adding multiple choice option -->
-<div hidden id="baseMultipleChoice" class="collapse card-block">
-  <form class="add_option" action="/tests/#/questions/#/multiple_choice_options" accept-charset="UTF-8" data-remote="true" method="post">
+  <!-- List of Options for Multiple Choice Questions -->
+  <div hidden id="baseMultipleChoiceList">
+    <h4>Options</h4>
+    <ul>
+    </ul>
+  </div>
+
+  <!-- List item for Multiple Choice Questions -->
+  <li hidden id="option-item-base" class="my-1">
+    <form name="delete-option" class="button_to form-inline float-right" method="post" action="/tests/#/questions/#/multiple_choice_option/#" data-remote="true">
+      <input type="hidden" name="_method" value="delete">
+      <input type="hidden" name="authenticity_token" value="">
+      <input class="btn btn-danger btn-sm delete-multiple-choice-option" data-confirm="Are you sure?" type="submit" value="&times;">
+    </form>
+    <button type="button" class="btn btn-success btn-sm float-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+    <p class='d-inline'></p>
+  </li>
+
+  <!-- Edit List Item Inline Form -->
+  <form hidden class="edit_option form-inline" id="editOptionLineBase" action="/tests/#/questions/#/multiple_choice_options/#" accept-charset="UTF-8" data-remote="true" method="post">
     <input name="utf8" type="hidden" value="✓">
+    <input type="hidden" name="_method" value="patch">
 
     <fieldset class="form-group">
-      <label class="form-control-label" for="multiple_choice_option_text">Text</label>
-      <input class="form-control" placeholder="Text" type="text" name="multiple_choice_option[text]" id="multiple_choice_option_text">
+      <input class="form-control" placeholder="Text" type="text" name="multiple_choice_option[text]">
     </fieldset>
 
     <fieldset class="form-group">
-      <label class="form-control-label" for="multiple_choice_option_correct">Correct</label>
-      <input name="multiple_choice_option[correct]" type="hidden" value="0">
-      <input class="form-check-inline" type="checkbox" value="1" name="multiple_choice_option[correct]" id="multiple_choice_option_correct">
+      <input name="multiple_choice_option[correct]" type="hidden" value="0"><input class="form-check-inline" type="checkbox" value="1" name="multiple_choice_option[correct]">
     </fieldset>
 
-    <input type="submit" name="commit" value="Add" class="btn btn-primary add-multiple-choice-option" data-disable-with="Create">
+    <input hidden type="submit" name="commit" value="Save" class="btn btn-primary btn-sm float-right" data-disable-with="Save">
   </form>
-</div>
 
-<!-- List of Options for Multiple Choice Questions -->
-<div hidden id="baseMultipleChoiceList">
-  <h4>Options</h4>
-  <ul>
-  </ul>
-</div>
+  <!-- List of Pairs for Matching Questions -->
+  <div hidden id="baseMatchingList">
+    <h4>Pairs</h4>
+    <table class="table table-striped">
+      <tbody>
+      </tbody>
+    </table>
+  </div>
 
-<!-- List item for Multiple Choice Questions -->
-<li hidden id="option-item-base" class="my-1">
-  <form name="delete-option" class="button_to form-inline float-right" method="post" action="/tests/#/questions/#/multiple_choice_option/#" data-remote="true">
-    <input type="hidden" name="_method" value="delete">
-    <input type="hidden" name="authenticity_token" value="">
-    <input class="btn btn-danger btn-sm delete-multiple-choice-option" data-confirm="Are you sure?" type="submit" value="&times;">
-  </form>
-  <button type="button" class="btn btn-success btn-sm float-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-  <p class='d-inline'></p>
-</li>
+  <div hidden id="baseMatchingListAdd" class="collapse card-block">
+    <%= form_for :matching_pair, url: nil, remote: true, html: { class: 'add_pair' } do |f| %>
+      <fieldset class="form-group">
+        <%= f.label :item1, 'Item One', class: 'form-control-label' %>
+        <%= f.text_field :item1, class: 'form-control', placeholder: 'Item One' %>
+      </fieldset>
 
-<!-- Edit List Item Inline Form -->
-<form hidden class="edit_option form-inline" id="editOptionLineBase" action="/tests/#/questions/#/multiple_choice_options/#" accept-charset="UTF-8" data-remote="true" method="post">
-  <input name="utf8" type="hidden" value="✓">
-  <input type="hidden" name="_method" value="patch">
+      <fieldset class="form-group">
+        <%= f.label :item2, 'Item Two', class: 'form-control-label' %>
+        <%= f.text_field :item2, class: 'form-control', placeholder: 'Item Two' %>
+      </fieldset>
 
-  <fieldset class="form-group">
-    <input class="form-control" placeholder="Text" type="text" name="multiple_choice_option[text]">
-  </fieldset>
+      <%= f.submit 'Add', class: 'btn btn-primary matching-pair-add', data: { disable_with: 'Add' } %>
+    <% end %>
+  </div>
 
-  <fieldset class="form-group">
-    <input name="multiple_choice_option[correct]" type="hidden" value="0"><input class="form-check-inline" type="checkbox" value="1" name="multiple_choice_option[correct]">
-  </fieldset>
-
-  <input hidden type="submit" name="commit" value="Save" class="btn btn-primary btn-sm float-right" data-disable-with="Save">
-</form>
-
-<!-- List of Pairs for Matching Questions -->
-<div hidden id="baseMatchingList">
-  <h4>Pairs</h4>
-  <table class="table table-striped">
+  <!-- Table row for Matching Pairs -->
+  <table hidden>
     <tbody>
+      <tr hidden id="baseMatchingPairRow">
+        <td name='item1'></td>
+        <td name='item2'></td>
+        <td hidden name='edit-pair'>
+          <%= form_for :matching_pair, url: nil, method: 'patch', remote: true, html: { class: 'edit_pair form-inline' } do |f| %>
+            <fieldset class="form-group">
+              <%= f.text_field :item1, class: 'form-control', placeholder: 'Item One' %>
+            </fieldset>
+
+            <fieldset class="form-group">
+              <%= f.text_field :item2, class: 'form-control', placeholder: 'Item Two' %>
+            </fieldset>
+
+            <%= f.submit 'Save', class: 'btn btn-primary btn-sm', data: { disable_with: 'Save' } %>
+          <% end %>
+        </td>
+        <td name='edit_and_delete'>
+          <%= button_to '&times;'.html_safe, { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-right', data: { confirm: "Are you sure?" } %>
+          <button type="button" class="btn btn-success btn-sm edit-pair-button float-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>
-
-<div hidden id="baseMatchingListAdd" class="collapse card-block">
-  <%= form_for :matching_pair, url: nil, remote: true, html: { class: 'add_pair' } do |f| %>
-    <fieldset class="form-group">
-      <%= f.label :item1, 'Item One', class: 'form-control-label' %>
-      <%= f.text_field :item1, class: 'form-control', placeholder: 'Item One' %>
-    </fieldset>
-
-    <fieldset class="form-group">
-      <%= f.label :item2, 'Item Two', class: 'form-control-label' %>
-      <%= f.text_field :item2, class: 'form-control', placeholder: 'Item Two' %>
-    </fieldset>
-
-    <%= f.submit 'Add', class: 'btn btn-primary matching-pair-add', data: { disable_with: 'Add' } %>
-  <% end %>
-</div>
-
-<!-- Table row for Matching Pairs -->
-<table hidden>
-  <tbody>
-    <tr hidden id="baseMatchingPairRow">
-      <td name='item1'></td>
-      <td name='item2'></td>
-      <td hidden name='edit-pair'>
-        <%= form_for :matching_pair, url: nil, method: 'patch', remote: true, html: { class: 'edit_pair form-inline' } do |f| %>
-          <fieldset class="form-group">
-            <%= f.text_field :item1, class: 'form-control', placeholder: 'Item One' %>
-          </fieldset>
-
-          <fieldset class="form-group">
-            <%= f.text_field :item2, class: 'form-control', placeholder: 'Item Two' %>
-          </fieldset>
-
-          <%= f.submit 'Save', class: 'btn btn-primary btn-sm', data: { disable_with: 'Save' } %>
-        <% end %>
-      </td>
-      <td name='edit_and_delete'>
-        <%= button_to '&times;'.html_safe, { action: 'destroy', controller: 'matching_pairs', question_id: '', id: '' }, remote: true, method: 'delete', class: 'btn btn-danger btn-sm float-right', data: { confirm: "Are you sure?" } %>
-        <button type="button" class="btn btn-success btn-sm edit-pair-button float-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-      </td>
-    </tr>
-  </tbody>
-</table>

@@ -14,6 +14,7 @@ RSpec.feature 'Questions' do
       params = FactoryGirl.build(:question)
       within('#new_question') do
         fill_in 'Question', with: params.text
+        fill_in 'Points', with: params.points
       end
       click_button 'Add'
       expect(page).to have_content(params.text)
@@ -53,6 +54,7 @@ RSpec.feature 'Questions' do
       params = FactoryGirl.build(:question, text: 'edit')
       within('#editQuestion') do
         fill_in 'Question', with: params.text
+        fill_in 'Points', with: params.points
         click_button 'Save'
       end
       expect(page).to have_content(params.text)

@@ -109,6 +109,8 @@ function makeCard(data, token, loadingPage) {
   //Card Text
   card.children('.card-block').children('blockquote[name="question-text"]').html(data.text);
 
+  card.children('.card-block').children('blockquote[name="question-points"]').html(data.points + ' points possible');
+
   switch(data.question_type) {
     case 'multiple_choice':
       var list = $('#baseMultipleChoiceList').clone();
@@ -166,7 +168,8 @@ function makeCard(data, token, loadingPage) {
 }
 
 function setUpEditModal(questionID) {
-  $('#editQuestionText').val($('#' + questionID).children('.card-block').children('blockquote').text());
+  $('#editQuestionText').val($('#' + questionID).children('.card-block').children('blockquote[name="question-text"]').text());
+  $('#editQuestionPoints').val($('#' + questionID).children('.card-block').children('blockquote[name="question-points"]').text().split(' ', 2)[0]);
   $('#editQuestion').attr('action', '/tests/' + $('#questionBody').attr('test-id') + '/questions/' + questionID.substr(questionID.lastIndexOf('-') + 1))
 }
 
@@ -177,17 +180,17 @@ $(document).on('turbolinks:load', function() {
     for(var i in existingCards) {
      makeCard(existingCards[i], token, true);
     }
-    $('.container').on('click', 'button[data-target="#editQuestionModal"]', function() {
+    $('.questions').on('click', 'button[data-target="#editQuestionModal"]', function() {
       setUpEditModal($(this).parent().parent().attr('id'));
     });
   }
-  $('.container').on('ajax:send', 'form[action*="questions"]', function() {
+  $('.questions').on('ajax:send', 'form[action*="questions"]', function() {
     $(this).children('div').children('fieldset').attr('class', 'form-group');
     $(this).children('div').children('fieldset').children('div').remove();
     $('#questionAlert').remove();
     $('input').attr('disabled', true);
   });
-  $('.container').on('ajax:success', 'form[action*="questions"]', function(event, data, status, xhr) {
+  $('.questions').on('ajax:success', 'form[action*="questions"]', function(event, data, status, xhr) {
     // Delete Buttons
     if ($(this).hasClass('button_to')) {
       if ($(this).hasClass('form-inline')) {
@@ -251,8 +254,10 @@ $(document).on('turbolinks:load', function() {
     // Edit Question from Modal
     if ($(this).hasClass('edit-question')) {
       var newQuestionText = event.currentTarget[3].value;
+      var newQuestionPoints = event.currentTarget[5].value;
       var questionID = event.target.action.substr(event.target.action.lastIndexOf('/') + 1);
-      $('#question-' + questionID).children('.card-block').children('blockquote').text(newQuestionText);
+      $('#question-' + questionID).children('.card-block').children('blockquote[name="question-text"]').text(newQuestionText);
+      $('#question-' + questionID).children('.card-block').children('blockquote[name="question-points"]').text(newQuestionPoints + ' points possible');
     }
     // New Question from Modal
     if ($(this).attr('id') == 'new_question') {
@@ -268,10 +273,11 @@ $(document).on('turbolinks:load', function() {
     $("#newQuestion").modal('hide');
     $("#editQuestionModal").modal('hide');
     $("#question_text").val("");
+    $("#question_points").val("");
   });
-  $('.container').on('ajax:error', 'form[action*="questions"]', function(event, data, status, xhr) {
+  $('.questions').on('ajax:error', 'form[action*="questions"]', function(event, data, status, xhr) {
     $('input').attr('disabled', false);
-    $('h2').before('<div class="alert alert-danger alert-dismissible fade in" role="alert" id="questionAlert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>An error has occured while trying to submit your information.</div>');
+    $('h2').before('<div class="alert alert-danger alert-dismissible fade show" role="alert" id="questionAlert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>An error has occured while trying to submit your information.</div>');
     if (data.responseJSON !== undefined) {
       var errors = data.responseJSON.error;
       for (var form in errors) {
