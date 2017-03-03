@@ -59,6 +59,10 @@ gem 'devise', '~> 4.2.0'
 gem 'simple_token_authentication', '~> 1.15.1'
 # Provide authorization using CanCanCan
 gem 'cancancan', '~> 1.16.0'
+# Use Delayed Job as a jobs backend
+gem 'delayed_job', '~> 4.1.2'
+# Use ActiveRecord with Delayed Job
+gem 'delayed_job_active_record', '~> 4.1.1'
 
 group :development do
   ###
