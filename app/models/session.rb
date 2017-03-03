@@ -24,6 +24,10 @@ class Session < ApplicationRecord
     scores.sum(:score)
   end
 
+  def answers
+    text_answers + multiple_choice_answers
+  end
+
   def grade_multiple_choice
     assignment.test.questions.where(question_type: :multiple_choice).find_each do |question|
       next unless Score.find_by(session: self, question: question).nil?
