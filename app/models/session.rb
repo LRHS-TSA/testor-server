@@ -15,6 +15,6 @@ class Session < ApplicationRecord
   validates :status, presence: true
 
   def locked?
-    !assignment.start_date.nil? && assignment.start_date.utc > Time.now.utc || !assignment.end_date.nil? && assignment.end_date.utc < Time.now.utc
+    !assignment.start_date.nil? && assignment.start_date.utc > Time.now.utc || !assignment.end_date.nil? && assignment.end_date.utc < Time.now.utc || !assignment.length.nil? && !start_time.nil? && assignment.length.seconds.ago > start_time
   end
 end
