@@ -266,6 +266,7 @@ $(document).on('turbolinks:load', function() {
         "test_id" : $("#questionBody").attr('test-id'),
         "question_type" : event.currentTarget[4].value,
         "text" : event.currentTarget[2].value,
+        "points" : event.currentTarget[6].value
       };
       makeCard(json, token, false);
     }
