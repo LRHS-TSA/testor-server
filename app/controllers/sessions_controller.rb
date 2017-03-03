@@ -34,11 +34,7 @@ class SessionsController < ApplicationController
   end
 
   def update
-    if @session.locked? || (current_user.student? && !@session.approved?)
-      head :bad_request
-      return
-    end
-    if current_user.student? && update_params[:status] != 'awaiting_approval'
+    if @session.locked? || (current_user.student? && update_params[:status] != 'awaiting_approval')
       head :bad_request
       return
     end
