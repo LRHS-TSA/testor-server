@@ -9,6 +9,8 @@ class Assignment < ApplicationRecord
   validates :test, presence: true
   validates :name, presence: true
 
+  delegate :points_possible, to: :test
+
   def length=(value)
     if value.nil? || value[4].nil? && value[5].nil?
       self[:length] = nil

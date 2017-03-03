@@ -6,4 +6,8 @@ class Test < ApplicationRecord
 
   validates :name, presence: true, length: {minimum: 3, maximum: 32}
   validates :user, presence: true
+
+  def points_possible
+    questions.sum(:points)
+  end
 end

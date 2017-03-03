@@ -18,6 +18,12 @@ class Session < ApplicationRecord
     !assignment.start_date.nil? && assignment.start_date.utc > Time.now.utc || !assignment.end_date.nil? && assignment.end_date.utc < Time.now.utc || !assignment.length.nil? && !start_time.nil? && assignment.length.seconds.ago > start_time
   end
 
+  delegate :points_possible, to: :assignment
+
+  def points_earned
+    scores.sum(:score)
+  end
+
   def grade_multiple_choice
     assignment.test.questions.where(question_type: :multiple_choice).find_each do |question|
       next unless Score.find_by(session: self, question: question).nil?
