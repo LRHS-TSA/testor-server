@@ -2,24 +2,28 @@
   <td><%= answer.question.text %></td>
   <% if answer.question.question_type == 'essay' %>
     <td><%= answer.text %></td>
+  <% else %>
     <td>
-      <% if answer.session.scores.find_by(question: answer.question).nil? %>
-        <%= form_for Score.new, url: group_assignment_session_scores_path(@session.assignment.group, @session.assignment, @session), remote: true do |f| %>
-          <%= f.number_field :score %>
-          <%= f.hidden_field :question_id, value: answer.question.id %>
-          <%= f.submit "Grade", class: 'btn btn-primary btn-sm' %>
-        <% end %>
-      <% else %>
-        <% score = answer.session.scores.find_by(question: answer.question) %>
-        <%= form_for score, url: group_assignment_session_score_path(@session.assignment.group, @session.assignment, @session, score), method: :patch, remote: true do |f| %>
-          <%= f.number_field :score %>
-          <%= f.hidden_field :question_id, value: answer.question.id %>
-          <%= f.submit "Update", class: 'btn btn-primary btn-sm' %>
-        <% end %>
-      <% end %>
-    </td>
-    <td>
-       Maximum Points: <%= answer.question.points %>
+
     </td>
   <% end %>
+  <td>
+    <% if answer.session.scores.find_by(question: answer.question).nil? %>
+      <%= form_for Score.new, url: group_assignment_session_scores_path(@session.assignment.group, @session.assignment, @session), remote: true do |f| %>
+        <%= f.number_field :score %>
+        <%= f.hidden_field :question_id, value: answer.question.id %>
+        <%= f.submit "Grade", class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    <% else %>
+      <% score = answer.session.scores.find_by(question: answer.question) %>
+      <%= form_for score, url: group_assignment_session_score_path(@session.assignment.group, @session.assignment, @session, score), method: :patch, remote: true do |f| %>
+        <%= f.number_field :score %>
+        <%= f.hidden_field :question_id, value: answer.question.id %>
+        <%= f.submit "Update", class: 'btn btn-primary btn-sm' %>
+      <% end %>
+    <% end %>
+  </td>
+  <td>
+     Maximum Points: <%= answer.question.points %>
+  </td>
 </tr>
